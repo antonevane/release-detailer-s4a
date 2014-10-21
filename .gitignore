@@ -1,0 +1,8 @@
+# IntelliJ
+target
+.idea
+okay\ to\ delete
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
