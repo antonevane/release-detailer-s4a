@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-public class TestController {
-    @RequestMapping(name = "/test")
+public class ReleaseSiteController {
+    @RequestMapping("/foo")
     public String test() {
+        return "view";
+    }
+
+    @RequestMapping(value = "/bar")
+    public String test2() {
         return "view";
     }
 }
