@@ -1,9 +1,10 @@
-package com.dirtroadsoftware.rds4a.entities;
+package com.dirtroadsoftware.rds4a.core.entities;
 
 /**
  *
  */
 public class ReleaseSite {
+    private Long id;
     private int region;
     private int site;
 
@@ -22,4 +23,13 @@ public class ReleaseSite {
     public void setSite(int site) {
         this.site = site;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
