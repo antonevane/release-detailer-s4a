@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -47,12 +49,10 @@ public class ReleaseSiteControllerTest {
         ReleaseSite site = new ReleaseSite();
         site.setId(1L);
         site.setRegion(1);
-        site.setSite((12345));
+        site.setSite(12345);
 
         // Tell Mockito to return the releaseSite when 1L is searched
         when(service.find(1L)).thenReturn(site);
-        when(service.find(2L)).thenReturn(null);
-
 
         // Ask Spring MockMVC to issue a GET request against our controller
         mockMvc.perform(get("/rest/release-sites/1"))
@@ -60,13 +60,8 @@ public class ReleaseSiteControllerTest {
                 .andExpect(jsonPath("$.site", is(site.getSite())))
                 .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/release-sites/1"))))
                 .andExpect(jsonPath("$.links[*].rel", hasItem(is(Link.REL_SELF))))
-                        .andExpect(status().isOk())
-                        .andDo(print());
-
-        mockMvc.perform(get("/rest/release-sites/2"))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isOk())
                 .andDo(print());
-
     }
 
     @Test
@@ -75,8 +70,62 @@ public class ReleaseSiteControllerTest {
         when(service.find(1L)).thenReturn(null);
 
         mockMvc.perform(get("/rest/release-sites/1"))
-                .andExpect(status().isNotFound())
-                .andDo(print());
+                .andExpect(status().isNotFound());
 
+    }
+
+    @Test
+    public void deleteExistingReleaseSite() throws Exception {
+        ReleaseSite site = new ReleaseSite();
+        site.setId(1L);
+        site.setRegion(1);
+        site.setSite(12345);
+
+        when(service.delete(site.getId())).thenReturn(site);
+
+        mockMvc.perform(delete("/rest/release-sites/1"))
+                .andExpect(jsonPath("$.region", is(site.getRegion())))
+                .andExpect(jsonPath("$.site", is(site.getSite())))
+                .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/release-sites/1"))))
+                .andExpect(jsonPath("$.links[*].rel", hasItem(is(Link.REL_SELF))))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteNonExistingReleaseSite() throws Exception {
+        when(service.delete(1L)).thenReturn(null);
+
+        mockMvc.perform(delete("/rest/release-sites/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateExistingReleaseSite() throws Exception {
+        ReleaseSite updatedSite = new ReleaseSite();
+        updatedSite.setId(1L);
+        updatedSite.setRegion(2);
+        updatedSite.setSite(12345);
+
+        when(service.update(eq(1L), any(ReleaseSite.class))).thenReturn(updatedSite);
+
+        mockMvc.perform(put("/rest/release-sites/1")
+
+                .content("{\"region\":2,\"site\":12345}")
+                .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.region", is(updatedSite.getRegion())))
+                    .andExpect(jsonPath("$.site", is(updatedSite.getSite())))
+                    .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/release-sites/1"))))
+                    .andExpect(jsonPath("$.links[*].rel", hasItem(is(Link.REL_SELF))))
+                    .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateNonExistingReleaseSite() throws Exception {
+        when(service.update(eq(1L), any(ReleaseSite.class))).thenReturn(null);
+
+        mockMvc.perform(put("/rest/release-sites/1")
+                .content("{\"region\":2,\"site\":12345}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

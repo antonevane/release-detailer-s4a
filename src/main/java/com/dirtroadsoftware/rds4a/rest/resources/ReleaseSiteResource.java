@@ -1,9 +1,10 @@
 package com.dirtroadsoftware.rds4a.rest.resources;
 
+import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- *
+ * Exposes {@link ReleaseSite} as a resource that can be accessed using Spring HATEOAS components.
  */
 public class ReleaseSiteResource extends ResourceSupport {
     private int region;
@@ -23,5 +24,13 @@ public class ReleaseSiteResource extends ResourceSupport {
 
     public void setSite(int site) {
         this.site = site;
+    }
+
+    /** Creates a {@link ReleaseSite} for this resource. */
+    public ReleaseSite toReleaseSite() {
+        ReleaseSite releaseSite = new ReleaseSite();
+        releaseSite.setRegion(getRegion());
+        releaseSite.setSite(getSite());
+        return releaseSite;
     }
 }
