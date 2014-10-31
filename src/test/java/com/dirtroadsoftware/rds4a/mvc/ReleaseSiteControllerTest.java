@@ -52,7 +52,7 @@ public class ReleaseSiteControllerTest {
         site.setSite(12345);
 
         // Tell Mockito to return the releaseSite when 1L is searched
-        when(service.find(1L)).thenReturn(site);
+        when(service.findReleaseSite(1L)).thenReturn(site);
 
         // Ask Spring MockMVC to issue a GET request against our controller
         mockMvc.perform(get("/rest/release-sites/1"))
@@ -67,7 +67,7 @@ public class ReleaseSiteControllerTest {
     @Test
     public void getNonExistingReleaseSite() throws Exception {
         // Tell Mockito to return null when 1L is searched
-        when(service.find(1L)).thenReturn(null);
+        when(service.findReleaseSite(1L)).thenReturn(null);
 
         mockMvc.perform(get("/rest/release-sites/1"))
                 .andExpect(status().isNotFound());
@@ -81,7 +81,7 @@ public class ReleaseSiteControllerTest {
         site.setRegion(1);
         site.setSite(12345);
 
-        when(service.delete(site.getId())).thenReturn(site);
+        when(service.deleteReleaseSite(site.getId())).thenReturn(site);
 
         mockMvc.perform(delete("/rest/release-sites/1"))
                 .andExpect(jsonPath("$.region", is(site.getRegion())))
@@ -93,7 +93,7 @@ public class ReleaseSiteControllerTest {
 
     @Test
     public void deleteNonExistingReleaseSite() throws Exception {
-        when(service.delete(1L)).thenReturn(null);
+        when(service.deleteReleaseSite(1L)).thenReturn(null);
 
         mockMvc.perform(delete("/rest/release-sites/1"))
                 .andExpect(status().isNotFound());
@@ -106,7 +106,7 @@ public class ReleaseSiteControllerTest {
         updatedSite.setRegion(2);
         updatedSite.setSite(12345);
 
-        when(service.update(eq(1L), any(ReleaseSite.class))).thenReturn(updatedSite);
+        when(service.updateReleaseSite(eq(1L), any(ReleaseSite.class))).thenReturn(updatedSite);
 
         mockMvc.perform(put("/rest/release-sites/1")
 
@@ -121,7 +121,7 @@ public class ReleaseSiteControllerTest {
 
     @Test
     public void updateNonExistingReleaseSite() throws Exception {
-        when(service.update(eq(1L), any(ReleaseSite.class))).thenReturn(null);
+        when(service.updateReleaseSite(eq(1L), any(ReleaseSite.class))).thenReturn(null);
 
         mockMvc.perform(put("/rest/release-sites/1")
                 .content("{\"region\":2,\"site\":12345}")

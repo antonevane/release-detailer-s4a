@@ -10,6 +10,13 @@ public class ReleaseSite {
     private int region;
     /** Site number, unique within a region */
     private int site;
+    /**
+     * TODO
+     * Temporary relationship - ReleaseSite to ReleaseDashboard -- that will
+     * be changed in a future version.
+     */
+    private ReleaseDashboard dashboard;
+
 
     /** Get the site's region */
     public int getRegion() {
@@ -39,5 +46,13 @@ public class ReleaseSite {
     /** Set the internal id */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ReleaseDashboard getDashboard() {
+        return dashboard;
+    }
+
+    public void setDashboard(ReleaseDashboard dashboard) {
+        this.dashboard = dashboard;
     }
 }

@@ -27,7 +27,7 @@ public class ReleaseSiteController {
     @RequestMapping(value="/{releaseSiteId}", method = RequestMethod.GET)
     public ResponseEntity<ReleaseSiteResource> getReleaseSite(
             @PathVariable Long releaseSiteId) {
-        ReleaseSite site = service.find(releaseSiteId);
+        ReleaseSite site = service.findReleaseSite(releaseSiteId);
         if (site != null) {
             ReleaseSiteResource res = new ReleaseSiteResourceAsm().toResource(site);
             return new ResponseEntity<ReleaseSiteResource>(res, HttpStatus.OK);
@@ -39,7 +39,7 @@ public class ReleaseSiteController {
     /** Deletes a {@link ReleaseSite} by id */
     @RequestMapping(value="/{releaseSiteId}", method=RequestMethod.DELETE)
     public ResponseEntity<ReleaseSiteResource> deleteReleaseSite(@PathVariable Long releaseSiteId) {
-        ReleaseSite site = service.delete(releaseSiteId);
+        ReleaseSite site = service.deleteReleaseSite(releaseSiteId);
         if (site != null) {
             ReleaseSiteResource res = new ReleaseSiteResourceAsm().toResource(site);
             return new ResponseEntity<ReleaseSiteResource>(res, HttpStatus.OK);
@@ -52,7 +52,7 @@ public class ReleaseSiteController {
     @RequestMapping(value="/{releaseSiteId}", method=RequestMethod.PUT)
     public ResponseEntity<ReleaseSiteResource> updateReleaseSite(@PathVariable Long releaseSiteId,
                                                                  @RequestBody ReleaseSiteResource sentReleaseSite) {
-        ReleaseSite updatedSite = service.update(releaseSiteId, sentReleaseSite.toReleaseSite());
+        ReleaseSite updatedSite = service.updateReleaseSite(releaseSiteId, sentReleaseSite.toReleaseSite());
         if (updatedSite != null) {
             ReleaseSiteResource res = new ReleaseSiteResourceAsm().toResource(updatedSite);
             return new ResponseEntity<ReleaseSiteResource>(res, HttpStatus.OK);
