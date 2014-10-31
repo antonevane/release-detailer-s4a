@@ -1,6 +1,6 @@
 package com.dirtroadsoftware.rds4a.rest.resources;
 
-import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import org.springframework.hateoas.ResourceSupport;
 
 /**

@@ -1,4 +1,4 @@
-package com.dirtroadsoftware.rds4a.core.entities;
+package com.dirtroadsoftware.rds4a.core.models.entities;
 
 /**
  * A MassDEP waste release site reported and monitored under the Massachusetts Contingency Plan.

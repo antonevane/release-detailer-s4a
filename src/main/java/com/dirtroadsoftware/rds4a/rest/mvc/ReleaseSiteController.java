@@ -1,7 +1,7 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
-import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteResourceAsm;
 import org.springframework.http.HttpStatus;

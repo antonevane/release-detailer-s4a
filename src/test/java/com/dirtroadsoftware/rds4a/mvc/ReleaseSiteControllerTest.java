@@ -1,7 +1,7 @@
 package com.dirtroadsoftware.rds4a.mvc;
 
-import com.dirtroadsoftware.rds4a.com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
-import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseSiteController;
 import org.junit.Before;
 import org.junit.Test;

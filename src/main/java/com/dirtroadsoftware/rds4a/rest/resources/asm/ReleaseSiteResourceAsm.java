@@ -1,6 +1,6 @@
 package com.dirtroadsoftware.rds4a.rest.resources.asm;
 
-import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseSiteController;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteResource;
 import org.springframework.hateoas.Link;

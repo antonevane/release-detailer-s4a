@@ -1,6 +1,6 @@
-package com.dirtroadsoftware.rds4a.com.dirtroadsoftware.rds4a.core.services;
+package com.dirtroadsoftware.rds4a.core.services;
 
-import com.dirtroadsoftware.rds4a.core.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 
 /**
  * Find, update and delete {@link ReleaseSite}
