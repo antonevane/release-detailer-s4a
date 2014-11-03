@@ -2,6 +2,7 @@ package com.dirtroadsoftware.rds4a.rest.resources.asm;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.rest.mvc.AccountController;
+import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseDashboardController;
 import com.dirtroadsoftware.rds4a.rest.resources.AccountResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
@@ -18,10 +19,10 @@ public class AccountResourceAsm extends ResourceAssemblerSupport<Account, Accoun
 
     @Override
     public AccountResource toResource(Account account) {
-        AccountResource res = new AccountResource();
-        res.setName(account.getName());
-        Link link = linkTo(AccountController.class).slash(account.getId()).withSelfRel();
-        res.add(link.withSelfRel());
-        return res;
+        AccountResource resource = new AccountResource();
+        resource.setName(account.getName());
+        resource.setPassword(account.getPassword());
+        resource.add(linkTo(AccountController.class).slash(account.getId()).withSelfRel());
+        return resource;
     }
 }

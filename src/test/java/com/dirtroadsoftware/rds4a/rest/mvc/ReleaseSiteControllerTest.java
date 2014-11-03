@@ -1,4 +1,4 @@
-package com.dirtroadsoftware.rds4a.mvc;
+package com.dirtroadsoftware.rds4a.rest.mvc;
 
 import com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
@@ -22,13 +22,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- *
+ * Test the Release Site web controller. Uses Mockito and Spring MockMVC to test controller behavior
  */
 public class ReleaseSiteControllerTest {
 
+    /** Mock service primed with responses */
     @Mock
     private ReleaseSiteService service;
 
+    /** Controller where mock service is injected */
     @InjectMocks
     private ReleaseSiteController releaseSiteController;
 

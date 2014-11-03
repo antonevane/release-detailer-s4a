@@ -7,7 +7,7 @@ import org.springframework.hateoas.ResourceSupport;
  *
  */
 public class ReleaseDashboardResource extends ResourceSupport {
-    String title;
+    private String title;
 
     public String getTitle() {
         return title;

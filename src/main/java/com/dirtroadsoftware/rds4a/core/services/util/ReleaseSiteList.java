@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * A list of release sites and the ID of the dashboard to which they belong.
  */
 public class ReleaseSiteList {
-    private List<ReleaseSite> entries = new ArrayList<ReleaseSite>();
+    private List<ReleaseSite> sites = new ArrayList<ReleaseSite>();
     private Long releaseDashboardId;
 
-    public List<ReleaseSite> getEntries() {return entries;}
+    public List<ReleaseSite> getSites() {return sites;}
 
-    public void setEntries(List<ReleaseSite> entries) {this.entries = entries;}
+    public void setSites(List<ReleaseSite> sites) {this.sites = sites;}
 
     public Long getReleaseDashboardId() {return releaseDashboardId;}
 
