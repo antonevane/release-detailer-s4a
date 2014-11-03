@@ -1,9 +1,15 @@
 package com.dirtroadsoftware.rds4a.core.models.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Account for accessing system and release dashboard
  */
+@Entity
 public class Account {
+    @Id @GeneratedValue
     private Long id;
     private String name;
     private String password;
