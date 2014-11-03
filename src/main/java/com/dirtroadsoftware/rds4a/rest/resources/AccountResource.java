@@ -1,6 +1,8 @@
 package com.dirtroadsoftware.rds4a.rest.resources;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -8,6 +10,7 @@ import org.springframework.hateoas.ResourceSupport;
  */
 public class AccountResource extends ResourceSupport {
     private String name;
+
     private String password;
 
     public String getName() {
@@ -18,10 +21,12 @@ public class AccountResource extends ResourceSupport {
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

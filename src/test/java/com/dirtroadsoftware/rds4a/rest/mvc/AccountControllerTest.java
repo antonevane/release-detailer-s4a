@@ -8,6 +8,7 @@ import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsExceptio
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -18,10 +19,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.URI;
 
+import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,11 +46,15 @@ public class AccountControllerTest {
 
     private MockMvc mockMvc;
 
+    private ArgumentCaptor<Account> accountCaptor;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
         mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
+
+        accountCaptor = ArgumentCaptor.forClass(Account.class);
     }
 
     @Test
@@ -54,15 +62,17 @@ public class AccountControllerTest {
         Account owner = new Account();
         owner.setId(3L);
         owner.setName("Jeff");
+        owner.setPassword("abcdefg");
 
         when(service.findAccount(eq(3L))).thenReturn(owner);
 
         mockMvc.perform(get("/rest/accounts/3"))
+                .andDo(print())
+                .andExpect(jsonPath("$.password", is(nullValue())))
                 .andExpect(jsonPath("$.name", is(owner.getName())))
                 .andExpect(jsonPath("$.links[0].href", endsWith("accounts/3")))
                 .andExpect(jsonPath("$.links[0].rel", is(Link.REL_SELF)))
-                .andExpect(status().isOk())
-                .andDo(print());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -87,10 +97,16 @@ public class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"Jeff\",\"password\":\"abcdefg\"}"))
                 .andExpect(jsonPath("$.name", is(owner.getName())))
-                .andExpect(jsonPath("$.links[0].href", endsWith("accounts/3")))
+                .andExpect(jsonPath("$.links[0].href", endsWith("/accounts/3")))
                 .andExpect(jsonPath("$.links[0].rel", is(Link.REL_SELF)))
+                .andExpect(header().string("Location", endsWith("/accounts/3")))
                 .andExpect(status().isCreated())
                 .andDo(print());
+
+         verify(service).createAccount(accountCaptor.capture());
+
+        String password = accountCaptor.getValue().getPassword();
+        assertEquals("abcdefg", password);
     }
 
     @Test
@@ -153,14 +169,6 @@ public class AccountControllerTest {
 
     @Test
     public void createReleaseDashboardExistingDashboard() throws Exception {
-        Account owner = new Account();
-        owner.setId(3L);
-
-        ReleaseDashboard dashboard = new ReleaseDashboard();
-        dashboard.setOwner(owner);
-        dashboard.setTitle("Hello board");
-        dashboard.setId(2L);
-
         when(service.createReleaseDashboard(eq(3L), any(ReleaseDashboard.class))).thenThrow(new ReleaseDashboardExistsException());
 
         mockMvc.perform(post(URI.create("/rest/accounts/3/dashboards"))

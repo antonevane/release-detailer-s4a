@@ -55,7 +55,9 @@ public class AccountController {
         try {
             Account account = service.createAccount(sentAccount.toAccount());
             AccountResource newResource = new AccountResourceAsm().toResource(account);
-            return new ResponseEntity<AccountResource>(newResource, HttpStatus.CREATED);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create(newResource.getLink(Link.REL_SELF).getHref()));
+            return new ResponseEntity<AccountResource>(newResource, headers, HttpStatus.CREATED);
         } catch (AccountExistsException ex) {
             throw new ConflictException(ex);
         }
