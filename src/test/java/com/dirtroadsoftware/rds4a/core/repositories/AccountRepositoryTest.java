@@ -28,7 +28,6 @@ public class AccountRepositoryTest {
     private Account account;
 
     @Before
-    @Transactional
     public void setup() {
         account = new Account();
         account.setName("Jeff");
