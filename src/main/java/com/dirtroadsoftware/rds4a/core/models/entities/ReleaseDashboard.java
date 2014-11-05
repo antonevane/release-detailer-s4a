@@ -1,13 +1,20 @@
 package com.dirtroadsoftware.rds4a.core.models.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.Collection;
 
 /**
  * A user's dashboard for monitoring release sites
  */
+@Entity
 public class ReleaseDashboard {
+    @Id @GeneratedValue
     private Long id;
     private String title;
+    @OneToOne
     private Account owner;
 
     public Long getId() {

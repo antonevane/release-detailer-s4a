@@ -13,6 +13,7 @@ import com.dirtroadsoftware.rds4a.rest.resources.AccountResource;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseDashboardResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.AccountResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardResourceAsm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ import java.net.URI;
 public class AccountController {
     private AccountService service;
 
+    @Autowired
     public AccountController(AccountService service) {
         this.service = service;
     }

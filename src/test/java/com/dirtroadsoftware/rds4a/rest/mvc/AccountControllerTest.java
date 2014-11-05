@@ -19,10 +19,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.URI;
 
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;

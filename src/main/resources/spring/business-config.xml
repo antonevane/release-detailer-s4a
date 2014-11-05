@@ -49,4 +49,7 @@
     <tx:annotation-driven/>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
 
+    <!-- Scan packages for Service beans -->
+    <context:component-scan base-package="com.dirtroadsoftware.rds4a.core.services.impl"/>
+
 </beans>

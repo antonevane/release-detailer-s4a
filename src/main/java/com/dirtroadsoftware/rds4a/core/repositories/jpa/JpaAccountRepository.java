@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Repository bean that implements the Account DAO {@link AccountRepository}. Uses the container-managed
@@ -14,7 +16,6 @@ import javax.persistence.PersistenceContext;
  */
 @Repository
 public class JpaAccountRepository implements AccountRepository {
-
     /**
      * Container-managed entity manager configured with transactional scope
      */
@@ -34,7 +35,27 @@ public class JpaAccountRepository implements AccountRepository {
     }
 
     @Override
-    public ReleaseDashboard createReleaseDashboard(Long accountId, ReleaseDashboard dashboard) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @SuppressWarnings("unchecked")
+    public List<Account> findAllAccounts() {
+        Query query = em.createQuery("SELECT a FROM Account a");
+        List<Account> accounts = query.getResultList();
+        if (accounts.size() == 0) {
+            return null;
+        } else {
+            return accounts;
+        }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Account findAccountByName(String name) {
+        Query query = em.createQuery("SELECT a FROM Account a WHERE a.name=?1");
+        query.setParameter(1, name);
+        List<Account> accounts = query.getResultList();
+        if (accounts.isEmpty()) {
+            return null;
+        } else {
+            return accounts.get(0);
+        }
     }
 }

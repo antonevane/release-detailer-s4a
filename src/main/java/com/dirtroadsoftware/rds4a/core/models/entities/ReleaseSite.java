@@ -1,10 +1,17 @@
 package com.dirtroadsoftware.rds4a.core.models.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 /**
  * A MassDEP waste release site reported and monitored under the Massachusetts Contingency Plan.
  */
+@Entity
 public class ReleaseSite {
     /** Internal identifier */
+    @Id @GeneratedValue
     private Long id;
     /** One of four geographic regions in Massachusetts */
     private int region;
@@ -15,6 +22,7 @@ public class ReleaseSite {
      * Temporary relationship - ReleaseSite to ReleaseDashboard -- that will
      * be changed in a future version.
      */
+    @OneToOne
     private ReleaseDashboard dashboard;
 
 

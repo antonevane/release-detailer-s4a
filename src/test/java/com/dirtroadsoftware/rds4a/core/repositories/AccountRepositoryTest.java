@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -38,7 +41,26 @@ public class AccountRepositoryTest {
 
     @Test
     @Transactional
-    public void test() {
+    public void findAccount() {
         assertNotNull(repository.findAccount(account.getId()));
+    }
+
+    @Test
+    @Transactional
+    public void findAllAccounts() {
+        Account account2 = new Account();
+        account2.setName("Phil");
+        account2.setPassword("abcdefg");
+        repository.createAccount(account2);
+
+        List<Account> accounts = repository.findAllAccounts();
+        assertNotNull(accounts);
+        assertEquals("Wrong number of accounts", 2, accounts.size());
+    }
+
+    @Test
+    @Transactional
+    public void findAccountByNameExisting() {
+        assertNotNull(repository.findAccountByName(account.getName()));
     }
 }
