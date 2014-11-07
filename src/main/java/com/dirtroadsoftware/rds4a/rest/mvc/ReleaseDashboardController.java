@@ -15,6 +15,7 @@ import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardListResourc
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteResourceAsm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ import java.net.URI;
 public class ReleaseDashboardController {
     private ReleaseDashboardService releaseDashboardService;
 
+    @Autowired
     public ReleaseDashboardController(ReleaseDashboardService service) {
         this.releaseDashboardService = service;
     }

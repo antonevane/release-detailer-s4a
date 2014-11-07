@@ -12,6 +12,11 @@ public class ReleaseSiteList {
     private List<ReleaseSite> sites = new ArrayList<ReleaseSite>();
     private Long releaseDashboardId;
 
+    public ReleaseSiteList(Long releaseDashboardId, List<ReleaseSite> sites) {
+        this.releaseDashboardId = releaseDashboardId;
+        this.sites = sites;
+    }
+
     public List<ReleaseSite> getSites() {return sites;}
 
     public void setSites(List<ReleaseSite> sites) {this.sites = sites;}

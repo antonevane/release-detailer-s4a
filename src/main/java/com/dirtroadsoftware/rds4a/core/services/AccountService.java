@@ -2,6 +2,8 @@ package com.dirtroadsoftware.rds4a.core.services;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 
 /**
  * Service for finding and creating an {@link Account} and create a {@link ReleaseDashboard}.
@@ -19,4 +21,8 @@ public interface AccountService {
     public Account createAccount(Account account);
 
     public ReleaseDashboard createReleaseDashboard(Long accountId, ReleaseDashboard dashboard);
+
+    public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId);
+    public AccountList findAllAccounts();
+    public Account findByAccountName(String name);
 }

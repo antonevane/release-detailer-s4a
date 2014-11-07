@@ -2,8 +2,11 @@ package com.dirtroadsoftware.rds4a.rest.mvc;
 
 import com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseSiteNotFoundException;
+import com.dirtroadsoftware.rds4a.rest.exceptions.NotFoundException;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteResourceAsm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ public class ReleaseSiteController {
     private ReleaseSiteService service;
 
     /** Create controller for a service */
+    @Autowired
     public ReleaseSiteController(ReleaseSiteService service) {
         this.service = service;
     }
@@ -52,12 +56,16 @@ public class ReleaseSiteController {
     @RequestMapping(value="/{releaseSiteId}", method=RequestMethod.PUT)
     public ResponseEntity<ReleaseSiteResource> updateReleaseSite(@PathVariable Long releaseSiteId,
                                                                  @RequestBody ReleaseSiteResource sentReleaseSite) {
-        ReleaseSite updatedSite = service.updateReleaseSite(releaseSiteId, sentReleaseSite.toReleaseSite());
-        if (updatedSite != null) {
-            ReleaseSiteResource res = new ReleaseSiteResourceAsm().toResource(updatedSite);
-            return new ResponseEntity<ReleaseSiteResource>(res, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<ReleaseSiteResource>(HttpStatus.NOT_FOUND);
+        try {
+            ReleaseSite updatedSite = service.updateReleaseSite(releaseSiteId, sentReleaseSite.toReleaseSite());
+            if (updatedSite != null) {
+                ReleaseSiteResource res = new ReleaseSiteResourceAsm().toResource(updatedSite);
+                return new ResponseEntity<ReleaseSiteResource>(res, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<ReleaseSiteResource>(HttpStatus.NOT_FOUND);
+            }
+        } catch (ReleaseSiteNotFoundException ex) {
+            throw new NotFoundException(ex);
         }
     }
 }

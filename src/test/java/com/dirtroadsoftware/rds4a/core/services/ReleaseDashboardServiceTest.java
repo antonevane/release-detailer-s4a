@@ -1,0 +1,124 @@
+package com.dirtroadsoftware.rds4a.core.services;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import javax.transaction.Transactional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+
+/**
+ *
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:spring/business-config.xml")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class ReleaseDashboardServiceTest {
+    @Autowired AccountService accountService;
+    @Autowired ReleaseDashboardService dashboardService;
+
+    @Test
+    @Transactional
+    public void findAllReleaseDashboards() {
+        Account owner = new Account();
+        owner.setName("Jeff");
+        owner.setPassword("abcdefg");
+        owner = accountService.createAccount(owner);
+
+        ReleaseDashboard dashboard = new ReleaseDashboard();
+        dashboard.setOwner(owner);
+        dashboard.setTitle("Hello board");
+        dashboard = accountService.createReleaseDashboard(owner.getId(), dashboard);
+
+        ReleaseDashboardList dashboards = dashboardService.findAllReleaseDashboards();
+
+        assertNotNull(dashboards);
+        assertEquals(1, dashboards.getDashboards().size());
+    }
+
+
+    @Test
+    @Transactional
+    public void findReleaseDashboard() {
+        Account owner = new Account();
+        owner.setName("Jeff");
+        owner.setPassword("abcdefg");
+        owner = accountService.createAccount(owner);
+
+        ReleaseDashboard dashboard = new ReleaseDashboard();
+        dashboard.setOwner(owner);
+        dashboard.setTitle("Hello board");
+        dashboard = accountService.createReleaseDashboard(owner.getId(), dashboard);
+
+        ReleaseDashboard foundDashboard = dashboardService.findReleaseDashboard(dashboard.getId());
+
+        assertNotNull(foundDashboard);
+        assertEquals(dashboard.getTitle(), foundDashboard.getTitle());
+    }
+
+    @Test
+    @Transactional
+    public void createReleaseSite() {
+        Account owner = new Account();
+        owner.setName("Jeff");
+        owner.setPassword("abcdefg");
+        owner = accountService.createAccount(owner);
+
+        ReleaseDashboard dashboard = new ReleaseDashboard();
+        dashboard.setOwner(owner);
+        dashboard.setTitle("Hello board");
+        dashboard = accountService.createReleaseDashboard(owner.getId(), dashboard);
+
+        ReleaseSite site = new ReleaseSite();
+        site.setRegion(3);
+        site.setSite(12345);
+        site.setDashboard(dashboard);
+
+        ReleaseSite createdSite = dashboardService.createReleaseSite(dashboard.getId(), site);
+        assertNotNull(createdSite);
+        assertEquals(site.getSite(), createdSite.getSite());
+    }
+
+    @Test
+    @Transactional
+    public void findAllReleaseSites() {
+        Account owner = new Account();
+        owner.setName("Jeff");
+        owner.setPassword("abcdefg");
+        owner = accountService.createAccount(owner);
+
+        ReleaseDashboard dashboard = new ReleaseDashboard();
+        dashboard.setOwner(owner);
+        dashboard.setTitle("Hello board");
+        dashboard = accountService.createReleaseDashboard(owner.getId(), dashboard);
+
+        ReleaseSite site = new ReleaseSite();
+        site.setRegion(3);
+        site.setSite(12345);
+        site.setDashboard(dashboard);
+
+        ReleaseSite createdSite = dashboardService.createReleaseSite(dashboard.getId(), site);
+
+        ReleaseSiteList releaseSites = dashboardService.findAllReleaseSites(dashboard.getId());
+        assertNotNull(releaseSites);
+        assertEquals(1, releaseSites.getSites().size());
+        assertEquals(12345, releaseSites.getSites().get(0).getSite());
+
+    }
+}

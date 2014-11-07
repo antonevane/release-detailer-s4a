@@ -52,14 +52,14 @@ public class JpaReleaseDashboardRepository implements ReleaseDashboardRepository
 
     @Override
     @SuppressWarnings("unchecked")
-    public ReleaseDashboard findReleaseDashboardByAccount(Long accountId) {
+    public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId) {
         Query query = em.createQuery("SELECT rd FROM ReleaseDashboard rd WHERE rd.owner.id=?1");
         query.setParameter(1, accountId);
         List<ReleaseDashboard> dashboards = query.getResultList();
         if (dashboards.isEmpty()) {
             return null;
         } else {
-            return dashboards.get(0);
+            return new ReleaseDashboardList(dashboards);
         }
     }
 }

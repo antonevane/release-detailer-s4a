@@ -107,9 +107,8 @@ public class ReleaseDashboardControllerTest {
         site2.setDashboard(dashboard);
         sites.add(site2);
 
-        ReleaseSiteList siteList = new ReleaseSiteList();
+        ReleaseSiteList siteList = new ReleaseSiteList(dashboard.getId(), sites);
         siteList.setReleaseSiteId(4L);
-        siteList.setSites(sites);
 
         when(service.findAllReleaseSites(2L)).thenReturn(siteList);
 
@@ -157,8 +156,7 @@ public class ReleaseDashboardControllerTest {
         dashboards.add(dashboard1);
         dashboards.add(dashboard2);
 
-        ReleaseDashboardList dashboardList = new ReleaseDashboardList();
-        dashboardList.setDashboards(dashboards);
+        ReleaseDashboardList dashboardList = new ReleaseDashboardList(dashboards);
 
         when(service.findAllReleaseDashboards()).thenReturn(dashboardList);
 

@@ -6,6 +6,7 @@ import com.dirtroadsoftware.rds4a.core.services.AccountService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
+import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -18,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.is;
@@ -177,4 +180,54 @@ public class AccountControllerTest {
                 .andDo(print())
                 .andExpect(status().isConflict());
     }
+
+    @Test
+    public void findAllAccounts() throws Exception {
+        List<Account> accounts = new ArrayList<Account>();
+        Account owner1 = new Account();
+        owner1.setName("Jeff");
+        owner1.setPassword("abcdefg");
+        Account owner2 = new Account();
+        owner2.setName("Phil");
+        owner2.setPassword("gfedcba");
+        accounts.add(owner1);
+        accounts.add(owner2);
+
+        AccountList accountList = new AccountList(accounts);
+
+        when(service.findAllAccounts()).thenReturn(accountList);
+
+        mockMvc.perform(get("/rest/accounts"))
+                .andDo(print())
+                .andExpect(jsonPath("$.accounts[0].name", is(owner1.getName())))
+                .andExpect(jsonPath("$.accounts[0].password", nullValue()))
+                .andExpect(jsonPath("$.accounts[1].name", is(owner2.getName())))
+                .andExpect(jsonPath("$.accounts[1].password", nullValue()))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findByAccountNameExistingAccount() throws Exception {
+        Account owner = new Account();
+        owner.setId(3L);
+        owner.setName("Jeff");
+        owner.setPassword("abcdefg");
+
+        when(service.findByAccountName(any(String.class))).thenReturn(owner);
+
+        mockMvc.perform(get("/rest/accounts").param("name","Jeff"))
+                .andDo(print())
+                .andExpect(jsonPath("$.accounts[0].name", is(owner.getName())))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findByAccountNameNonExistingAccount() throws Exception {
+        when(service.findByAccountName(any(String.class))).thenThrow(new AccountDoesNotExistException());
+
+        mockMvc.perform(get("/rest/accounts").param("name","Jeff"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
 }

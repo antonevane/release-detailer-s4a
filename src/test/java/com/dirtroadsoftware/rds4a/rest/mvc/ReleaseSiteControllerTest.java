@@ -2,6 +2,7 @@ package com.dirtroadsoftware.rds4a.rest.mvc;
 
 import com.dirtroadsoftware.rds4a.core.services.ReleaseSiteService;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseSiteNotFoundException;
 import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseSiteController;
 import org.junit.Before;
 import org.junit.Test;
@@ -123,7 +124,7 @@ public class ReleaseSiteControllerTest {
 
     @Test
     public void updateNonExistingReleaseSite() throws Exception {
-        when(service.updateReleaseSite(eq(1L), any(ReleaseSite.class))).thenReturn(null);
+        when(service.updateReleaseSite(eq(1L), any(ReleaseSite.class))).thenThrow(new ReleaseSiteNotFoundException());
 
         mockMvc.perform(put("/rest/release-sites/1")
                 .content("{\"region\":2,\"site\":12345}")
