@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -71,6 +73,9 @@ public class ReleaseSiteRepositoryTest {
         site2.setDashboard(dashboard);
         siteRepository.createReleaseSite(site2);
 
+        List<ReleaseSite> foundSites = siteRepository.findByReleaseDashboardId(dashboard.getId());
+        assertNotNull(foundSites);
+        assertEquals(2, foundSites.size());
     }
 
     @Test

@@ -46,7 +46,7 @@ public class JpaReleaseSiteRepository implements ReleaseSiteRepository {
     @Override
     @SuppressWarnings("unchecked")
     public List<ReleaseSite> findByReleaseDashboardId(Long releaseDashboardId) {
-        Query query = em.createQuery("SELECT rs FROM ReleaseSite rs WHERE rs.id=?1");
+        Query query = em.createQuery("SELECT rs FROM ReleaseSite rs, ReleaseDashboard rd WHERE rs.dashboard=rd AND rd.id=?1");
         query.setParameter(1, releaseDashboardId);
         List<ReleaseSite> releaseSites = query.getResultList();
         return releaseSites;

@@ -22,7 +22,10 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
@@ -207,6 +210,18 @@ public class AccountControllerTest {
     }
 
     @Test
+    public void findAllAccountsNoAccounts() throws Exception {
+        AccountList accountList = new AccountList(new ArrayList<Account>());
+
+        when(service.findAllAccounts()).thenReturn(accountList);
+
+        mockMvc.perform(get("/rest/accounts"))
+                .andDo(print())
+                .andExpect(jsonPath("$.accounts", hasSize(0)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
     public void findByAccountNameExistingAccount() throws Exception {
         Account owner = new Account();
         owner.setId(3L);
@@ -225,7 +240,7 @@ public class AccountControllerTest {
     public void findByAccountNameNonExistingAccount() throws Exception {
         when(service.findByAccountName(any(String.class))).thenThrow(new AccountDoesNotExistException());
 
-        mockMvc.perform(get("/rest/accounts").param("name","Jeff"))
+        mockMvc.perform(get("/rest/accounts").param("name", "Jeff"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }

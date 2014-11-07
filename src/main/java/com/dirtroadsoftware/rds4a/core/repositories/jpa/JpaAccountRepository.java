@@ -39,11 +39,7 @@ public class JpaAccountRepository implements AccountRepository {
     public List<Account> findAllAccounts() {
         Query query = em.createQuery("SELECT a FROM Account a");
         List<Account> accounts = query.getResultList();
-        if (accounts.size() == 0) {
-            return null;
-        } else {
-            return accounts;
-        }
+        return accounts;
     }
 
     @Override
