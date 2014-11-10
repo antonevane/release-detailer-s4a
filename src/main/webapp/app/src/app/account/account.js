@@ -1,5 +1,6 @@
 angular.module( 'ngBoilerplate.account', [
-    'ui.router'
+    'ui.router',
+        'ngResource'
 ])
 
 .config(function($stateProvider) {
@@ -28,7 +29,7 @@ angular.module( 'ngBoilerplate.account', [
     .factory('sessionService', function() {
         var session = {};
         session.login = function(data) {
-            alert("User logged in with credentials " + data.name + " and " + data.password)
+            alert("User logged in with credentials " + data.name + " and " + data.password);
             localStorage.setItem("session", data);
         };
         session.logout = function(data) {
@@ -36,19 +37,55 @@ angular.module( 'ngBoilerplate.account', [
         };
         session.isLoggedIn = function(data) {
             return localStorage.getItem("session") !== null;
-        }
+        };
         return session;
     })
-    .controller("LoginCtrl", function($scope, sessionService, $state) {
+    .factory('accountService', function($resource) {
+        var service = {};
+        service.register = function(account, success, failure) {
+            var Account = $resource("/release-detailer-s4a/rest/accounts");
+            Account.save({}, account, success, failure);
+        };
+        service.userExists = function(account, success, failure) {
+            var Account = $resource("/release-detailer-s4a/rest/accounts");
+            var data = Account.get({name:account.name},
+                function() {
+                    var accounts = data.accounts;
+                    if (accounts.length !== 0) {
+                        success(accounts[0]);
+                    } else {
+                        failure();
+                    }
+                },
+                failure
+            );
+        };
+        return service;
+    })
+    .controller("LoginCtrl", function($scope, sessionService, $state, accountService) {
     $scope.login = function() {
-        sessionService.login($scope.account);
-        $state.go("home");
+        accountService.userExists($scope.account,
+            function(account) {
+                sessionService.login(account);
+                $state.go("home");
+            },
+            function() {
+                alert("User does not exist: " + $scope.account.name);
+            }
+        );
     };
 })
-    .controller("RegisterCtrl", function($scope, sessionService, $state) {
+    .controller("RegisterCtrl", function($scope, sessionService, $state, accountService) {
         $scope.register = function() {
-            sessionService.login($scope.account);
-            $state.go("home");
+            accountService.register($scope.account,
+                function(returnedData) {
+                    sessionService.login(returnedData);
+                    $state.go("home");
+                },
+                function() {
+                    alert("Error registering user");
+                }
+            );
         };
 })
 ;
