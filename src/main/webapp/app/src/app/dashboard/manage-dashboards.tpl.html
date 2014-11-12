@@ -1,0 +1,28 @@
+<div class="row no-gutters">
+    <h1>Release Dashboard Management for {{name}}</h1>
+</div>
+<div class="row no-gutters">
+    <div class="input-group component-group">
+        <input type="text" class="form-control" ng-model="newDashboardName" placeholder="Release Dashboard Title"/>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="createDashboard(newDashboardName)">Create New Dashboard!</button>
+        </span>
+    </div>
+</div>
+<div class="row no-gutters">
+    <table class="table table-striped">
+        <th>Release Dashboard Name</th>
+        <th>Action</th>
+        <tr ng-repeat="dashboard in dashboards">
+            <td>{{dashboard.title}}</td>
+            <td>
+                <a ui-sref="manageDashboards({accountId: account.rid})" class="btn btn-large btn-default">
+                    <i class="fa fa-cog"></i> Manage
+                </a>
+                <a ui-sref="deleteDashboard({dashboardId: dashboard.rid})" class="btn btn-large btn-default">
+                    <i class="fa fa-trash-o"></i> Delete
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>

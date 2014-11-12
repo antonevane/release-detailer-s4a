@@ -5,6 +5,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import com.dirtroadsoftware.rds4a.core.repositories.AccountRepository;
 import com.dirtroadsoftware.rds4a.core.repositories.ReleaseDashboardRepository;
 import com.dirtroadsoftware.rds4a.core.services.AccountService;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
 import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
@@ -12,6 +13,7 @@ import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import javax.transaction.Transactional;
 
 /**
@@ -57,7 +59,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId) {
-        return dashboardRepository.findReleaseDashboardsByAccount(accountId);
+        Account account = findAccount(accountId);
+        if (account == null) {
+            throw new AccountDoesNotExistException();
+        }
+        return new ReleaseDashboardList(dashboardRepository.findReleaseDashboardsByAccount(accountId));
     }
 
     @Override

@@ -22,6 +22,7 @@ public class ReleaseDashboardResourceAsm extends ResourceAssemblerSupport<Releas
     public ReleaseDashboardResource toResource(ReleaseDashboard dashboard) {
         ReleaseDashboardResource resource = new ReleaseDashboardResource();
         resource.setTitle(dashboard.getTitle());
+        resource.setRid(dashboard.getId());
         resource.add(linkTo(ReleaseDashboardController.class).slash(dashboard.getId()).withSelfRel());
         resource.add(linkTo(ReleaseDashboardController.class).slash(dashboard.getId()).slash("release-sites").withRel("release-sites"));
         if (dashboard.getOwner() != null) {

@@ -9,6 +9,15 @@ import org.springframework.hateoas.ResourceSupport;
 public class ReleaseSiteResource extends ResourceSupport {
     private int region;
     private int site;
+    private Long rid;
+
+    public Long getRid() {
+        return rid;
+    }
+
+    public void setRid(Long rid) {
+        this.rid = rid;
+    }
 
     public int getRegion() {
         return region;

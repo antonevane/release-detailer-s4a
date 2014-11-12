@@ -13,5 +13,5 @@ public interface ReleaseDashboardRepository {
     public List<ReleaseDashboard> findAllReleaseDashboards();
     public ReleaseDashboard findReleaseDashboard(Long releaseDashboardId);
     public ReleaseDashboard findReleaseDashboardByTitle(String title);
-    public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId);
+    public List<ReleaseDashboard> findReleaseDashboardsByAccount(Long accountId);
 }

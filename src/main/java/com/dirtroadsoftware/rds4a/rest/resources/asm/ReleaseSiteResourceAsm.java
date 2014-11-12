@@ -22,6 +22,7 @@ public class ReleaseSiteResourceAsm extends ResourceAssemblerSupport<ReleaseSite
         ReleaseSiteResource res = new ReleaseSiteResource();
         res.setRegion(site.getRegion());
         res.setSite(site.getSite());
+        res.setRid(site.getId());
         Link link = linkTo(ReleaseSiteController.class).slash(site.getId()).withSelfRel();
         res.add(link.withSelfRel());
         link = linkTo(ReleaseSiteController.class).slash("dashboards").withSelfRel();

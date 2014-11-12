@@ -13,6 +13,8 @@ public class AccountResource extends ResourceSupport {
 
     private String password;
 
+    private Long rid;
+
     public String getName() {
         return name;
     }
@@ -29,6 +31,14 @@ public class AccountResource extends ResourceSupport {
     @JsonProperty
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getRid() {
+        return rid;
+    }
+
+    public void setRid(Long rid) {
+        this.rid = rid;
     }
 
     /** Creates a {@link Account} for this resource. */

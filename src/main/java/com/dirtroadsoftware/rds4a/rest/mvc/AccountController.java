@@ -7,14 +7,17 @@ import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistEx
 import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
 import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import com.dirtroadsoftware.rds4a.rest.exceptions.BadRequestException;
 import com.dirtroadsoftware.rds4a.rest.exceptions.ConflictException;
 import com.dirtroadsoftware.rds4a.rest.exceptions.NotFoundException;
 import com.dirtroadsoftware.rds4a.rest.resources.AccountListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.AccountResource;
+import com.dirtroadsoftware.rds4a.rest.resources.ReleaseDashboardListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseDashboardResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.AccountListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.AccountResourceAsm;
+import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
@@ -105,5 +108,16 @@ public class AccountController {
             }
         }
         return new ResponseEntity<AccountListResource>(new AccountListResourceAsm().toResource(accounts), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/{accountId}/dashboards", method = RequestMethod.GET)
+    public ResponseEntity<ReleaseDashboardListResource> findAllDashboards(@PathVariable Long accountId) {
+        try {
+            ReleaseDashboardList dashboardsList = service.findReleaseDashboardsByAccount(accountId);
+            ReleaseDashboardListResource resource = new ReleaseDashboardListResourceAsm().toResource(dashboardsList);
+            return new ResponseEntity<ReleaseDashboardListResource>(resource, HttpStatus.OK);
+        } catch (AccountDoesNotExistException ex) {
+            throw new NotFoundException(ex);
+        }
     }
 }

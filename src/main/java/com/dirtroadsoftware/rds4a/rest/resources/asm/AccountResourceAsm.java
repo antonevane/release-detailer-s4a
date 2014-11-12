@@ -8,6 +8,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  *
@@ -22,7 +23,9 @@ public class AccountResourceAsm extends ResourceAssemblerSupport<Account, Accoun
         AccountResource resource = new AccountResource();
         resource.setName(account.getName());
         resource.setPassword(account.getPassword());
+        resource.setRid(account.getId());
         resource.add(linkTo(AccountController.class).slash(account.getId()).withSelfRel());
+        resource.add(linkTo(methodOn(AccountController.class).findAllDashboards(account.getId())).withRel("dashboards"));
         return resource;
     }
 }

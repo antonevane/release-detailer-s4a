@@ -7,6 +7,7 @@ import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistEx
 import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
 import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -245,4 +246,41 @@ public class AccountControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void findAllDashboardsExistingAccount() throws Exception {
+        Account owner = new Account();
+        owner.setId(3L);
+
+        ReleaseDashboard dashboard = new ReleaseDashboard();
+        dashboard.setOwner(owner);
+        dashboard.setTitle("Hello board");
+        dashboard.setId(2L);
+
+        ReleaseDashboard dashboard2 = new ReleaseDashboard();
+        dashboard2.setOwner(owner);
+        dashboard2.setTitle("Hello Again board");
+        dashboard2.setId(3L);
+
+        List<ReleaseDashboard> dashboards = new ArrayList<ReleaseDashboard>();
+        dashboards.add(dashboard);
+        dashboards.add(dashboard2);
+
+        ReleaseDashboardList dashboardsList = new ReleaseDashboardList(dashboards);
+        when(service.findReleaseDashboardsByAccount(eq(3L))).thenReturn(dashboardsList);
+
+        mockMvc.perform(get("/rest/accounts/3/dashboards"))
+                .andDo(print())
+                .andExpect(jsonPath("$.dashboards[0].title", is("Hello board")))
+                .andExpect(jsonPath("$.dashboards[1].title", is("Hello Again board")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findAllDashboardsNonExistingAccount() throws Exception {
+        when(service.findReleaseDashboardsByAccount(any(Long.class))).thenThrow(new AccountDoesNotExistException());
+
+        mockMvc.perform(get("/rest/accounts/3/dashboards"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
 }
