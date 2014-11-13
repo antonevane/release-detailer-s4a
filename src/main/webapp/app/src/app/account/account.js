@@ -44,8 +44,15 @@ angular.module( 'ngBoilerplate.account', [
 .factory('sessionService', function($http, $base64) {
         var session = {};
         session.login = function(data) {
-            alert("User logged in with credentials " + data.name + " and " + data.password);
-            localStorage.setItem("session", data);
+            return $http.post("/release-detailer-s4a/login", "username=" + data.name +
+               "&password=" + data.password, {
+                   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(data) {
+                alert("login successful");
+                localStorage.setItem("session", {}); // May be a better way using cookies from AngularJS
+            }, function(data) {
+                alert("error logging in");
+            });
         };
         session.logout = function(data) {
             localStorage.removeItem("session");
@@ -94,8 +101,9 @@ angular.module( 'ngBoilerplate.account', [
     $scope.login = function() {
         accountService.userExists($scope.account,
             function(account) {
-                sessionService.login(account);
-                $state.go("home");
+                sessionService.login($scope.account).then(function() {
+                    $state.go("home");
+                });
             },
             function() {
                 alert("User does not exist: " + $scope.account.name);
@@ -107,8 +115,9 @@ angular.module( 'ngBoilerplate.account', [
         $scope.register = function() {
             accountService.register($scope.account,
                 function(returnedData) {
-                    sessionService.login(returnedData);
-                    $state.go("home");
+                    sessionService.login($scope.account).then(function () {
+                        $state.go("home");
+                    });
                 },
                 function() {
                     alert("Error registering user");
