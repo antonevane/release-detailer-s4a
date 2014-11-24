@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -33,9 +34,9 @@ public class MaReleaseRepositoryTest {
     public void findMaReleaseByRegionSite() throws Exception {
         MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
         assertNotNull(release);
-        assertEquals(release.getRegion(), 1);
-        assertEquals(release.getSite(), 12345);
-        assertEquals(release.getRtn(), "1-0012345");
+        assertEquals(1, release.getRegion());
+        assertEquals(12345, release.getSite());
+        assertEquals("1-0012345", release.getRtn());
     }
 
     @Test
@@ -43,7 +44,7 @@ public class MaReleaseRepositoryTest {
     public void findTownsWithReleasesByRegion() throws Exception {
         List<String> towns = repository.findTownsWithReleasesByRegion(2);
         assertNotNull(towns);
-        assertEquals(towns.size(), 77);
+        assertEquals(77, towns.size());
     }
 
     @Test
@@ -51,7 +52,7 @@ public class MaReleaseRepositoryTest {
     public void findMaReleasesByTown() throws Exception {
         List<MaRelease> releases = repository.findMaReleasesByTown("ORANGE");
         assertNotNull(releases);
-        assertEquals(releases.size(), 69);
+        assertEquals(69, releases.size());
     }
 
     @Test
@@ -73,4 +74,20 @@ public class MaReleaseRepositoryTest {
             }
         }
     }
+
+    @Test
+    @Transactional
+    public void findExistingMaRelease() throws Exception {
+        MaRelease release = repository.findMaRelease(1L);
+        assertNotNull(release);
+        assertEquals("ADAMS LANDFILL", release.getSiteName());
+    }
+
+    @Test
+    @Transactional
+    public void findNonExistingMaRelease() throws Exception {
+        MaRelease release = repository.findMaRelease(0L);
+        assertNull(release);
+    }
+
 }

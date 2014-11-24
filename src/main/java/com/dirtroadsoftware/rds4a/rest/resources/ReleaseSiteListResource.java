@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Resource for the list of release sites
  */
-public class ReleaseSiteListResource extends ResourceSupport {
+public class  ReleaseSiteListResource extends ResourceSupport {
     private List<ReleaseSiteResource> sites;
 
     public List<ReleaseSiteResource> getSites() {
