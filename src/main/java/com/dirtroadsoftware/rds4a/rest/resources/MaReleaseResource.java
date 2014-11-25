@@ -12,6 +12,7 @@ public class MaReleaseResource extends ResourceSupport {
     private int site;
     private String siteName;
     private String address;
+    private String town;
     private Long rid;
     private String rtn;
 
@@ -63,6 +64,14 @@ public class MaReleaseResource extends ResourceSupport {
         this.rtn = rtn;
     }
 
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
     /** Creates a {@link com.dirtroadsoftware.rds4a.core.models.entities.MaRelease} for this resource. */
     public MaRelease toMaRelease() {
         MaRelease maRelease = new MaRelease();
@@ -70,6 +79,7 @@ public class MaReleaseResource extends ResourceSupport {
         maRelease.setSite(getSite());
         maRelease.setSiteName(getSiteName());
         maRelease.setAddress(getAddress());
+        maRelease.setTown(getTown());
         maRelease.setRtn(getRtn());
         return maRelease;
     }

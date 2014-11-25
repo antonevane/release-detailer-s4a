@@ -27,6 +27,7 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         res.setSite(site.getSite());
         res.setSiteName(site.getSiteName());
         res.setAddress(site.getAddress());
+        res.setTown(site.getTown());
         res.setRid(site.getId());
         res.setRtn(site.getRtn());
         Link link = linkTo(MaReleaseController.class).slash(site.getId()).withSelfRel();

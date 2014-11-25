@@ -13,10 +13,22 @@ angular.module( 'ngBoilerplate.release', [
                     }
                 },
                 data : {
-                    pageTitle : "Search Releases",
-                    rtn : ""
+                    pageTitle : "Search Releases"
                 }
-            });
+            })
+//            .state('viewRelease', {
+//                url:'/releases/ma?rtn',
+//                views: {
+//                    'main': {
+//                        templateUrl:'release/view-release.tpl.html',
+//                        controller:'ViewReleaseCtrl'
+//                    }
+//                },
+//                data: {
+//                    pageTitle : "View Release"
+//                }
+//            })
+        ;
     })
     .factory('releaseService', function($resource) {
         var service = {};
@@ -25,8 +37,7 @@ angular.module( 'ngBoilerplate.release', [
             var Release = $resource("/release-detailer-s4a/rest/releases/id/:paramReleaseId");
             return Release.get({paramReleaseId : releaseId}).$promise;
         };
-        service.getMaReleaseByRtn = function(rtn) {
-            console.log("rtn is", rtn);
+        service.getMaReleaseByRtn = function(rtn, success, failure) {
             var Release = $resource("/release-detailer-s4a/rest/releases/ma/:paramRtn");
             return Release.get({paramRtn : rtn}).$promise;
         };
@@ -35,7 +46,23 @@ angular.module( 'ngBoilerplate.release', [
 
     .controller("ReleaseSearchCtrl", function($scope, releaseService) {
         $scope.getMaReleaseByRtn = function(rtn) {
-            releaseService.getMaReleaseByRtn(rtn);
+            // Get the $promise from the service to fetch the release information using the RTN
+            releaseService.getMaReleaseByRtn(rtn).then(
+                function(data) {
+                    console.log("ReleaseSearchCtrl: getMaReleaseByRtn: data", data);
+                    $scope.release2 = data;
+                },
+                function() {
+                    console.log("Unable to get release information for " + $scope.rtn);
+                    $scope.release2 = {};
+                });
         };
+        // Default value
+        $scope.rtn = "1-0012345";
     })
+//    .controller("ViewReleaseCtrl", function($scope, releaseService) {
+//        $scope.testString = "This is a test string";
+//        console.log("ViewReleaseCtrl: scope", $scope);
+//        console.log("release in scope: release", $scope.release);
+//    })
 ;
