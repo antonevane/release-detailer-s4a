@@ -50,15 +50,16 @@ angular.module( 'ngBoilerplate.release', [
             releaseService.getMaReleaseByRtn(rtn).then(
                 function(data) {
                     console.log("ReleaseSearchCtrl: getMaReleaseByRtn: data", data);
-                    $scope.release2 = data;
+                    // Convert to array of releases so we can use ng-repeat in the table
+                    $scope.releases = [data];
                 },
                 function() {
                     console.log("Unable to get release information for " + $scope.rtn);
-                    $scope.release2 = {};
+                    $scope.releases = [];
                 });
         };
         // Default value
-        $scope.rtn = "1-0012345";
+//        $scope.rtn = "1-0012345";
     })
 //    .controller("ViewReleaseCtrl", function($scope, releaseService) {
 //        $scope.testString = "This is a test string";

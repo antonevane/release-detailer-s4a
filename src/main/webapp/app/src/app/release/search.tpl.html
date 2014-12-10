@@ -1,6 +1,6 @@
 <div class="row">
     <div class="input-group component-group">
-        <input type="text" class="form-control" ng-model="rtn" placeholder="E.g. 1-12345, Release Tracking Number (RTN)"/>
+        <input type="text" class="form-control" ng-model="rtn" ng-keyup="$event.keyCode == 13 && getMaReleaseByRtn(rtn)" placeholder="E.g. 1-12345, Release Tracking Number (RTN)"/>
         <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-click="getMaReleaseByRtn(rtn)">Search</button>
         </span>
@@ -10,11 +10,13 @@
         <th>Site</th>
         <th>Address</th>
         <th>Town</th>
-        <tr>
-            <td>{{release2.rtn}}</td>
-            <td>{{release2.siteName}}</td>
-            <td>{{release2.address}}</td>
-            <td>{{release2.town}}</td>
+        <th>Actions</th>
+        <tr ng-repeat="release in releases">
+            <td>{{release.rtn}}</td>
+            <td>{{release.siteName}}</td>
+            <td>{{release.address}}</td>
+            <td>{{release.town}}</td>
+            <td><button class="btn btn-default" type="button" ng-click="getMaReleaseByRtn(rtn)">Details</button></td>
         </tr>
     </table>
 </div>
