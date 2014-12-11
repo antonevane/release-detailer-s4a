@@ -1,8 +1,12 @@
 package com.dirtroadsoftware.rds4a.rest.resources;
 
+import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import org.springframework.hateoas.ResourceSupport;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Exposes {@link com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite} as a resource that can be accessed using Spring HATEOAS components.
@@ -15,6 +19,12 @@ public class MaReleaseResource extends ResourceSupport {
     private String town;
     private Long rid;
     private String rtn;
+    private String zipCode;
+    private Boolean active;
+    private String raoClass;
+    private Integer phase;
+    private Date complianceStatusDate;
+    private Date notificationDate;
 
     public Long getRid() {
         return rid;
@@ -82,5 +92,53 @@ public class MaReleaseResource extends ResourceSupport {
         maRelease.setTown(getTown());
         maRelease.setRtn(getRtn());
         return maRelease;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setRaoClass(String raoClass) {
+        this.raoClass = raoClass;
+    }
+
+    public String getRaoClass() {
+        return raoClass;
+    }
+
+    public void setPhase(Integer phase) {
+        this.phase = phase;
+    }
+
+    public Integer getPhase() {
+        return phase;
+    }
+
+    public void setComplianceStatusDate(Date complianceStatusDate) {
+        this.complianceStatusDate = complianceStatusDate;
+    }
+
+    public Date getComplianceStatusDate() {
+        return complianceStatusDate;
+    }
+
+    public void setNotificationDate(Date notificationDate) {
+        this.notificationDate = notificationDate;
+    }
+
+    public Date getNotificationDate() {
+        return notificationDate;
     }
 }
