@@ -16,25 +16,33 @@ angular.module( 'ngBoilerplate.release', [
                     pageTitle : "Search Releases"
                 }
             })
-//            .state('viewRelease', {
-//                url:'/releases/ma?rtn',
-//                views: {
-//                    'main': {
-//                        templateUrl:'release/view-release.tpl.html',
-//                        controller:'ViewReleaseCtrl'
-//                    }
-//                },
-//                data: {
-//                    pageTitle : "View Release"
-//                }
-//            })
+            .state('releaseDetails', {
+                url:'/releases/{rtn}',
+                views: {
+                    'main': {
+                        templateUrl:'release/details.tpl.html',
+                        controller:'ReleaseDetailsCtrl'
+                    }
+                },
+                resolve: {
+                    release: function(releaseService, $stateParams) {
+                        console.log("releaseDetails.resolve: $stateParams.rtn = " + $stateParams.rtn);
+                        returnValue = releaseService.getMaReleaseByRtn($stateParams.rtn);
+                        console.log("releaseDetails.resolve: returnValue = ...");
+                        console.log(returnValue);
+                        return returnValue;
+                    }
+                },
+                data: {
+                    pageTitle : "Release Details {{release.rtn}}"
+                }
+            })
         ;
     })
     .factory('releaseService', function($resource) {
         var service = {};
         service.getMaReleaseById = function(releaseId) {
-            alert("getMaReleaseById " + releaseId);
-            var Release = $resource("/release-detailer-s4a/rest/releases/id/:paramReleaseId");
+            var Release = $resource("/release-detailer-s4a/rest/releases/:paramReleaseId");
             return Release.get({paramReleaseId : releaseId}).$promise;
         };
         service.getMaReleaseByRtn = function(rtn, success, failure) {
@@ -51,19 +59,33 @@ angular.module( 'ngBoilerplate.release', [
                 function(data) {
                     console.log("ReleaseSearchCtrl: getMaReleaseByRtn: data", data);
                     // Convert to array of releases so we can use ng-repeat in the table
-                    $scope.releases = [data];
+                    $scope.release = data;
                 },
                 function() {
                     console.log("Unable to get release information for " + $scope.rtn);
-                    $scope.releases = [];
+                    $scope.release = null;
+                });
+
+        };
+        $scope.getMaReleaseById= function(rid) {
+            // Get the $promise from the service to fetch the release information using the internal release ID
+            releaseService.getMaReleaseById(rid).then(
+                function(data) {
+                    console.log("ReleaseSearchCtrl: getMaReleaseById: data", data);
+                    // Convert to array of releases so we can use ng-repeat in the table
+                    $scope.release = data;
+                },
+                function() {
+                    console.log("Unable to get release information for " + $scope.rtn);
+                    $scope.release = null;
                 });
         };
         // Default value
 //        $scope.rtn = "1-0012345";
     })
-//    .controller("ViewReleaseCtrl", function($scope, releaseService) {
-//        $scope.testString = "This is a test string";
-//        console.log("ViewReleaseCtrl: scope", $scope);
-//        console.log("release in scope: release", $scope.release);
-//    })
+    .controller("ReleaseDetailsCtrl", function($scope, releaseService, release) {
+        console.log("release as argument to controller: release = ", release);
+        $scope.release = release;
+
+    })
 ;

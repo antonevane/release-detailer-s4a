@@ -11,12 +11,16 @@
         <th>Address</th>
         <th>Town</th>
         <th>Actions</th>
-        <tr ng-repeat="release in releases">
+        <tr>
             <td>{{release.rtn}}</td>
             <td>{{release.siteName}}</td>
             <td>{{release.address}}</td>
             <td>{{release.town}}</td>
-            <td><button class="btn btn-default" type="button" ng-click="getMaReleaseByRtn(rtn)">Details</button></td>
+            <td>
+                <a ui-sref="releaseDetails({rtn:release.rtn})" class="btn btn-large btn-default" ng-show="release != null">
+                    <i class="fa fa-info-circle"></i> Details
+                </a>
+            </td>
         </tr>
     </table>
 </div>
