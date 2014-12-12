@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface MaActionRepository {
     public List<MaAction> findActionsByMaRelease(MaRelease release);
+    public MaAction findMaAction(long actionId);
 }

@@ -30,7 +30,8 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
 
     @Override
     public MaRelease findMaRelease(Long id) {
-        return em.find(MaRelease.class, id);
+        MaRelease maRelease = em.find(MaRelease.class, id);
+        return maRelease;
     }
 
     @Override

@@ -35,9 +35,6 @@ public class MaReleaseControllerTest {
     @Mock
     private MaReleaseService releaseService;
 
-    @Mock
-    private MaActionService actionService;
-
     /** Controller where mock service is injected */
     @InjectMocks
     private MaReleaseController controller;

@@ -21,9 +21,12 @@ public class MaAction {
     private Date date;
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="release_id") // 'release_id' column in ma_release_dev table
+    @ManyToOne
+    @JoinColumn(name="release_id", referencedColumnName = "id") // 'release_id' column in ma_action_ table
+                                                                // references 'id' column in ma_release_dev
     private MaRelease release;
+
+    private String rtn;
 
     public Long getId() {
         return id;
@@ -63,5 +66,13 @@ public class MaAction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getRtn() {
+        return rtn;
+    }
+
+    public void setRtn(String rtn) {
+        this.rtn = rtn;
     }
 }

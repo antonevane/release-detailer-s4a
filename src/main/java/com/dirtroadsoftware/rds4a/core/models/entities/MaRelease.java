@@ -1,7 +1,10 @@
 package com.dirtroadsoftware.rds4a.core.models.entities;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -66,9 +69,20 @@ public class MaRelease {
     @Column(name="town_longitude")
     private Double townLongitude;
 
+    private String location;
+
     @OneToMany(mappedBy = "release")
     @OrderBy("date ASC")
     private List<MaAction> actions;
+
+    @Formula("(SELECT COUNT(a.id) FROM ma_action_dev a WHERE a.release_id = id)")
+    private int numActions;
+
+    // TODO add numChemicals
+//    @Formula("(SELECT COUNT(c.id) FROM ma_chemical_dev c WHERE c.release_id = id)")
+//    private int numChemicals;
+
+    // TODO add sources string
 
     /** Get the site's region */
     public int getRegion() {
@@ -228,4 +242,19 @@ public class MaRelease {
         this.actions = actions;
     }
 
+    public int getNumActions() {
+        return numActions;
+    }
+
+    public void setNumActions(int numActions) {
+        this.numActions = numActions;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

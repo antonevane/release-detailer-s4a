@@ -38,4 +38,11 @@ public class MaReleaseServiceImpl implements MaReleaseService {
         }
         return releaseRepository.findMaReleaseByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
     }
+
+    @Override
+    public MaRelease findMaReleaseWithActionsById(Long id) {
+        MaRelease release = findMaRelease(id);
+        release.getActions().isEmpty();
+        return release;
+    }
 }

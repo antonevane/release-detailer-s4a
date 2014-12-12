@@ -31,14 +31,10 @@ public class MaReleaseController {
     /** Service exposed by this web controller */
     private MaReleaseService releaseService;
 
-    /** Service for retrieving MaActions for releases */
-    private MaActionService actionService;
-
     /** Create controller for a service */
     @Autowired
-    public MaReleaseController(MaReleaseService releaseService, MaActionService actionService) {
+    public MaReleaseController(MaReleaseService releaseService) {
         this.releaseService = releaseService;
-        this.actionService = actionService;
     }
 
     /** Finds a {@link com.dirtroadsoftware.rds4a.core.models.entities.MaRelease} by id */
@@ -71,7 +67,7 @@ public class MaReleaseController {
     @RequestMapping(value="/{releaseId}/actions", method = RequestMethod.GET)
     @PreAuthorize("permitAll")
     public ResponseEntity<MaActionListResource> findAllActions(@PathVariable Long releaseId) {
-        MaRelease release = releaseService.findMaRelease(releaseId);
+        MaRelease release = releaseService.findMaReleaseWithActionsById(releaseId);
         if (release == null) {
             throw new NotFoundException();
         }

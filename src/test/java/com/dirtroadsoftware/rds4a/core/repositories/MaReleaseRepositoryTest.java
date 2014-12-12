@@ -83,6 +83,7 @@ public class MaReleaseRepositoryTest {
         assertEquals("ADAMS LANDFILL", release.getSiteName());
     }
 
+
     @Test
     @Transactional
     public void findNonExistingMaRelease() throws Exception {
@@ -90,4 +91,15 @@ public class MaReleaseRepositoryTest {
         assertNull(release);
     }
 
+    @Test
+    public void getNumActions() throws Exception {
+        MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
+        assertEquals(6, release.getNumActions());
+    }
+
+//    @Test
+//    public void getNumChemicals() throws Exception {
+//        MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
+//        assertEquals(6, release.getNumActions());
+//    }
 }

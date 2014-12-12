@@ -25,6 +25,7 @@ public class MaReleaseResource extends ResourceSupport {
     private Integer phase;
     private Date complianceStatusDate;
     private Date notificationDate;
+    private int numActions;
 
     public Long getRid() {
         return rid;
@@ -140,5 +141,13 @@ public class MaReleaseResource extends ResourceSupport {
 
     public Date getNotificationDate() {
         return notificationDate;
+    }
+
+    public void setNumActions(int numActions) {
+        this.numActions = numActions;
+    }
+
+    public int getNumActions() {
+        return numActions;
     }
 }

@@ -43,6 +43,8 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         res.setRaoClass(release.getRaoClass());
         res.setPhase(release.getPhase());
 
+        res.setNumActions(release.getNumActions());
+
         // Dates
         res.setComplianceStatusDate(release.getStatusDate());
         res.setNotificationDate(release.getNotification());

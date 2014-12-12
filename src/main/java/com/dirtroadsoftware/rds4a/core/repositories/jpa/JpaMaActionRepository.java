@@ -21,4 +21,9 @@ public class JpaMaActionRepository implements MaActionRepository {
     public List<MaAction> findActionsByMaRelease(MaRelease release) {
         return null;
     }
+
+    @Override
+    public MaAction findMaAction(long actionId) {
+        return em.find(MaAction.class, actionId);
+    }
 }

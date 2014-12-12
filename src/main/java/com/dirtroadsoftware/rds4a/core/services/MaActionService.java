@@ -8,5 +8,5 @@ import java.util.List;
  *
  */
 public interface MaActionService {
-    List<MaAction> findActionsByReleaseId(Long releaseId);
+    public MaAction findActionById(Long actionId);
 }

@@ -29,14 +29,14 @@ public class MaActionResourceAsm extends ResourceAssemblerSupport<MaAction, MaAc
         res.setRid(action.getId());
         res.setAction(action.getAction());
         res.setDate(DATE_FORMAT.format(action.getDate()));
-        res.setRtn(action.getRelease().getRtn());
+        res.setRtn(action.getRtn());
         res.setStatus(action.getStatus());
 
         Link selfLink = linkTo(MaActionController.class).slash(action.getId()).withSelfRel();
         res.add(selfLink);
 
         // Link to release
-        Link releaseLink = linkTo(methodOn(MaReleaseController.class).getMaRelease(action.getRelease().getId())).withRel("release");
+        Link releaseLink = linkTo(methodOn(MaReleaseController.class).getMaReleaseByRtn(action.getRtn())).withRel("release");
         res.add(releaseLink);
 
         return res;
