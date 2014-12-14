@@ -35,6 +35,19 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
     }
 
     @Override
+    public MaRelease findMaReleaseWithActions(Long id) {
+        Query query = em.createQuery("SELECT r FROM MaRelease r " +
+                "INNER JOIN FETCH r.actions WHERE r.id = :id");
+        query.setParameter("id", id);
+        List<MaRelease> releases = query.getResultList();
+        if (releases == null) {
+            return null;
+        } else {
+            return releases.get(0);
+        }
+    }
+
+    @Override
     public List<MaRelease> findMaReleasesByTown(String town) {
         Query query = em.createQuery("SELECT r from MaRelease r where r.town=?1");
         query.setParameter(1, town);
@@ -44,9 +57,9 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
 
     @Override
     public MaRelease findMaReleaseByRegionSite(int region, int site) {
-        Query query = em.createQuery("SELECT r FROM MaRelease r WHERE r.region=?1 AND r.site=?2");
-        query.setParameter(1, region);
-        query.setParameter(2, site);
+        Query query = em.createQuery("SELECT r FROM MaRelease r WHERE r.region = :region AND r.site = :site");
+        query.setParameter("region", region);
+        query.setParameter("site", site);
         List<MaRelease> releases = query.getResultList();
         if (releases.isEmpty()) {
             return null;
@@ -56,9 +69,25 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
     }
 
     @Override
+    public MaRelease findMaReleaseWithActionsByRegionSite(int region, int site) {
+        Query query = em.createQuery("SELECT r FROM MaRelease r " +
+                "INNER JOIN FETCH r.actions WHERE r.region= :region AND r.site= :site");
+        query.setParameter("region", region);
+        query.setParameter("site", site);
+        List<MaRelease> releases = query.getResultList();
+        if (releases.isEmpty()) {
+            return null;
+        } else {
+            MaRelease release = releases.get(0);
+            return release;
+        }
+    }
+
+    @Override
     public List<String> findTownsWithReleasesByRegion(int region) {
         String sql = "SELECT DISTINCT(town) FROM ma_release_dev where region=?";
         List<String> towns = jdbcTemplate.queryForList(sql, new Object[] {region}, String.class);
         return towns;
     }
+
 }

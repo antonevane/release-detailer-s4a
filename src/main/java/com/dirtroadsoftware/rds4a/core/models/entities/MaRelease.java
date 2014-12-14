@@ -71,7 +71,7 @@ public class MaRelease {
 
     private String location;
 
-    @OneToMany(mappedBy = "release")
+    @OneToMany(mappedBy = "release", fetch = FetchType.LAZY)
     @OrderBy("date ASC")
     private List<MaAction> actions;
 

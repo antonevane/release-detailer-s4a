@@ -9,6 +9,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUtil;
 import javax.transaction.Transactional;
 
 import java.util.Date;
@@ -30,7 +32,6 @@ public class MaReleaseRepositoryTest {
     private MaReleaseRepository repository;
 
     @Test
-    @Transactional
     public void findMaReleaseByRegionSite() throws Exception {
         MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
         assertNotNull(release);
@@ -40,7 +41,6 @@ public class MaReleaseRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void findTownsWithReleasesByRegion() throws Exception {
         List<String> towns = repository.findTownsWithReleasesByRegion(2);
         assertNotNull(towns);
@@ -48,7 +48,6 @@ public class MaReleaseRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void findMaReleasesByTown() throws Exception {
         List<MaRelease> releases = repository.findMaReleasesByTown("ORANGE");
         assertNotNull(releases);
@@ -56,9 +55,8 @@ public class MaReleaseRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void actionsForMaRelease() throws Exception {
-        MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
+        MaRelease release = repository.findMaReleaseWithActionsByRegionSite(1, 12345);
         assertNotNull(release);
         Date lastDate = null;
         List<MaAction> actions = release.getActions();
@@ -76,16 +74,25 @@ public class MaReleaseRepositoryTest {
     }
 
     @Test
-    @Transactional
     public void findExistingMaRelease() throws Exception {
         MaRelease release = repository.findMaRelease(1L);
         assertNotNull(release);
         assertEquals("ADAMS LANDFILL", release.getSiteName());
     }
 
+    @Test
+    public void findExistingMaReleaseWithActions() throws Exception {
+        MaRelease release = repository.findMaReleaseWithActions(1L);
+        assertNotNull(release);
+        assertEquals("ADAMS LANDFILL", release.getSiteName());
+
+        PersistenceUtil util = Persistence.getPersistenceUtil();
+        assertTrue(util.isLoaded(release, "actions"));
+        assertEquals(4, release.getActions().size());
+    }
+
 
     @Test
-    @Transactional
     public void findNonExistingMaRelease() throws Exception {
         MaRelease release = repository.findMaRelease(0L);
         assertNull(release);
@@ -93,8 +100,11 @@ public class MaReleaseRepositoryTest {
 
     @Test
     public void getNumActions() throws Exception {
-        MaRelease release = repository.findMaReleaseByRegionSite(1, 12345);
-        assertEquals(6, release.getNumActions());
+        MaRelease release = repository.findMaReleaseWithActionsByRegionSite(1, 12345);
+        // Check to see that the reference to Actions is not "hollow"
+        PersistenceUtil util = Persistence.getPersistenceUtil();
+        assertTrue(util.isLoaded(release, "actions"));
+        assertEquals(6, release.getActions().size());
     }
 
 //    @Test

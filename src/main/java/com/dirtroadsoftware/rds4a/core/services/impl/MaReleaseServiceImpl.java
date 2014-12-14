@@ -29,6 +29,22 @@ public class MaReleaseServiceImpl implements MaReleaseService {
 
     @Override
     public MaRelease findMaReleaseByRtn(String rtn) {
+        Rtn parsedRtn = parseRtn(rtn);
+        return releaseRepository.findMaReleaseByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
+    }
+
+    @Override
+    public MaRelease findMaReleaseWithActionsByRtn(String rtn) {
+        Rtn parsedRtn = parseRtn(rtn);
+        return releaseRepository.findMaReleaseWithActionsByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
+    }
+
+    @Override
+    public MaRelease findMaReleaseWithActionsById(Long id) {
+        return releaseRepository.findMaReleaseWithActions(id);
+    }
+
+    private Rtn parseRtn(String rtn) {
         Rtn parsedRtn = null;
         try {
             parsedRtn = Rtn.parseRtn(rtn);
@@ -36,13 +52,6 @@ public class MaReleaseServiceImpl implements MaReleaseService {
             logger.warn("Exception while parsing rtn " + rtn, ex);
             throw new MaReleaseNotFoundException(ex);
         }
-        return releaseRepository.findMaReleaseByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
-    }
-
-    @Override
-    public MaRelease findMaReleaseWithActionsById(Long id) {
-        MaRelease release = findMaRelease(id);
-        release.getActions().isEmpty();
-        return release;
+        return parsedRtn;
     }
 }

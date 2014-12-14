@@ -13,4 +13,6 @@ public interface MaReleaseService {
      * Fetch the MaRelease with the given ID and load the release's actions
      */
     public MaRelease findMaReleaseWithActionsById(Long id);
+
+    public MaRelease findMaReleaseWithActionsByRtn(String rtn);
 }

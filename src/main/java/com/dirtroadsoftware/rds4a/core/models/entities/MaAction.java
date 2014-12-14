@@ -21,9 +21,9 @@ public class MaAction {
     private Date date;
     private String status;
 
-    @ManyToOne
-    @JoinColumn(name="release_id", referencedColumnName = "id") // 'release_id' column in ma_action_ table
-                                                                // references 'id' column in ma_release_dev
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="release_id", referencedColumnName = "id") // 'release_id' ma_action table refs 'id' in ma_release
     private MaRelease release;
 
     private String rtn;
