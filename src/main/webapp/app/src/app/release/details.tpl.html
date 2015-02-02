@@ -9,13 +9,40 @@
         <div class="panel-body">
             <div class="list-group">
                 <h4 class="list-group-item-heading">Location</h4>
-                <p class="list-group-item-text">{{release.address}}, {{release.town}}</p>
+                <p class="list-group-item-text">{{release.address}}, {{release.town}}, MA</p>
                 <h4 class="list-group-item-heading">Sources</h4>
                 <p class="list-group-item-text">{{release.sources}}</p>
-                <h4 class="list-group-item-heading">Lo</h4>
+                <h4 class="list-group-item-heading">Locations</h4>
+                <p class="list-group-item-text">{{release.locations}}</p>
+                <h4 class="list-group-item-heading">Chemicals </h4>
+                <p class="list-group-item-text">{{release.chemicals}}</p>            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">External Links</h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <h4 class="list-group-item-heading">MassDEP</h4>
+                <p class="list-group-item-text">
+                    <a href="http://public.dep.state.ma.us/SearchableSites2/Site_Info.aspx?textfield_RTN={{release.rtn}}&searchType=ALL&CurrentPage=1"
+                            target="_blank">
+                        Waste Site / Reportable Release - {{release.rtn}}
+                    </a>
+                </p>
+                <p class="list-group-item-text">
+                    <a href="http://public.dep.state.ma.us/fileviewer/Rtn.aspx?rtn={{release.rtn}}"
+                       target="_blank">
+                        Supporting Documents
+                     </a>
+                </p>
+                <h4 class="list-group-item-heading">Sources</h4>
                 <p class="list-group-item-text">{{release.sources}}</p>
-
-            </div>
+                <h4 class="list-group-item-heading">Locations</h4>
+                <p class="list-group-item-text">{{release.locations}}</p>
+                <h4 class="list-group-item-heading">Chemicals </h4>
+                <p class="list-group-item-text">{{release.chemicals}}</p>            </div>
         </div>
     </div>
 </div>

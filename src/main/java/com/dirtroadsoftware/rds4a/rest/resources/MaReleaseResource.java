@@ -26,6 +26,10 @@ public class MaReleaseResource extends ResourceSupport {
     private Date complianceStatusDate;
     private Date notificationDate;
     private int numActions;
+    private String locations;
+    private int numSources;
+    private String sources;
+    private String chemicals;
 
     public Long getRid() {
         return rid;
@@ -149,5 +153,37 @@ public class MaReleaseResource extends ResourceSupport {
 
     public int getNumActions() {
         return numActions;
+    }
+
+    public String getLocations() {
+        return locations;
+    }
+
+    public void setLocations(String locations) {
+        this.locations = locations;
+    }
+
+    public void setNumSources(int numSources) {
+        this.numSources = numSources;
+    }
+
+    public int getNumSources() {
+        return numSources;
+    }
+
+    public String getSources() {
+        return sources;
+    }
+
+    public void setSources(String sources) {
+        this.sources = sources;
+    }
+
+    public String getChemicals() {
+        return chemicals;
+    }
+
+    public void setChemicals(String chemicals) {
+        this.chemicals = chemicals;
     }
 }

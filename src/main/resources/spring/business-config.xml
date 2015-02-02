@@ -65,7 +65,9 @@
         </property>
         <property name="jpaProperties">
             <map>
+                <!-- validate the schema on startup -->
                 <entry key="hibernate.hbm2ddl.auto" value="validate"/>
+
                 <entry key="hibernate.show_sql" value="true"/>
             </map>
         </property>

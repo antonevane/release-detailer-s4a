@@ -36,7 +36,7 @@ public class AccountServiceTest {
     @Transactional
     public void findAccountExistingOwner() throws Exception {
         Account owner = new Account();
-        owner.setName("Jeff");
+        owner.setName("Foo");
         owner.setPassword("abcdefg");
         Account ownerCreated = accountRepository.createAccount(owner);
         assertNotNull(ownerCreated);
@@ -56,7 +56,7 @@ public class AccountServiceTest {
     @Transactional
     public void createAccount() throws Exception {
         Account owner = new Account();
-        owner.setName("Jeff");
+        owner.setName("Foo");
         owner.setPassword("abcdefg");
         Account ownerCreated = accountService.createAccount(owner);
         assertNotNull(ownerCreated);
@@ -66,7 +66,7 @@ public class AccountServiceTest {
     @Transactional
     public void createReleaseDashboardExistingOwner() throws Exception {
         Account owner = new Account();
-        owner.setName("Jeff");
+        owner.setName("Foo");
         owner.setPassword("abcdefg");
         owner = accountService.createAccount(owner);
 

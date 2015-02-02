@@ -1,10 +1,17 @@
 package com.dirtroadsoftware.rds4a.rest.resources.asm;
 
+import com.dirtroadsoftware.rds4a.core.models.entities.MaChemical;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaSource;
 import com.dirtroadsoftware.rds4a.rest.mvc.MaReleaseController;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseResource;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+
+import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -33,11 +40,24 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         res.setAddress(release.getAddress());
         res.setTown(release.getTown());
         res.setZipCode(release.getZipCode());
-        // TODO location types
+        res.setLocations(release.getLocation());
 
         // Sources
-        // TODO release sources
+        res.setNumSources(release.getNumSources());
 
+        List<MaSource> sources = release.getSources();
+        if (!sources.isEmpty()) {
+            List<String> sourceNames = Lists.transform(sources, MaSourceToSource.INSTANCE);
+            Joiner joiner = Joiner.on(", ");
+            res.setSources(joiner.join(sourceNames));
+        }
+
+        List<MaChemical> chemicals = release.getChemicals();
+        if (!chemicals.isEmpty()) {
+            List<String> chemicalNames = Lists.transform(chemicals, MaChemicalToChemical.INSTANCE);
+            Joiner joiner = Joiner.on(", ");
+            res.setChemicals(joiner.join(chemicalNames));
+        }
         // Status and actions
         res.setActive(release.getActive());
         res.setRaoClass(release.getRaoClass());
@@ -56,5 +76,22 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         res.add(actionsLink);
 
         return res;
+    }
+
+    enum MaSourceToSource implements Function<MaSource, String> {
+        INSTANCE;
+
+        @Override
+        public String apply(MaSource source) {
+            return source.getSource();
+        }
+    }
+    enum MaChemicalToChemical implements Function<MaChemical, String> {
+        INSTANCE;
+
+        @Override
+        public String apply(MaChemical chemical) {
+            return chemical.getChemical();
+        }
     }
 }

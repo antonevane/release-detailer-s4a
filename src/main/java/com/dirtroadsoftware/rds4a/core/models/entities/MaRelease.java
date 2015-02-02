@@ -71,18 +71,27 @@ public class MaRelease {
 
     private String location;
 
+    @OneToMany(mappedBy = "release", fetch = FetchType.EAGER)
+    @OrderBy("source")
+    private List<MaSource> sources;
+
     @OneToMany(mappedBy = "release", fetch = FetchType.LAZY)
     @OrderBy("date ASC")
     private List<MaAction> actions;
 
+    @OneToMany(mappedBy = "release", fetch = FetchType.EAGER)
+    @OrderBy("chemical ASC")
+    private List<MaChemical> chemicals;
+
     @Formula("(SELECT COUNT(a.id) FROM ma_action_dev a WHERE a.release_id = id)")
     private int numActions;
+
+    @Formula("(SELECT COUNT(s.id) FROM ma_source_dev s WHERE s.release_id = id)")
+    private int numSources;
 
     // TODO add numChemicals
 //    @Formula("(SELECT COUNT(c.id) FROM ma_chemical_dev c WHERE c.release_id = id)")
 //    private int numChemicals;
-
-    // TODO add sources string
 
     /** Get the site's region */
     public int getRegion() {
@@ -256,5 +265,21 @@ public class MaRelease {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getNumSources() {
+        return numSources;
+    }
+
+    public List<MaSource> getSources() {
+        return sources;
+    }
+
+    public List<MaChemical> getChemicals() {
+        return chemicals;
+    }
+
+    public void setChemicals(List<MaChemical> chemicals) {
+        this.chemicals = chemicals;
     }
 }
