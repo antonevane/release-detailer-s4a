@@ -10,12 +10,19 @@
             <div class="list-group">
                 <h4 class="list-group-item-heading">Location</h4>
                 <p class="list-group-item-text">{{release.address}}, {{release.town}}, MA</p>
+                &nbsp;
                 <h4 class="list-group-item-heading">Sources</h4>
                 <p class="list-group-item-text">{{release.sources}}</p>
+                &nbsp;
                 <h4 class="list-group-item-heading">Locations</h4>
                 <p class="list-group-item-text">{{release.locations}}</p>
+                &nbsp;
                 <h4 class="list-group-item-heading">Chemicals </h4>
-                <p class="list-group-item-text">{{release.chemicals}}</p>            </div>
+                <p class="list-group-item-text">{{release.chemicals}}</p>
+                &nbsp;
+                <h4 class="list-group-item-heading">Actions</h4>
+                <p class="list=group-item-text"><a ui-sref="releaseActions({rtn:release.rtn})">{{release.numActions}} action(s)</a></p>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
@@ -37,12 +44,7 @@
                         Supporting Documents
                      </a>
                 </p>
-                <h4 class="list-group-item-heading">Sources</h4>
-                <p class="list-group-item-text">{{release.sources}}</p>
-                <h4 class="list-group-item-heading">Locations</h4>
-                <p class="list-group-item-text">{{release.locations}}</p>
-                <h4 class="list-group-item-heading">Chemicals </h4>
-                <p class="list-group-item-text">{{release.chemicals}}</p>            </div>
+            </div>
         </div>
     </div>
 </div>

@@ -46,14 +46,14 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         res.setNumSources(release.getNumSources());
 
         List<MaSource> sources = release.getSources();
-        if (!sources.isEmpty()) {
+        if (sources != null && !sources.isEmpty()) {
             List<String> sourceNames = Lists.transform(sources, MaSourceToSource.INSTANCE);
             Joiner joiner = Joiner.on(", ");
             res.setSources(joiner.join(sourceNames));
         }
 
         List<MaChemical> chemicals = release.getChemicals();
-        if (!chemicals.isEmpty()) {
+        if (chemicals != null && !chemicals.isEmpty()) {
             List<String> chemicalNames = Lists.transform(chemicals, MaChemicalToChemical.INSTANCE);
             Joiner joiner = Joiner.on(", ");
             res.setChemicals(joiner.join(chemicalNames));
@@ -72,7 +72,7 @@ public class MaReleaseResourceAsm extends ResourceAssemblerSupport<MaRelease, Ma
         Link link = linkTo(MaReleaseController.class).slash(release.getId()).withSelfRel();
         res.add(link);
 
-        Link actionsLink = linkTo(methodOn(MaReleaseController.class).findAllActions(release.getId())).withRel("actions");
+        Link actionsLink = linkTo(methodOn(MaReleaseController.class).findAllActions(release.getRtn())).withRel("actions");
         res.add(actionsLink);
 
         return res;

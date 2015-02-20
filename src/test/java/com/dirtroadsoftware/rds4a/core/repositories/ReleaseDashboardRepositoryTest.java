@@ -3,6 +3,7 @@ package com.dirtroadsoftware.rds4a.core.repositories;
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class ReleaseDashboardRepositoryTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAllReleaseDashboards() {
         ReleaseDashboard dashboard2 = new ReleaseDashboard();
         dashboard2.setOwner(account);

@@ -2,6 +2,7 @@ package com.dirtroadsoftware.rds4a.core.repositories;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class AccountRepositoryTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAllAccounts() {
         Account account2 = new Account();
         account2.setName("Phil");

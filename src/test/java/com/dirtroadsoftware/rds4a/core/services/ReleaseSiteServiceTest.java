@@ -4,6 +4,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,7 @@ public class ReleaseSiteServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findReleaseSite() {
         ReleaseSite foundSite = siteService.findReleaseSite(site.getId());
         assertNotNull(foundSite);
@@ -67,6 +69,7 @@ public class ReleaseSiteServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void updateReleaseSite() {
         site.setSite(11111);
         updatedSite = siteService.updateReleaseSite(site.getId(), site);
@@ -80,6 +83,7 @@ public class ReleaseSiteServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void deleteReleaseSite() {
         ReleaseSite deletedSite = siteService.deleteReleaseSite(site.getId());
         assertNotNull(deletedSite);

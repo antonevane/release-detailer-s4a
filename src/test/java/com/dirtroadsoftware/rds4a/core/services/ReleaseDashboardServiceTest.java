@@ -6,6 +6,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class ReleaseDashboardServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAllReleaseDashboards() {
         Account owner = new Account();
         owner.setName("Jeff");
@@ -55,6 +57,7 @@ public class ReleaseDashboardServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findReleaseDashboard() {
         Account owner = new Account();
         owner.setName("Jeff");
@@ -74,6 +77,7 @@ public class ReleaseDashboardServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void createReleaseSite() {
         Account owner = new Account();
         owner.setName("Jeff");
@@ -97,6 +101,7 @@ public class ReleaseDashboardServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAllReleaseSites() {
         Account owner = new Account();
         owner.setName("Jeff");

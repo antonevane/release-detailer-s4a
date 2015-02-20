@@ -1,26 +1,23 @@
 <div class="row">
+
+    <h2>Search by RTN</h2>
     <div class="input-group component-group">
-        <input type="text" class="form-control" ng-model="rtn" ng-keyup="$event.keyCode == 13 && getMaReleaseByRtn(rtn)" placeholder="E.g. 1-12345, Release Tracking Number (RTN)"/>
+        <input type="text" class="form-control" ng-model="rtn" ng-keyup="$event.keyCode == 13 && getMaReleaseByRtn(rtn)" placeholder="E.g. 1-12345"/>
         <span class="input-group-btn">
             <button class="btn btn-default" type="button" ng-click="getMaReleaseByRtn(rtn)">Search</button>
         </span>
     </div>
+    <p/>
     <table class="table table-striped">
         <th>Release</th>
         <th>Site</th>
         <th>Address</th>
         <th>Town</th>
-        <th>Actions</th>
         <tr>
-            <td>{{release.rtn}}</td>
+            <td><a ui-sref="releaseDetails({rtn:release.rtn})">{{release.rtn}}</a></td>
             <td>{{release.siteName}}</td>
             <td>{{release.address}}</td>
             <td>{{release.town}}</td>
-            <td>
-                <a ui-sref="releaseDetails({rtn:release.rtn})" class="btn btn-large btn-default" ng-show="release != null">
-                    <i class="fa fa-info-circle"></i> Details
-                </a>
-            </td>
         </tr>
     </table>
 </div>

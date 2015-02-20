@@ -13,13 +13,19 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.hateoas.Link;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +37,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -135,6 +142,7 @@ public class AccountControllerTest {
     @Test
     public void createReleaseDashboardExistingAccount() throws Exception {
         Account owner = new Account();
+        owner.setName("Test Name");
         owner.setId(3L);
 
         ReleaseDashboard dashboard = new ReleaseDashboard();
@@ -143,6 +151,17 @@ public class AccountControllerTest {
         dashboard.setId(2L);
 
         when(service.createReleaseDashboard(eq(3L), any(ReleaseDashboard.class))).thenReturn(dashboard);
+        when(service.findByAccountName(anyString())).thenReturn(owner);
+
+
+        // Setup the SecurityContextHolder with a mocked context
+        UserDetails principal = Mockito.mock(UserDetails.class);
+        when(principal.getUsername()).thenReturn(owner.getName());
+        Authentication authentication = Mockito.mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(principal);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(post(URI.create("/rest/accounts/3/dashboards"))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -158,6 +177,7 @@ public class AccountControllerTest {
     @Test
     public void createReleaseDashboardNonExistingAccount() throws Exception {
         Account owner = new Account();
+        owner.setName("Test Name");
         owner.setId(3L);
 
         ReleaseDashboard dashboard = new ReleaseDashboard();
@@ -166,6 +186,16 @@ public class AccountControllerTest {
         dashboard.setId(2L);
 
         when(service.createReleaseDashboard(eq(3L), any(ReleaseDashboard.class))).thenThrow(new AccountDoesNotExistException());
+        when(service.findByAccountName(anyString())).thenReturn(owner);
+
+        // Setup the SecurityContextHolder with a mocked context
+        UserDetails principal = Mockito.mock(UserDetails.class);
+        when(principal.getUsername()).thenReturn(owner.getName());
+        Authentication authentication = Mockito.mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(principal);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(post(URI.create("/rest/accounts/3/dashboards"))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -176,7 +206,21 @@ public class AccountControllerTest {
 
     @Test
     public void createReleaseDashboardExistingDashboard() throws Exception {
+        Account owner = new Account();
+        owner.setName("Test Name");
+        owner.setId(3L);
+
         when(service.createReleaseDashboard(eq(3L), any(ReleaseDashboard.class))).thenThrow(new ReleaseDashboardExistsException());
+        when(service.findByAccountName(anyString())).thenReturn(owner);
+
+        // Setup the SecurityContextHolder with a mocked context
+        UserDetails principal = Mockito.mock(UserDetails.class);
+        when(principal.getUsername()).thenReturn(owner.getName());
+        Authentication authentication = Mockito.mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(principal);
+        SecurityContext securityContext = Mockito.mock(SecurityContext.class);
+        Mockito.when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
 
         mockMvc.perform(post(URI.create("/rest/accounts/3/dashboards"))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -191,9 +235,11 @@ public class AccountControllerTest {
         Account owner1 = new Account();
         owner1.setName("Jeff");
         owner1.setPassword("abcdefg");
+        owner1.setId(1l);
         Account owner2 = new Account();
         owner2.setName("Phil");
         owner2.setPassword("gfedcba");
+        owner2.setId(2L);
         accounts.add(owner1);
         accounts.add(owner2);
 

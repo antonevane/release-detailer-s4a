@@ -59,6 +59,7 @@ public class MaReleaseControllerTest {
         release.setSiteName("Tram Breakwater");
         release.setAddress("123 Palm Drive");
         release.setSite(12345);
+        release.setRtn("1-0012345");
 
         // Tell Mockito to return the releaseSite when 1L is searched
         when(releaseService.findMaRelease(1L)).thenReturn(release);
@@ -73,7 +74,7 @@ public class MaReleaseControllerTest {
                 .andExpect(jsonPath("$.address", is(release.getAddress())))
                 .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/releases/1"))))
                 .andExpect(jsonPath("$.links[*].rel", hasItem(is(Link.REL_SELF))))
-                .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/1/actions"))))
+                .andExpect(jsonPath("$.links[*].href", hasItem(endsWith("/1-0012345/actions"))))
                 .andExpect(jsonPath("$.links[*].rel", hasItem(is("actions"))))
                 ;
     }
@@ -96,7 +97,7 @@ public class MaReleaseControllerTest {
         release.setSite(12345);
         release.setSiteName("Tram Breakwater");
         release.setAddress("123 Palm Drive");
-
+        release.setRtn("1-0012345");
 
         // Tell Mockito to return the releaseSite when 1L is searched
         when(releaseService.findMaReleaseByRtn("01-012345")).thenReturn(release);
@@ -129,12 +130,13 @@ public class MaReleaseControllerTest {
         action.setDate(new LocalDate("2008-12-05").toDate());
         action.setStatus("ISSUED");
         action.setAction("NOR");
+        action.setRtn("1-0012345");
 
         release.setActions(Arrays.asList(action));
 
-        when(releaseService.findMaRelease(anyLong())).thenReturn(release);
+        when(releaseService.findMaReleaseWithActionsByRtn("1-0012345")).thenReturn(release);
 
-        mockMvc.perform(get("/rest/releases/1/actions"))
+        mockMvc.perform(get("/rest/releases/ma/1-0012345/actions"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.actions[0].rtn", is("1-0012345")))
@@ -142,7 +144,7 @@ public class MaReleaseControllerTest {
                 .andExpect(jsonPath("$.actions[0].status", is("ISSUED")))
                 .andExpect(jsonPath("$.actions[0].action", is("NOR")))
                 .andExpect(jsonPath("$.actions[0].links[*].href", hasItem(endsWith("/actions/123"))))
-                .andExpect(jsonPath("$.actions[0].links[*].href", hasItem(endsWith("/releases/1"))))
+                .andExpect(jsonPath("$.actions[0].links[*].href", hasItem(endsWith("/releases/ma/1-0012345"))))
                 .andExpect(jsonPath("$.actions[0].links[*].rel", hasItem(is("release"))))
                 ;
 

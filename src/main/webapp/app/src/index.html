@@ -6,16 +6,16 @@
 
     <!-- social media tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@joshdmiller">
-    <meta name="twitter:title" content="ngBoilerplate">
-    <meta name="twitter:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
-    <meta name="twitter:creator" content="@joshdmiller">
-    <meta name="twitter:image:src" content="https://a248.e.akamai.net/assets.github.com/images/modules/logos_page/Octocat.png?1366128846">
-    <meta property="og:title" content="ngBoilerplate" />
+    <meta name="twitter:site" content="@jeffreylkurtz">
+    <meta name="twitter:title" content="releaseDetailer">
+    <meta name="twitter:description" content="Massachusetts hazardous waste site data at your fingertips. Quickly search and compare site information collected by the MassDEP Bureau of Waste Site Cleanup.">
+    <meta name="twitter:creator" content="@jeffreylkurtz">
+    <!--<meta name="twitter:image:src" content="">-->
+    <meta property="og:title" content="Release Detailer" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="http://bit.ly/ngBoilerplate" />
-    <meta property="og:image" content="https://a248.e.akamai.net/assets.github.com/images/modules/logos_page/Octocat.png?1366128846" />
-    <meta property="og:description" content="Non-Trivial AngularJS Made Easy: Everything you need to kickstart AngularJS projects: a best-practice directory structure, an intelligent build system, and the best web design libraries around.">
+    <meta property="og:url" content="http://bit.ly/releaseDetailer" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="Massachusetts hazardous waste site data at your fingertips. Quickly search and compare site information collected by the MassDEP Bureau of Waste Site Cleanup.">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,7 +28,7 @@
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
-    <!-- it's stupid to have to load it here, but this is for the +1 button -->
+    <!-- +1 button -->
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
       { "parsetags": "explicit" }
     </script>
@@ -45,11 +45,9 @@
             <span class="icon-bar"></span>
           </button>
           <div class="navbar-brand">
-            ngbp
+            Release Detailer
             <small>
-              <a href="http://github.com/ngbp/ngbp/blob/v<%= version %>-release/CHANGELOG.md">
                 v<%= version %>
-              </a>
             </small>
           </div>
         </div>
@@ -62,25 +60,13 @@
               </a>
             </li>
             <li ui-sref-active="active">
-              <a href ui-sref="accountSearch">
-                <i class="fa fa-search"></i>
-                Search Accounts
-              </a>
-            </li>
-              <li ui-sref-active="active">
-                  <a href ui-sref="releaseSearch">
-                      <i class="fa fa-search"></i>
-                      Search Releases
-                  </a>
-              </li>
-            <li>
-              <a href="https://github.com/ngbp/ngbp">
-                <i class="fa fa-github-alt"></i>
-                Github
-              </a>
+                <a href ui-sref="releaseSearch">
+                    <i class="fa fa-search"></i>
+                    Search Releases
+                </a>
             </li>
             <li>
-              <a href="https://github.com/ngbp/ngbp/issues">
+              <a href="mailto:jeffreylkurtz@gmail.com">
                 <i class="fa fa-comments"></i>
                 Support
               </a>
@@ -96,24 +82,16 @@
       <div class="container">
         <div class="footer-inner">
           <ul class="social">
-            <li><a target="_blank" href="http://gplus.to/joshdmiller"><i class="fa fa-google-plus-sign"></i></a></li>
-            <li><a target="_blank" href="http://twitter.com/joshdmiller"><i class="fa fa-twitter-sign"></i></a></li>
-            <li><a target="_blank" href="http://linkedin.com/in/joshdmiller"><i class="fa fa-linkedin-sign"></i></a></li>
-            <li><a target="_blank" href="http://github.com/ngbp/ngbp"><i class="fa fa-github-sign"></i></a></li>
+            <li><a target="_blank" href="http://gplus.to/jeffreylkurtz"><i class="fa fa-google-plus-sign"></i></a></li>
+            <li><a target="_blank" href="http://twitter.com/jeffreylkurtz"><i class="fa fa-twitter-sign"></i></a></li>
+            <li><a target="_blank" href="http://linkedin.com/in/jeffreylkurtz"><i class="fa fa-linkedin-sign"></i></a></li>
           </ul>
-          
 
           <p>
-            (c) 2013 <a href="http://www.joshdavidmiller.com">Josh David Miller</a>. 
-            <a href="http://github.com/ngbp/ngbp/fork_select">Fork this</a>
-            to kickstart your next project.
+            (c) 2015 <a href="http://www.jeffreylkurtz.com">Jeffrey L Kurtz</a>.
             <br />
-            ngbp is based on
-            <a href="http://www.angularjs.org">AngularJS</a>,
-            <a href="http://getbootstrap.com">Bootstrap</a>, 
-            <a href="http://angular-ui.github.com/bootstrap">UI Bootstrap</a>,
-            and 
-            <a href="http://fortawesome.github.com/Font-Awesome">Font Awesome</a>.        
+            Release Detailer uses data published by the <a href="http://www.mass.gov/eea/agencies/massdep/cleanup/sites/downloadable-site-lists.html">MassDEP</a>
+              and was created using <a href="http://github.com/ngbp/ngbp">ngbp</a>.
           </p>
         </div>
       </div>

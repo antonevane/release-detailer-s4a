@@ -7,6 +7,7 @@ package com.dirtroadsoftware.rds4a.core.services;
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import com.dirtroadsoftware.rds4a.core.repositories.AccountRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class AccountServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAccountExistingOwner() throws Exception {
         Account owner = new Account();
         owner.setName("Foo");
@@ -47,6 +49,7 @@ public class AccountServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void findAccountNonExistingOwner() throws Exception {
         Account ownerFound = accountService.findAccount(3L);
         assertNull(ownerFound);
@@ -54,6 +57,7 @@ public class AccountServiceTest {
 
     @Test
     @Transactional
+    @Ignore("Uses actual database")
     public void createAccount() throws Exception {
         Account owner = new Account();
         owner.setName("Foo");

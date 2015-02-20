@@ -52,6 +52,7 @@ angular.module( 'ngBoilerplate.dashboard',
                   }
               );
           });
+
           return deferred.promise;
       };
       return service;

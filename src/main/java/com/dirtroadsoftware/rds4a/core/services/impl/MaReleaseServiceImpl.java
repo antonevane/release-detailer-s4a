@@ -18,7 +18,7 @@ import java.text.ParseException;
 @Service
 @Transactional
 public class MaReleaseServiceImpl implements MaReleaseService {
-    static final Logger logger = Logger.getLogger(MaReleaseServiceImpl.class.getTypeName());
+    static final Logger logger = Logger.getLogger(MaReleaseServiceImpl.class);
     @Autowired
     MaReleaseRepository releaseRepository;
 

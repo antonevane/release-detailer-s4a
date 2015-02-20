@@ -64,10 +64,10 @@ public class MaReleaseController {
         }
     }
 
-    @RequestMapping(value="/{releaseId}/actions", method = RequestMethod.GET)
+    @RequestMapping(value="/ma/{rtn}/actions", method = RequestMethod.GET)
     @PreAuthorize("permitAll")
-    public ResponseEntity<MaActionListResource> findAllActions(@PathVariable Long releaseId) {
-        MaRelease release = releaseService.findMaReleaseWithActionsById(releaseId);
+    public ResponseEntity<MaActionListResource> findAllActions(@PathVariable String rtn) {
+        MaRelease release = releaseService.findMaReleaseWithActionsByRtn(rtn);
         if (release == null) {
             throw new NotFoundException();
         }

@@ -113,7 +113,7 @@ public class AccountController {
 
     @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("permitAll")
-    public ResponseEntity<AccountListResource> findAllAccounts(@RequestParam(value = "name", required = false) String name) {
+    public ResponseEntity<AccountListResource> findAllAccounts(@RequestParam(required = false) String name) {
         AccountList accounts = null;
         if (name == null) {
             accounts = service.findAllAccounts();
