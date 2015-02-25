@@ -50,7 +50,7 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
     @Override
     public List<MaRelease> findMaReleasesByTown(String town) {
         Query query = em.createQuery("SELECT r from MaRelease r where r.town=?1");
-        query.setParameter(1, town);
+        query.setParameter(1, town.toUpperCase());
         List<MaRelease> releases = query.getResultList();
         return releases;
     }
