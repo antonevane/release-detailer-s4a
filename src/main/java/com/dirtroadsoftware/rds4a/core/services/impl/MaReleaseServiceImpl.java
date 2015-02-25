@@ -4,6 +4,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.repositories.MaReleaseRepository;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.MaReleaseNotFoundException;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import com.dirtroadsoftware.rds4a.core.services.util.Rtn;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -37,6 +40,16 @@ public class MaReleaseServiceImpl implements MaReleaseService {
     public MaRelease findMaReleaseWithActionsByRtn(String rtn) {
         Rtn parsedRtn = parseRtn(rtn);
         return releaseRepository.findMaReleaseWithActionsByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
+    }
+
+    @Override
+    public MaReleaseList findMaReleasesByTown(String town) {
+        List<MaRelease> releases = releaseRepository.findMaReleasesByTown(town);
+        if (releases == null) {
+            return new MaReleaseList(Collections.<MaRelease>emptyList());
+        } else {
+            return new MaReleaseList(releases);
+        }
     }
 
     @Override

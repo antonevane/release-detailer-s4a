@@ -1,6 +1,9 @@
 package com.dirtroadsoftware.rds4a.core.services;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
+
+import java.util.List;
 
 /**
  *
@@ -15,4 +18,6 @@ public interface MaReleaseService {
     public MaRelease findMaReleaseWithActionsById(Long id);
 
     public MaRelease findMaReleaseWithActionsByRtn(String rtn);
+
+    public MaReleaseList findMaReleasesByTown(String town);
 }

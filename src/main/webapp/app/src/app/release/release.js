@@ -17,7 +17,7 @@ angular.module( 'ngBoilerplate.release', [
                 }
             })
             .state('releaseDetails', {
-                url:'/releases/{rtn}',
+                url:'/releases/details/{rtn}',
                 views: {
                     'main': {
                         templateUrl:'release/details.tpl.html',
@@ -26,15 +26,24 @@ angular.module( 'ngBoilerplate.release', [
                 },
                 resolve: {
                     release: function(releaseService, $stateParams) {
-                        console.log("releaseDetails.resolve: $stateParams.rtn = " + $stateParams.rtn);
                         returnValue = releaseService.getMaReleaseByRtn($stateParams.rtn);
-                        console.log("releaseDetails.resolve: returnValue = ...");
-                        console.log(returnValue);
                         return returnValue;
                     }
                 },
                 data: {
                     pageTitle : "Release Details {{release.rtn}}"
+                }
+            })
+            .state('releaseLocationSearch', {
+                url:'/releases/locationSearch',
+                views: {
+                    'main': {
+                        templateUrl:'release/location-search.tpl.html',
+                        controller:'ReleaseSearchCtrl'
+                    }
+                },
+                data : {
+                    pageTitle : "Search Releases by Location"
                 }
             })
         ;
@@ -49,30 +58,32 @@ angular.module( 'ngBoilerplate.release', [
             var Release = $resource("/release-detailer-s4a/rest/releases/ma/:paramRtn");
             return Release.get({paramRtn : rtn}).$promise;
         };
+        service.getMaReleasesByTown = function(town) {
+            console.log("releaseService.getMaReleasesByTown() called: " + town);
+            var Release = $resource("/release-detailer-s4a/rest/releases/ma/town/:paramTown");
+            return Release.get({paramTown : town}).$promise;
+        };
+
         return service;
     })
-
     .controller("ReleaseSearchCtrl", function($scope, releaseService) {
         $scope.getMaReleaseByRtn = function(rtn) {
             // Get the $promise from the service to fetch the release information using the RTN
             releaseService.getMaReleaseByRtn(rtn).then(
                 function(data) {
                     console.log("ReleaseSearchCtrl: getMaReleaseByRtn: data", data);
-                    // Convert to array of releases so we can use ng-repeat in the table
                     $scope.release = data;
                 },
                 function() {
                     console.log("Unable to get release information for " + $scope.rtn);
                     $scope.release = null;
                 });
-
         };
         $scope.getMaReleaseById= function(rid) {
             // Get the $promise from the service to fetch the release information using the internal release ID
             releaseService.getMaReleaseById(rid).then(
                 function(data) {
                     console.log("ReleaseSearchCtrl: getMaReleaseById: data", data);
-                    // Convert to array of releases so we can use ng-repeat in the table
                     $scope.release = data;
                 },
                 function() {
@@ -80,8 +91,20 @@ angular.module( 'ngBoilerplate.release', [
                     $scope.release = null;
                 });
         };
-        // Default value
-//        $scope.rtn = "1-0012345";
+        $scope.getMaReleasesByTown = function(town) {
+            console.log("ReleaseSearchCtrl: getMaReleasesByTown: ", town);
+            releaseService.getMaReleasesByTown(town).then(
+                function(data) {
+                    console.log("SUCCESS: " + data);
+                    $scope.releases = data.releases;
+                    console.log("$scope.releases: " + $scope.releases);
+                },
+                function(error) {
+                    console.log("FAILURE: " + error);
+                }
+            );
+
+        };
     })
     .controller("ReleaseDetailsCtrl", function($scope, releaseService, release) {
         console.log("release as argument to controller: release = ", release);

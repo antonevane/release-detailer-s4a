@@ -1,0 +1,23 @@
+<div class="row">
+
+    <h2>Search by Town</h2>
+    <div class="input-group component-group">
+        <input type="text" class="form-control" ng-model="town" ng-keyup="$event.keyCode == 13 && getMaReleasesByTown(town)" placeholder="E.g. Cambridge"/>
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="getMaReleasesByTown(town)">Search</button>
+        </span>
+    </div>
+    <p/>
+    <table class="table table-striped">
+        <th>Release</th>
+        <th>Site</th>
+        <th>Address</th>
+        <th>Town</th>
+        <tr ng-repeat="release in releases">
+            <td><a ui-sref="releaseDetails({rtn:release.rtn})">{{release.rtn}}</a></td>
+            <td>{{release.siteName}}</td>
+            <td>{{release.address}}</td>
+            <td>{{release.town}}</td>
+        </tr>
+    </table>
+</div>

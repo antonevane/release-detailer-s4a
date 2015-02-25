@@ -4,12 +4,16 @@ import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.TownNotFoundException;
 import com.dirtroadsoftware.rds4a.core.services.util.MaActionList;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import com.dirtroadsoftware.rds4a.rest.exceptions.BadRequestException;
 import com.dirtroadsoftware.rds4a.rest.exceptions.NotFoundException;
 import com.dirtroadsoftware.rds4a.rest.resources.MaActionListResource;
+import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.MaActionListResourceAsm;
+import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,6 +67,20 @@ public class MaReleaseController {
             return new ResponseEntity<MaReleaseResource>(HttpStatus.NOT_FOUND);
         }
     }
+
+    /** Finds a {@link com.dirtroadsoftware.rds4a.core.models.entities.MaRelease} by Town (Release Tracking Number) */
+    @RequestMapping(value="/ma/town/{town}", method = RequestMethod.GET)
+    @PreAuthorize("permitAll")
+    public ResponseEntity<MaReleaseListResource> getMaReleasesByTown(@PathVariable String town) {
+
+        try {
+            MaReleaseList releaseList = releaseService.findMaReleasesByTown(town);
+            MaReleaseListResource res = new MaReleaseListResourceAsm().toResource(releaseList);
+            return new ResponseEntity<MaReleaseListResource>(res, HttpStatus.OK);
+        } catch (TownNotFoundException ex) {
+            throw new NotFoundException();
+        }
+     }
 
     @RequestMapping(value="/ma/{rtn}/actions", method = RequestMethod.GET)
     @PreAuthorize("permitAll")

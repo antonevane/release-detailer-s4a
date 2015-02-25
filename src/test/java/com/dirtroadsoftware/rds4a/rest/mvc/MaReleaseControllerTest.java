@@ -4,6 +4,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -148,6 +149,43 @@ public class MaReleaseControllerTest {
                 .andExpect(jsonPath("$.actions[0].links[*].rel", hasItem(is("release"))))
                 ;
 
+    }
+
+    @Test
+    public void getExistingMaReleasesByTown() throws Exception {
+        MaRelease release1 = new MaRelease();
+        release1.setId(1L);
+        release1.setRegion(1);
+        release1.setSite(54321);
+        release1.setSiteName("This site");
+        release1.setAddress("314 Meadow Dr");
+        release1.setRtn("1-0054321");
+        release1.setTown("MY TOWN");
+
+        MaRelease release2 = new MaRelease();
+        release2.setId(2L);
+        release2.setRegion(2);
+        release2.setSite(12345);
+        release2.setSiteName("Tram Breakwater");
+        release2.setAddress("123 Palm Drive");
+        release2.setRtn("1-0012345");
+        release2.setTown("MY TOWN");
+
+        // Tell Mockito to return the releaseSite when 1L is searched
+        MaReleaseList releases = new MaReleaseList(Arrays.asList(new MaRelease[]{release1, release2}));
+
+        when(releaseService.findMaReleasesByTown("MY TOWN")).thenReturn(releases);
+
+        // Ask Spring MockMVC to issue a GET request against our controller
+        mockMvc.perform(get("/rest/releases/ma/town/MY TOWN"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.releases[1].region", is(release2.getRegion())))
+                .andExpect(jsonPath("$.releases[1].site", is(release2.getSite())))
+                .andExpect(jsonPath("$.releases[1].siteName", is(release2.getSiteName())))
+                .andExpect(jsonPath("$.releases[1].address", is(release2.getAddress())))
+                .andExpect(jsonPath("$.releases[1].links[*].href", hasItem(endsWith("/releases/2"))))
+                .andExpect(jsonPath("$.releases[1].links[*].rel", hasItem(is(Link.REL_SELF))));
     }
 
 }
