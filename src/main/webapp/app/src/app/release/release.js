@@ -31,7 +31,7 @@ angular.module( 'ngBoilerplate.release', [
                     }
                 },
                 data: {
-                    pageTitle : "Release Details {{release.rtn}}"
+                    pageTitle : "Release Details"
                 }
             })
             .state('releaseLocationSearch', {

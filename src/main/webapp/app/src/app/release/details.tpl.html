@@ -1,50 +1,76 @@
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{release.siteName}}    <small>RTN: {{release.rtn}}</small></h2>
+        </div>
+        <div class="col-md-6">
+            <h2>{{release.address}}    <small>{{release.town}}, MA</small></h2>
+        </div>
+    </div>
+</div>
 <div class="row">
-    <div class="page-header">
-        <h1>{{release.siteName}}    <small>RTN: {{release.rtn}}</small></h1>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Release Information</h3>
-        </div>
-        <div class="panel-body">
-            <div class="list-group">
-                <h4 class="list-group-item-heading">Location</h4>
-                <p class="list-group-item-text">{{release.address}}, {{release.town}}, MA</p>
-                &nbsp;
-                <h4 class="list-group-item-heading">Sources</h4>
-                <p class="list-group-item-text">{{release.sources}}</p>
-                &nbsp;
-                <h4 class="list-group-item-heading">Locations</h4>
-                <p class="list-group-item-text">{{release.locations}}</p>
-                &nbsp;
-                <h4 class="list-group-item-heading">Chemicals </h4>
-                <p class="list-group-item-text">{{release.chemicals}}</p>
-                &nbsp;
-                <h4 class="list-group-item-heading">Actions</h4>
-                <p class="list=group-item-text"><a ui-sref="releaseActions({rtn:release.rtn})">{{release.numActions}} action(s)</a></p>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Release Information</h3>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div ng-show="{{release.source}}">
+                        <h4 class="list-group-item-heading release-label">Sources</h4>
+                        <p class="list-group-item-text release-data">{{release.sources}}</p>
+                    </div>
+                    <div ng-show="{{release.locations}}">
+                        <h4 class="list-group-item-heading release-label">Location Type</h4>
+                        <p class="list-group-item-text release-data">{{release.locations}}</p>
+                    </div>
+                    <div ng-show="{{release.chemicals}}">
+                        <h4 class="list-group-item-heading release-label">Chemicals </h4>
+                        <p class="list-group-item-text release-data">{{release.chemicals}}</p>
+                    </div>
+                    <h4 class="list-group-item-heading release-label">Actions</h4>
+                    <p class="list=group-item-text release-data"><a ui-sref="releaseActions({rtn:release.rtn})">{{release.numActions}} action(s)</a></p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">External Links</h3>
-        </div>
-        <div class="panel-body">
-            <div class="list-group">
-                <h4 class="list-group-item-heading">MassDEP</h4>
-                <p class="list-group-item-text">
-                    <a href="http://public.dep.state.ma.us/SearchableSites2/Site_Info.aspx?textfield_RTN={{release.rtn}}&searchType=ALL&CurrentPage=1"
-                            target="_blank">
-                        Waste Site / Reportable Release - {{release.rtn}}
-                    </a>
-                </p>
-                <p class="list-group-item-text">
-                    <a href="http://public.dep.state.ma.us/fileviewer/Rtn.aspx?rtn={{release.rtn}}"
-                       target="_blank">
-                        Supporting Documents
-                     </a>
-                </p>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Release Dates</h3>
             </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div class="list-group-item-heading release-label">Notification</div>
+                    <div class="list-group-item-text release-data">{{release.notificationDate}}</div>
+                    <h4 class="list-group-item-heading release-label">Reporting Time Frame</h4>
+                    <p class="list-group-item-text release-data">{{release.category}}</p>
+                    <h4 class="list-group-item-heading release-label">Compliance Status</h4>
+                    <p class="list-group-item-text release-data">{{release.complianceStatusDate}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">External Links</h3>
+    </div>
+    <div class="panel-body">
+        <div class="list-group">
+            <h4 class="list-group-item-heading">MassDEP</h4>
+            <p class="list-group-item-text">
+                <a href="http://public.dep.state.ma.us/SearchableSites2/Site_Info.aspx?textfield_RTN={{release.rtn}}&searchType=ALL&CurrentPage=1"
+                        target="_blank">
+                    Waste Site / Reportable Release - {{release.rtn}}
+                </a>
+            </p>
+            <p class="list-group-item-text">
+                <a href="http://public.dep.state.ma.us/fileviewer/Rtn.aspx?rtn={{release.rtn}}"
+                   target="_blank">
+                    Supporting Documents
+                 </a>
+            </p>
         </div>
     </div>
 </div>

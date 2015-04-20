@@ -5,6 +5,7 @@ import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import org.springframework.hateoas.ResourceSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +24,21 @@ public class MaReleaseResource extends ResourceSupport {
     private Boolean active;
     private String raoClass;
     private Integer phase;
-    private Date complianceStatusDate;
-    private Date notificationDate;
+    private String complianceStatusDate;
+    private String notificationDate;
     private int numActions;
     private String locations;
     private int numSources;
     private String sources;
     private String chemicals;
+    private String category;
+
+    private static final ThreadLocal<SimpleDateFormat> DATE_FORMAT = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd");
+        }
+    };
 
     public Long getRid() {
         return rid;
@@ -132,18 +141,18 @@ public class MaReleaseResource extends ResourceSupport {
     }
 
     public void setComplianceStatusDate(Date complianceStatusDate) {
-        this.complianceStatusDate = complianceStatusDate;
+        this.complianceStatusDate = DATE_FORMAT.get().format(complianceStatusDate);
     }
 
-    public Date getComplianceStatusDate() {
+    public String getComplianceStatusDate() {
         return complianceStatusDate;
     }
 
     public void setNotificationDate(Date notificationDate) {
-        this.notificationDate = notificationDate;
+        this.notificationDate = DATE_FORMAT.get().format(notificationDate);
     }
 
-    public Date getNotificationDate() {
+    public String getNotificationDate() {
         return notificationDate;
     }
 
@@ -185,5 +194,13 @@ public class MaReleaseResource extends ResourceSupport {
 
     public void setChemicals(String chemicals) {
         this.chemicals = chemicals;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
