@@ -107,27 +107,20 @@ public class MaReleaseRepositoryTest {
         assertEquals(6, release.getActions().size());
     }
 
-    @Test
-    public void findMaActionsByTown() throws Exception {
-        String town = "Bolton";
-        String sortBy = "date";
-        String sortHow = "DESC";
-        List<MaAction> actions = repository.findMaActionsByTown(town, sortBy, sortHow, 5, 10);
 
-        assertEquals(10, actions.size());
-        assertEquals("RNF", actions.get(5).getAction());
-        assertEquals("2-0018764", actions.get(5).getRelease().getRtn());
+    @Test
+    public void findMaReleasesByTownWithPagination() throws Exception {
+        List<MaRelease> releases = repository.findMaReleasesByTown("TOWNSEND", "notification", "DESC", 11, 15);
+
+        assertEquals(15, releases.size());
+        assertEquals(java.sql.Date.valueOf("1999-12-14"), releases.get(3).getNotification());
     }
 
     @Test
-    public void findMaActionsByDate() throws Exception {
-        String date = "2013-06-03";
-        String sortBy = "raoClass";
-        String sortHow = "ASC";
-        List<MaAction> actions = repository.findMaActionsByDate(date, sortBy, sortHow, 0, 8);
+    public void countMaReleases() throws Exception {
+        String town = "TOWNSEND";
+        Long count = repository.countMaReleases("town", town);
 
-        assertEquals(8, actions.size());
-        assertEquals("A2", actions.get(7).getRelease().getRaoClass());
-        assertEquals("4-0024584", actions.get(7).getRelease().getRtn());
+        assertEquals(36l, count.longValue());
     }
 }

@@ -101,45 +101,29 @@ public class JpaMaReleaseRepository implements MaReleaseRepository {
     }
 
     @Override
-    public List<MaAction> findMaActionsByTown(String town, String sortBy, String sortHow, int offset, int limit) {
-        Query query = em.createQuery("SELECT a FROM MaAction a" +
-                " WHERE a.release.town = :town" +
-                " ORDER BY a." + sortBy
-                + " " + (sortHow.equalsIgnoreCase("DESC") ? "DESC" : "ASC") + ", a.id DESC");
+    public List<MaRelease> findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit) {
+        Query query = em.createQuery("SELECT r FROM MaRelease r" +
+                " WHERE r.town = :town" +
+                " ORDER BY r." + sortBy
+                + " " + (sortHow.equalsIgnoreCase("DESC") ? "DESC" : "ASC") + ", r.id DESC");
         query.setFirstResult(offset).setMaxResults(limit);
         query.setParameter("town", town.toUpperCase());
 
-        List<MaAction> actions = query.getResultList();
-        if (actions.isEmpty()) {
+        List<MaRelease> releases = query.getResultList();
+        if (releases.isEmpty()) {
             return Collections.emptyList();
         } else {
-            return actions;
+            return releases;
         }
     }
 
     @Override
-    public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit) {
-        Query query;
-        if ("raoClass".equals(sortBy)) {
-            query = em.createQuery("SELECT a FROM MaAction a" +
-                    " WHERE a.date = :date" +
-                    " ORDER BY CASE WHEN a.release.raoClass = '' THEN 2 ELSE 1 END, a.release.raoClass "
-                    + " " + (sortHow.equalsIgnoreCase("DESC") ? "DESC" : "ASC") + ", a.id DESC");
-        } else {
-            query = em.createQuery("SELECT a FROM MaAction a" +
-                    " WHERE a.date = :date" +
-                    " ORDER BY a.release." + sortBy
-                    + " " + (sortHow.equalsIgnoreCase("DESC") ? "DESC" : "ASC") + ", a.id DESC");
-        }
-        query.setFirstResult(offset).setMaxResults(limit);
-        query.setParameter("date", java.sql.Date.valueOf(date));
+    public Long countMaReleases(String releaseAttribute, String attributeValue) {
+        Query query = em.createQuery("SELECT count(r) FROM MaRelease r" +
+                " WHERE r." + releaseAttribute + " = ?1");
+        query.setParameter(1, attributeValue);
 
-        List<MaAction> actions = query.getResultList();
-        if (actions.isEmpty()) {
-            return Collections.emptyList();
-        } else {
-            return actions;
-        }
+        List results = query.getResultList();
+        return (Long)results.iterator().next();
     }
-
 }

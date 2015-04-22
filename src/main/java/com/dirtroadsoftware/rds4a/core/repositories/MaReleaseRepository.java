@@ -23,6 +23,6 @@ public interface MaReleaseRepository {
     public MaRelease findMaReleaseByRegionSite(int region, int site);
     public MaRelease findMaReleaseWithActionsByRegionSite(int region, int site);
     public List<String> findTownsWithReleasesByRegion(int region);
-    public List<MaAction> findMaActionsByTown(String town, String sortBy, String sortHow, int offset, int limit);
-    public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit);
+    public List<MaRelease> findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit);
+    public Long countMaReleases(String releaseAttribute, String attributeValue);
 }
