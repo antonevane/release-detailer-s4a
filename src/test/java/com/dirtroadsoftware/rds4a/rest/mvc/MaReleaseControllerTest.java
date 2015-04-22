@@ -2,7 +2,6 @@ package com.dirtroadsoftware.rds4a.rest.mvc;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
 import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import org.joda.time.LocalDate;
@@ -15,12 +14,14 @@ import org.springframework.hateoas.Link;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -61,6 +62,8 @@ public class MaReleaseControllerTest {
         release.setAddress("123 Palm Drive");
         release.setSite(12345);
         release.setRtn("1-0012345");
+        release.setNotification(Calendar.getInstance().getTime());
+        release.setStatusDate(Calendar.getInstance().getTime());
 
         // Tell Mockito to return the releaseSite when 1L is searched
         when(releaseService.findMaRelease(1L)).thenReturn(release);
@@ -99,6 +102,8 @@ public class MaReleaseControllerTest {
         release.setSiteName("Tram Breakwater");
         release.setAddress("123 Palm Drive");
         release.setRtn("1-0012345");
+        release.setNotification(Calendar.getInstance().getTime());
+        release.setStatusDate(Calendar.getInstance().getTime());
 
         // Tell Mockito to return the releaseSite when 1L is searched
         when(releaseService.findMaReleaseByRtn("01-012345")).thenReturn(release);
@@ -161,6 +166,8 @@ public class MaReleaseControllerTest {
         release1.setAddress("314 Meadow Dr");
         release1.setRtn("1-0054321");
         release1.setTown("MY TOWN");
+        release1.setNotification(Calendar.getInstance().getTime());
+        release1.setStatusDate(Calendar.getInstance().getTime());
 
         MaRelease release2 = new MaRelease();
         release2.setId(2L);
@@ -170,6 +177,8 @@ public class MaReleaseControllerTest {
         release2.setAddress("123 Palm Drive");
         release2.setRtn("1-0012345");
         release2.setTown("MY TOWN");
+        release2.setNotification(Calendar.getInstance().getTime());
+        release2.setStatusDate(Calendar.getInstance().getTime());
 
         // Tell Mockito to return the releaseSite when 1L is searched
         MaReleaseList releases = new MaReleaseList(Arrays.asList(new MaRelease[]{release1, release2}));
@@ -187,5 +196,58 @@ public class MaReleaseControllerTest {
                 .andExpect(jsonPath("$.releases[1].links[*].href", hasItem(endsWith("/releases/2"))))
                 .andExpect(jsonPath("$.releases[1].links[*].rel", hasItem(is(Link.REL_SELF))));
     }
+
+//    @Test
+//    public void getExistingMaReleasesByActionDate() throws Exception {
+//        MaRelease release1 = new MaRelease();
+//        release1.setId(1L);
+//        release1.setRegion(1);
+//        release1.setSite(54321);
+//        release1.setSiteName("This site");
+//        release1.setAddress("314 Meadow Dr");
+//        release1.setRtn("1-0054321");
+//        release1.setTown("MY TOWN");
+//        List<MaAction> actions1  = new ArrayList<MaAction>();
+//        MaAction action1 = new MaAction();
+//        action1.setAction("ACTION_ONE");
+//        action1.setStatus("STATUS_ONE");
+//        actions1.add(action1);
+//        release1.setActions(actions1);
+//        release1.setNotification(Calendar.getInstance().getTime());
+//        release1.setStatusDate(Calendar.getInstance().getTime());
+//
+//        MaRelease release2 = new MaRelease();
+//        release2.setId(2L);
+//        release2.setRegion(2);
+//        release2.setSite(12345);
+//        release2.setSiteName("Tram Breakwater");
+//        release2.setAddress("123 Palm Drive");
+//        release2.setRtn("1-0012345");
+//        release2.setTown("MY TOWN");
+//        List<MaAction> actions2  = new ArrayList<MaAction>();
+//        MaAction action2 = new MaAction();
+//        action2.setAction("ACTION_TWO");
+//        action2.setStatus("STATUS_TWO");
+//        actions2.add(action2);
+//        release2.setActions(actions2);
+//        release2.setNotification(Calendar.getInstance().getTime());
+//        release2.setStatusDate(Calendar.getInstance().getTime());
+//
+//        // Tell Mockito to return the releaseSite when 1L is searched
+//        MaReleaseList releases = new MaReleaseList(Arrays.asList(new MaRelease[]{release1, release2}));
+//
+//        when(releaseService.findMaReleasesOrderByLatestActionDate(0, 2)).thenReturn(releases);
+//
+//        // Ask Spring MockMVC to issue a GET request against our controller
+//        mockMvc.perform(get("/rest/releases?offset=0&limit=2"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.releases[1].region", is(release2.getRegion())))
+//                .andExpect(jsonPath("$.releases[1].site", is(release2.getSite())))
+//                .andExpect(jsonPath("$.releases[1].siteName", is(release2.getSiteName())))
+//                .andExpect(jsonPath("$.releases[1].address", is(release2.getAddress())))
+//                .andExpect(jsonPath("$.releases[1].links[*].href", hasItem(endsWith("/releases/2"))))
+//                .andExpect(jsonPath("$.releases[1].links[*].rel", hasItem(is(Link.REL_SELF))));
+//    }
 
 }

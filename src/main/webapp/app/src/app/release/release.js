@@ -4,7 +4,8 @@ angular.module( 'ngBoilerplate.release', [
         'base64'
     ])
     .config(function($stateProvider) {
-        $stateProvider.state('releaseSearch', {
+        $stateProvider
+            .state('releaseSearch', {
                 url:'/releases/search',
                 views: {
                     'main': {
@@ -43,7 +44,7 @@ angular.module( 'ngBoilerplate.release', [
                     }
                 },
                 data : {
-                    pageTitle : "Search Releases by Location"
+                    pageTitle : "Search Releases by Town"
                 }
             })
         ;

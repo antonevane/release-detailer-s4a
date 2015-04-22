@@ -23,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -93,6 +95,15 @@ public class MaReleaseController {
         MaActionListResource res = new MaActionListResourceAsm().toResource(actions);
         return new ResponseEntity<MaActionListResource>(res, HttpStatus.OK);
     }
+
+//    @RequestMapping(value="", method = RequestMethod.GET, params = {"offset", "limit"})
+//    @ResponseBody
+//    @PreAuthorize("permitAll")
+//    public ResponseEntity<MaReleaseListResource> findReleasesOrderByLatestActionDate(@RequestParam("offset") String offset, @RequestParam("limit") String limit) {
+//        MaReleaseList releaseList = releaseService.findMaReleasesOrderByLatestActionDate(Integer.parseInt(offset), Integer.parseInt(limit));
+//        MaReleaseListResource res = new MaReleaseListResourceAsm().toResource(releaseList);
+//        return new ResponseEntity<MaReleaseListResource>(res, HttpStatus.OK);
+//    }
 
     public List<MaRelease> findMaReleasesByTown(Long townId) {
         return null;  //To change body of created methods use File | Settings | File Templates.
