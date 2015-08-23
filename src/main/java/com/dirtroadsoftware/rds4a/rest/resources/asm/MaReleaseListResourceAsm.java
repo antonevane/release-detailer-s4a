@@ -8,6 +8,7 @@ import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseResource;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteResource;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 
 import java.util.List;
@@ -37,5 +38,33 @@ public class MaReleaseListResourceAsm extends ResourceAssemblerSupport<MaRelease
         MaReleaseListResource listResource = new MaReleaseListResource();
         listResource.setReleases(resources);
         return listResource;
+    }
+
+    public MaReleaseListResource toResource(MaReleaseList list, String town, int offset, int limit, int totalPages) {
+        List<MaReleaseResource> resources = new MaReleaseResourceAsm().toResources(list.getReleases());
+        MaReleaseListResource listResource = new MaReleaseListResource();
+        listResource.setReleases(resources);
+
+        if (offset > 0) {
+            Link previousLink = createPreviousLink(town, offset, limit);
+            listResource.add(previousLink);
+        }
+        if (offset + 1 < totalPages) {
+            Link nextLink = createNextLink(town, offset, limit);
+            listResource.add(nextLink);
+        }
+        return listResource;
+    }
+
+    private Link createPreviousLink(String town, int offset, int limit) {
+        offset = offset - 1;
+        Link previousLink = linkTo(methodOn(MaReleaseController.class).findReleasesByTown(town, offset, limit)).withRel(Link.REL_PREVIOUS);
+        return previousLink;
+    }
+
+    private Link createNextLink(String town, int offset, int limit) {
+        offset = offset + 1;
+        Link nextLink = linkTo(methodOn(MaReleaseController.class).findReleasesByTown(town, offset, limit)).withRel(Link.REL_NEXT);
+        return nextLink;
     }
 }

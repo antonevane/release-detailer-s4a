@@ -54,6 +54,21 @@ public class MaReleaseServiceImpl implements MaReleaseService {
     }
 
     @Override
+    public MaReleaseList findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit) {
+        List<MaRelease> releases = releaseRepository.findMaReleasesByTown(town, sortBy, sortHow, offset, limit);
+        if (releases == null) {
+            return new MaReleaseList(Collections.<MaRelease>emptyList());
+        } else {
+            return new MaReleaseList(releases);
+        }
+    }
+
+    @Override
+    public Long countMaReleasesByTown(String town) {
+        return releaseRepository.countMaReleases("town", town);
+    }
+
+    @Override
     public MaRelease findMaReleaseWithActionsById(Long id) {
         return releaseRepository.findMaReleaseWithActions(id);
     }

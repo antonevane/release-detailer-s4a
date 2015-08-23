@@ -1,13 +1,11 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.TownNotFoundException;
 import com.dirtroadsoftware.rds4a.core.services.util.MaActionList;
 import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
-import com.dirtroadsoftware.rds4a.rest.exceptions.BadRequestException;
+import com.dirtroadsoftware.rds4a.rest.exceptions.ForbiddenException;
 import com.dirtroadsoftware.rds4a.rest.exceptions.NotFoundException;
 import com.dirtroadsoftware.rds4a.rest.resources.MaActionListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseListResource;
@@ -34,6 +32,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest/releases")
 public class MaReleaseController {
+    private static final int MAX_RELEASE_LIMIT = 20;
     /** Service exposed by this web controller */
     private MaReleaseService releaseService;
 
@@ -96,15 +95,45 @@ public class MaReleaseController {
         return new ResponseEntity<MaActionListResource>(res, HttpStatus.OK);
     }
 
-//    @RequestMapping(value="", method = RequestMethod.GET, params = {"offset", "limit"})
-//    @ResponseBody
-//    @PreAuthorize("permitAll")
-//    public ResponseEntity<MaReleaseListResource> findReleasesOrderByLatestActionDate(@RequestParam("offset") String offset, @RequestParam("limit") String limit) {
-//        MaReleaseList releaseList = releaseService.findMaReleasesOrderByLatestActionDate(Integer.parseInt(offset), Integer.parseInt(limit));
-//        MaReleaseListResource res = new MaReleaseListResourceAsm().toResource(releaseList);
-//        return new ResponseEntity<MaReleaseListResource>(res, HttpStatus.OK);
-//    }
+    @RequestMapping(value="/ma", method = RequestMethod.GET, params = {"town", "offset", "limit"},
+            produces = "application/json; charset=utf-8")
+    @ResponseBody
+    @PreAuthorize("permitAll")
+    public ResponseEntity<MaReleaseListResource> findReleasesByTown(@RequestParam("town") String town,
+                                                                    @RequestParam("offset") int offset,
+                                                                    @RequestParam("limit") int limit) {
+        validateLimit(limit);
+        town = town.replaceAll("%20", " ");
 
+        String townAllCaps = town.toUpperCase();
+        Long townReleases = releaseService.countMaReleasesByTown(townAllCaps);
+        int totalPages = calculateTotalPages(limit, townReleases);
+        validateOffset(offset, totalPages);
+
+        MaReleaseList releasesByTown =
+                releaseService.findMaReleasesByTown(townAllCaps, "notification", "DESC", offset, limit);
+
+        MaReleaseListResource res = new MaReleaseListResourceAsm().toResource(releasesByTown, townAllCaps, offset, limit, totalPages);
+        return new ResponseEntity<MaReleaseListResource>(res, HttpStatus.OK);
+    }
+
+    private void validateLimit(int limit) {
+        if (limit > MAX_RELEASE_LIMIT) {
+            throw new ForbiddenException();
+        }
+    }
+
+    private int calculateTotalPages(int limit, Long totalCount) {
+        return Math.round(totalCount / limit);
+    }
+
+    private void validateOffset(int offset, int totalPages) {
+        if (offset > totalPages){
+            throw new NotFoundException();
+        }
+    }
+
+    // TODO remove
     public List<MaRelease> findMaReleasesByTown(Long townId) {
         return null;  //To change body of created methods use File | Settings | File Templates.
     }

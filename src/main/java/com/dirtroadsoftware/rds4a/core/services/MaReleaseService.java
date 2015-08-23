@@ -21,4 +21,9 @@ public interface MaReleaseService {
     public MaRelease findMaReleaseWithActionsByRtn(String rtn);
 
     public MaReleaseList findMaReleasesByTown(String town);
+
+    public MaReleaseList findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit);
+
+    public Long countMaReleasesByTown(String town);
+
 }

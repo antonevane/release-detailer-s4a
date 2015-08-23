@@ -2,13 +2,17 @@
 
     <h2>Search by Town</h2>
     <div class="input-group component-group">
-        <input type="text" class="form-control" ng-model="town" ng-keyup="$event.keyCode == 13 && getMaReleasesByTown(town)" placeholder="E.g. Cambridge"/>
+        <input type="text" ng-model="town" typeahead="town for town in towns | filter:$viewValue:startsWith | limitTo:8"
+               typeahead-select-on-exact="true" class="form-control" ng-keyup="$event.keyCode == 13 && getMaReleasesByTownPaged(town,0,10)" placeholder="E.g. Cambridge"/>
+
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="getMaReleasesByTown(town)">Search</button>
+            <button class="btn btn-default" type="button" ng-click="getMaReleasesByTownPaged(town,0,10)">Search</button>
         </span>
     </div>
     <p/>
-    <table class="table table-striped">
+    <a ng-show="prev" ng-click="getMaReleasesPagination(prev)">Prev</a>
+    <a ng-show="next" ng-click="getMaReleasesPagination(next)">Next</a>
+    <table class="table table-striped" ng-show="releases">
         <th>Release</th>
         <th>Site</th>
         <th>Address</th>
