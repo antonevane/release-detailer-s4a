@@ -101,19 +101,23 @@ angular.module( 'ngBoilerplate.release', [
         };
         $scope.getMaReleasesByTown = function(town) {
             console.log("ReleaseSearchCtrl: getMaReleasesByTown: ", town);
+            $scope.loading = true;
             releaseService.getMaReleasesByTown(town).then(
                 function(data) {
                     console.log("SUCCESS: " + data);
                     $scope.releases = data.releases;
                     console.log("$scope.releases: " + $scope.releases);
+                    $scope.loading = false;
                 },
                 function(error) {
                     console.log("FAILURE: " + error);
+                    $scope.loading = false;
                 }
             );
 
         };
         $scope.getMaReleasesByTownPaged = function(town, offset, limit) {
+            $scope.loading = true;
             releaseService.getMaReleasesByTownPaged(town, offset, limit).then(
                 function(data) {
                     console.log("SUCCESS: " + data);
@@ -121,14 +125,17 @@ angular.module( 'ngBoilerplate.release', [
                     $scope.next = data.links.next;
                     $scope.prev = data.links.prev;
                     console.log("$scope.releases: " + $scope.releases);
+                    $scope.loading = false;
                 },
                 function(error) {
                     console.log("FAILURE: " + error);
+                    $scope.loading = false;
                 }
             );
 
         };
         $scope.getMaReleasesPagination = function(paginationLink) {
+            $scope.loading = true;
             releaseService.getMaReleasesPagination(paginationLink).then(
                 function(data) {
                     console.log("SUCCESS: " + data);
@@ -136,9 +143,11 @@ angular.module( 'ngBoilerplate.release', [
                     $scope.next = data.links.next;
                     $scope.prev = data.links.prev;
                     console.log("$scope.releases: " + $scope.releases);
+                    $scope.loading = false;
                 },
                 function(error) {
                     console.log("FAILURE: " + error);
+                    $scope.loading = false;
                 }
             );
 

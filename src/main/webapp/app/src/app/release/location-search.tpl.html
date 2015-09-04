@@ -1,5 +1,4 @@
-<div class="row">
-
+<div>
     <h2>Search by Town</h2>
     <div class="input-group component-group">
         <input type="text" ng-model="town" typeahead="town for town in towns | filter:$viewValue:startsWith | limitTo:8"
@@ -10,9 +9,11 @@
         </span>
     </div>
     <p/>
-    <a ng-show="prev" ng-click="getMaReleasesPagination(prev)">Prev</a>
-    <a ng-show="next" ng-click="getMaReleasesPagination(next)">Next</a>
-    <table class="table table-striped" ng-show="releases">
+    <div ng-show="loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+    <a ng-show="prev && !loading" ng-click="getMaReleasesPagination(prev)">Prev</a>
+    <a ng-show="next && !loading" ng-click="getMaReleasesPagination(next)">Next</a>
+    <div>
+        <table class="table table-striped" ng-show="releases && !loading">
         <th>Release</th>
         <th>Site</th>
         <th>Address</th>
@@ -24,4 +25,5 @@
             <td>{{release.town}}</td>
         </tr>
     </table>
+    </div>
 </div>
