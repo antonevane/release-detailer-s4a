@@ -8,3 +8,7 @@ release-detailer-s4a.iml
 .DS_Store
 Desktop.ini
 
+# Eclipse
+/.settings/
+/.classpath
+/.project
