@@ -32,7 +32,7 @@ public class MaActionRepositoryTest {
     @Test
     @Transactional
     public void findExsitingMaAction() throws Exception {
-        MaAction action = repository.findMaAction(44025L); // RTN 1-12345
+        MaAction action = repository.findOne(44025L); // RTN 1-12345
         assertNotNull(action);
         assertEquals("1-0012345", action.getRelease().getRtn());
     }

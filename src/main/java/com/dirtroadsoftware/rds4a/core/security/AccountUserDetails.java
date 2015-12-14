@@ -11,7 +11,11 @@ import java.util.Collection;
  *
  */
 public class AccountUserDetails implements UserDetails {
-    private final Account account;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6013409620762169183L;
+	private final Account account;
 
     public AccountUserDetails(Account account) {
         this.account = account;
@@ -20,7 +24,9 @@ public class AccountUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         GrantedAuthority authority = new GrantedAuthority() {
-            @Override
+			private static final long serialVersionUID = -4625332332740016383L;
+
+			@Override
             public String getAuthority() {
                 return "USER";
             }

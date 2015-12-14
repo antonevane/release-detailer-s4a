@@ -13,18 +13,15 @@ import java.util.List;
 /**
  *
  */
-@Repository
-public class JpaReleaseDashboardRepository implements ReleaseDashboardRepository {
+public class JpaReleaseDashboardRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
     public ReleaseDashboard createReleaseDashboard(ReleaseDashboard dashboard) {
         em.persist(dashboard);
         return dashboard;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public List<ReleaseDashboard> findAllReleaseDashboards() {
         Query query = em.createQuery("SELECT rd FROM ReleaseDashboard rd");
@@ -32,12 +29,10 @@ public class JpaReleaseDashboardRepository implements ReleaseDashboardRepository
         return releaseDashboards;
     }
 
-    @Override
     public ReleaseDashboard findReleaseDashboard(Long releaseDashboardId) {
         return em.find(ReleaseDashboard.class, releaseDashboardId);
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public ReleaseDashboard findReleaseDashboardByTitle(String title) {
         Query query = em.createQuery("SELECT rd FROM ReleaseDashboard rd WHERE rd.title=?1");
@@ -50,7 +45,6 @@ public class JpaReleaseDashboardRepository implements ReleaseDashboardRepository
         }
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public List<ReleaseDashboard> findReleaseDashboardsByAccount(Long accountId) {
         Query query = em.createQuery("SELECT rd FROM ReleaseDashboard rd WHERE rd.owner.id=?1");

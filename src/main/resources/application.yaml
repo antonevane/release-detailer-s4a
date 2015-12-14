@@ -1,0 +1,7 @@
+#spring.profiles.active: dev,hsqldb
+db:
+  driverClassName: org.h2.Driver
+  # jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+  jdbcUrl: jdbc:h2:file:~/local;DB_CLOSE_DELAY=-1
+  login: SA
+  password: 

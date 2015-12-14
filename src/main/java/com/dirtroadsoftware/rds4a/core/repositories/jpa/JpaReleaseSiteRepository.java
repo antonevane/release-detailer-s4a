@@ -17,25 +17,21 @@ public class JpaReleaseSiteRepository implements ReleaseSiteRepository {
     @PersistenceContext
     EntityManager em;
 
-    @Override
     public ReleaseSite createReleaseSite(ReleaseSite data) {
         em.persist(data);
         return data;
     }
 
-    @Override
     public ReleaseSite findReleaseSite(Long id) {
         return em.find(ReleaseSite.class, id);
     }
 
-    @Override
     public ReleaseSite deleteReleaseSite(Long id) {
         ReleaseSite releaseSite = findReleaseSite(id);
         em.remove(releaseSite);
         return releaseSite;
     }
 
-    @Override
     public ReleaseSite updateReleaseSite(Long id, ReleaseSite releaseSite) {
         ReleaseSite rs = findReleaseSite(id);
         rs.setRegion(releaseSite.getRegion());
@@ -43,7 +39,6 @@ public class JpaReleaseSiteRepository implements ReleaseSiteRepository {
         return rs;
     }
 
-    @Override
     @SuppressWarnings("unchecked")
     public List<ReleaseSite> findByReleaseDashboardId(Long releaseDashboardId) {
         Query query = em.createQuery("SELECT rs FROM ReleaseSite rs, ReleaseDashboard rd WHERE rs.dashboard=rd AND rd.id=?1");

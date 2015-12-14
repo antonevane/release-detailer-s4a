@@ -1,16 +1,14 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.List;
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 
 /**
  *
  */
-public interface AccountRepository {
-    public Account findAccount(Long id);
+public interface AccountRepository extends PagingAndSortingRepository<Account, Long>{
     public Account createAccount(Account account);
-    public List<Account> findAllAccounts();
+    
     public Account findAccountByName(String name);
 }

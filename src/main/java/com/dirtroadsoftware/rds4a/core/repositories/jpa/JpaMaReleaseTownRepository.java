@@ -12,12 +12,10 @@ import java.util.List;
 /**
  *
  */
-@Repository
-public class JpaMaReleaseTownRepository implements MaReleaseTownRepository {
+public class JpaMaReleaseTownRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
     public List<MaReleaseTown> findTownsWithReleasesByRegion(int region) {
         Query query = em.createQuery("SELECT t FROM MaReleaseTown t where t.region=?1");
         query.setParameter(1, region);
@@ -25,14 +23,12 @@ public class JpaMaReleaseTownRepository implements MaReleaseTownRepository {
         return townsByRegion;
     }
 
-    @Override
     public List<MaReleaseTown> findAllTownsWithReleases() {
         Query query = em.createQuery("SELECT t FROM MaReleaseTown t");
         List<MaReleaseTown> towns = query.getResultList();
         return towns;
     }
 
-    @Override
     public MaReleaseTown findTownByZipCode(String zipCode) {
         Query query = em.createQuery("SELECT t from MaReleaseTown t where t.zipCode=?1");
         query.setParameter(1, zipCode);

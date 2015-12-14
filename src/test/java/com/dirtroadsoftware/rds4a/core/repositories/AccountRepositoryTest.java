@@ -1,6 +1,8 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.google.common.collect.Lists;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -45,7 +47,7 @@ public class AccountRepositoryTest {
     @Test
     @Transactional
     public void findAccount() {
-        assertNotNull(repository.findAccount(account.getId()));
+        assertNotNull(repository.findOne(account.getId()));
     }
 
     @Test
@@ -57,7 +59,7 @@ public class AccountRepositoryTest {
         account2.setPassword("abcdefg");
         repository.createAccount(account2);
 
-        List<Account> accounts = repository.findAllAccounts();
+        List<Account> accounts = Lists.newArrayList(repository.findAll());
         assertNotNull(accounts);
         assertEquals("Wrong number of accounts", 2, accounts.size());
     }

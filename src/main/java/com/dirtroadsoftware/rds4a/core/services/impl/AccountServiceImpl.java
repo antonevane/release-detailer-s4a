@@ -1,5 +1,10 @@
 package com.dirtroadsoftware.rds4a.core.services.impl;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import com.dirtroadsoftware.rds4a.core.repositories.AccountRepository;
@@ -10,11 +15,7 @@ import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsExceptio
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
 import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.security.auth.login.AccountNotFoundException;
-import javax.transaction.Transactional;
+import com.google.common.collect.Lists;
 
 /**
  *
@@ -30,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccount(Long id) {
-        return accountRepository.findAccount(id);
+        return accountRepository.findOne(id);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
         if (existingAccount != null) {
             throw new AccountExistsException();
         }
-        return accountRepository.createAccount(account);
+        return accountRepository.save(account);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountList findAllAccounts() {
-        return new AccountList(accountRepository.findAllAccounts());
+        return new AccountList(Lists.newArrayList(accountRepository.findAll()));
     }
 
     @Override

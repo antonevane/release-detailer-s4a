@@ -1,39 +1,31 @@
 package com.dirtroadsoftware.rds4a.core.repositories.jpa;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.repositories.MaActionRepository;
-import org.hibernate.Session;
-import org.springframework.stereotype.Repository;
+import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.Collections;
-import java.util.List;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
+import com.dirtroadsoftware.rds4a.core.repositories.MaActionRepository;
 
 /**
  *
  */
-@Repository
-public class JpaMaActionRepository implements MaActionRepository {
+public class JpaMaActionRepository {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
     public List<MaAction> findActionsByMaRelease(MaRelease release) {
         return null;
     }
 
-    @Override
     public MaAction findMaAction(long actionId) {
         return em.find(MaAction.class, actionId);
     }
 
-    @Override
     public List<MaAction> findMaActionsByTown(String town, String sortBy, String sortHow, int offset, int limit) {
         Query query = em.createQuery("SELECT a FROM MaAction a" +
                 " WHERE a.release.town = :town" +
@@ -50,7 +42,6 @@ public class JpaMaActionRepository implements MaActionRepository {
         }
     }
 
-    @Override
     public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit) {
         Query query;
         if ("raoClass".equals(sortBy)) {
@@ -75,7 +66,6 @@ public class JpaMaActionRepository implements MaActionRepository {
         }
     }
 
-    @Override
     public Long countMaActions(String actionAttribute, String town) {
         Query query = em.createQuery("SELECT count(a) FROM MaAction a" +
                 " WHERE a." + actionAttribute + " = ?1");

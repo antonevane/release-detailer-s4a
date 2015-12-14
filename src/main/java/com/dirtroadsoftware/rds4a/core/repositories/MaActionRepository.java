@@ -5,13 +5,16 @@ import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 
 import java.util.List;
 
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  */
-public interface MaActionRepository {
+@Repository
+public interface MaActionRepository extends PagingAndSortingRepository<MaAction, Long>{
     public List<MaAction> findActionsByMaRelease(MaRelease release);
-    public MaAction findMaAction(long actionId);
-    public List<MaAction> findMaActionsByTown(String town, String sortBy, String sortHow, int offset, int limit);
+    public List<MaAction> findByReleaseTown (String town, String sortBy, String sortHow, int offset, int limit);
     public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit);
     public Long countMaActions(String actionAttribute, String attributeValue);
 }
