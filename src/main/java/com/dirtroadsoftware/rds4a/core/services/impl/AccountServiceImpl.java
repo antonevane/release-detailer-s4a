@@ -1,5 +1,7 @@
 package com.dirtroadsoftware.rds4a.core.services.impl;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +33,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findAccount(Long id) {
-        return accountRepository.findOne(id);
+    	Optional<Account> account =  accountRepository.findById(id);
+    	return account.orElseThrow(() -> new AccountDoesNotExistException("Account doesn't exist! ID= " + id));
     }
 
     @Override
     public Account createAccount(Account account) {
         Account existingAccount = findByAccountName(account.getName());
         if (existingAccount != null) {
-            throw new AccountExistsException();
+            throw new AccountExistsException("Account allready exist! [NAME] = " + account.getName());
         }
         return accountRepository.save(account);
     }
@@ -49,10 +52,9 @@ public class AccountServiceImpl implements AccountService {
         if (existingDashboard != null) {
             throw new ReleaseDashboardExistsException();
         }
+        
         Account owner = findAccount(accountId);
-        if (owner == null) {
-            throw new AccountExistsException();
-        }
+        
         ReleaseDashboard createdDashboard = dashboardRepository.save(dashboard);
         createdDashboard.setOwner(owner);
         return createdDashboard;
@@ -60,20 +62,21 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId) {
-        Account account = findAccount(accountId);
-        if (account == null) {
-            throw new AccountDoesNotExistException();
-        }
+    	// TODO wired way to test AccountDoesnt exist REMOVE/REFACTOR
+        findAccount(accountId);
         return new ReleaseDashboardList(dashboardRepository.findByOwnerId((accountId)));
     }
 
     @Override
     public AccountList findAllAccounts() {
+    	// TODO: Stream API
+    	// https://github.com/spring-projects/spring-data-examples/tree/master/jpa/java8
         return new AccountList(Lists.newArrayList(accountRepository.findAll()));
     }
 
     @Override
     public Account findByAccountName(String name) {
-        return accountRepository.findByName(name);
+    	Optional<Account> account =  accountRepository.findByName(name);
+        return account.orElseThrow(() -> new AccountDoesNotExistException("Account doesn't exist"));
     }
 }

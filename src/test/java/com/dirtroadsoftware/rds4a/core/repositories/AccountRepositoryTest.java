@@ -47,7 +47,7 @@ public class AccountRepositoryTest {
     @Test
     @Transactional
     public void findAccount() {
-        assertNotNull(repository.findOne(account.getId()));
+        assertNotNull(repository.findById(account.getId()));
     }
 
     @Test
