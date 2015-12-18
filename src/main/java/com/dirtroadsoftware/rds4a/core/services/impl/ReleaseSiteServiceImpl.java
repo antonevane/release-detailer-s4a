@@ -20,12 +20,13 @@ public class ReleaseSiteServiceImpl implements ReleaseSiteService {
 
     @Override
     public ReleaseSite findReleaseSite(Long id) {
-        return siteRepository.findReleaseSite(id);
+        return siteRepository.findOne(id);
     }
 
     @Override
     public ReleaseSite deleteReleaseSite(Long id) {
-        return siteRepository.deleteReleaseSite(id);
+        siteRepository.delete(id);
+        return null;
     }
 
     @Override
@@ -34,6 +35,6 @@ public class ReleaseSiteServiceImpl implements ReleaseSiteService {
         if (foundSite == null) {
             throw new ReleaseSiteNotFoundException();
         }
-        return siteRepository.updateReleaseSite(id, releaseSite);
+        return siteRepository.updateSiteAndRegion(id, releaseSite.getRegion(), releaseSite.getSite());
     }
 }

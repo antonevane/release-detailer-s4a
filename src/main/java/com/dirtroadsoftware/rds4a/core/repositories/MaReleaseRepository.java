@@ -1,16 +1,17 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-
-import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 
 /**
  *
  */
-public interface MaReleaseRepository {
-    public MaRelease findMaRelease(Long id);
+public interface MaReleaseRepository extends PagingAndSortingRepository<MaRelease, Long> {
     /**
      * Fetch the release by id, but also make sure the associated actions are
      * loaded and available.
@@ -18,11 +19,19 @@ public interface MaReleaseRepository {
      * @param id
      * @return
      */
-    public MaRelease findMaReleaseWithActions(Long id);
-    public List<MaRelease> findMaReleasesByTown(String town);
-    public MaRelease findMaReleaseByRegionSite(int region, int site);
-    public MaRelease findMaReleaseWithActionsByRegionSite(int region, int site);
-    public List<String> findTownsWithReleasesByRegion(int region);
-    public List<MaRelease> findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit);
-    public Long countMaReleases(String releaseAttribute, String attributeValue);
+	@Query("SELECT r FROM MaRelease r INNER JOIN FETCH r.actions WHERE r.id = :id")
+	public MaRelease findMaReleaseWithActions(Long id);
+
+	public List<MaRelease> findByTown(String town);
+
+	public MaRelease findByRegionAndSite(int region, int site);
+
+	@Query("SELECT r FROM MaRelease r INNER JOIN FETCH r.actions WHERE r.region= :region AND r.site= :site")
+	public MaRelease findMaReleaseWithActionsByRegionSite(int region, int site);
+
+	public List<String> findDistinctTownsByRegion(int region);
+
+	public List<MaRelease> findByTown(String town, Pageable pageable);
+
+	public Long countByTown(String town);
 }

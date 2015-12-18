@@ -45,7 +45,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ReleaseDashboard createReleaseDashboard(Long accountId, ReleaseDashboard dashboard) {
-        ReleaseDashboard existingDashboard = dashboardRepository.findReleaseDashboardByTitle(dashboard.getTitle());
+        ReleaseDashboard existingDashboard = dashboardRepository.findByTitle(dashboard.getTitle());
         if (existingDashboard != null) {
             throw new ReleaseDashboardExistsException();
         }
@@ -53,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
         if (owner == null) {
             throw new AccountExistsException();
         }
-        ReleaseDashboard createdDashboard = dashboardRepository.createReleaseDashboard(dashboard);
+        ReleaseDashboard createdDashboard = dashboardRepository.save(dashboard);
         createdDashboard.setOwner(owner);
         return createdDashboard;
     }
@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
         if (account == null) {
             throw new AccountDoesNotExistException();
         }
-        return new ReleaseDashboardList(dashboardRepository.findReleaseDashboardsByAccount(accountId));
+        return new ReleaseDashboardList(dashboardRepository.findByOwnerId((accountId)));
     }
 
     @Override
@@ -74,6 +74,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByAccountName(String name) {
-        return accountRepository.findAccountByName(name);
+        return accountRepository.findByName(name);
     }
 }

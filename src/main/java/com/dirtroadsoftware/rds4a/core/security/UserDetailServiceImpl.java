@@ -1,15 +1,13 @@
 package com.dirtroadsoftware.rds4a.core.security;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.services.AccountService;
 
 /**
  *

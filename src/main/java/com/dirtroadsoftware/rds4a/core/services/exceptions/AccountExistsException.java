@@ -4,7 +4,9 @@ package com.dirtroadsoftware.rds4a.core.services.exceptions;
  *
  */
 public class AccountExistsException extends RuntimeException {
-    public AccountExistsException(Throwable cause) {
+	private static final long serialVersionUID = -695952249244012616L;
+
+	public AccountExistsException(Throwable cause) {
         super(cause);
     }
 

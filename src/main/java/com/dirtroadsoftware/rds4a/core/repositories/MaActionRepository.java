@@ -1,20 +1,23 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 
 /**
  *
  */
-@Repository
-public interface MaActionRepository extends PagingAndSortingRepository<MaAction, Long>{
-    public List<MaAction> findActionsByMaRelease(MaRelease release);
-    public List<MaAction> findByReleaseTown (String town, String sortBy, String sortHow, int offset, int limit);
-    public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit);
-    public Long countMaActions(String actionAttribute, String attributeValue);
+public interface MaActionRepository extends PagingAndSortingRepository<MaAction, Long> {
+	public List<MaAction> findByRelease(MaRelease release);
+
+	public List<MaAction> findByReleaseTown(String town, Pageable pageable);
+
+	// TODO: Implement second find with a proper sort
+	public List<MaAction> findByDate(String date, Pageable pageable);
+
+	public Long countByReleaseTown(String town);
 }

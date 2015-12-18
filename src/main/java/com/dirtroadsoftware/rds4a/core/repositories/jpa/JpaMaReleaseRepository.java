@@ -10,14 +10,14 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.repositories.MaReleaseRepository;
 
 /**
  *
  */
+@Deprecated
+@SuppressWarnings("rawtypes")
 public class JpaMaReleaseRepository {
     @PersistenceContext
     private EntityManager em;
@@ -34,7 +34,8 @@ public class JpaMaReleaseRepository {
         return maRelease;
     }
 
-    public MaRelease findMaReleaseWithActions(Long id) {
+    @SuppressWarnings("unchecked")
+	public MaRelease findMaReleaseWithActions(Long id) {
         Query query = em.createQuery("SELECT r FROM MaRelease r " +
                 "INNER JOIN FETCH r.actions WHERE r.id = :id");
         query.setParameter("id", id);

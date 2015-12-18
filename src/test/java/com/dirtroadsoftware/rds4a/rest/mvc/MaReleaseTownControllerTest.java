@@ -1,13 +1,15 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
-import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
-import com.dirtroadsoftware.rds4a.core.services.MaReleaseTownService;
-import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
-import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseTownList;
-import org.joda.time.LocalDate;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,20 +19,9 @@ import org.springframework.hateoas.Link;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
+import com.dirtroadsoftware.rds4a.core.services.MaReleaseTownService;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseTownList;
 
 /**
  * Test the MA Release Town web controller.

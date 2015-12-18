@@ -4,7 +4,9 @@ package com.dirtroadsoftware.rds4a.core.services.exceptions;
  *
  */
 public class ReleaseDashboardNotFoundException extends RuntimeException {
-    public ReleaseDashboardNotFoundException(Throwable cause) {
+	private static final long serialVersionUID = 2566028295106129755L;
+
+	public ReleaseDashboardNotFoundException(Throwable cause) {
         super(cause);
     }
 

@@ -8,6 +8,9 @@ import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import com.dirtroadsoftware.rds4a.core.services.util.Rtn;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -27,13 +30,13 @@ public class MaReleaseServiceImpl implements MaReleaseService {
 
     @Override
     public MaRelease findMaRelease(Long id) {
-        return releaseRepository.findMaRelease(id);
+        return releaseRepository.findOne(id);
     }
 
     @Override
     public MaRelease findMaReleaseByRtn(String rtn) {
         Rtn parsedRtn = parseRtn(rtn);
-        return releaseRepository.findMaReleaseByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
+        return releaseRepository.findByRegionAndSite(parsedRtn.getRegion(), parsedRtn.getSite());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class MaReleaseServiceImpl implements MaReleaseService {
 
     @Override
     public MaReleaseList findMaReleasesByTown(String town) {
-        List<MaRelease> releases = releaseRepository.findMaReleasesByTown(town);
+        List<MaRelease> releases = releaseRepository.findByTown(town);
         if (releases == null) {
             return new MaReleaseList(Collections.<MaRelease>emptyList());
         } else {
@@ -54,7 +57,8 @@ public class MaReleaseServiceImpl implements MaReleaseService {
 
     @Override
     public MaReleaseList findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit) {
-        List<MaRelease> releases = releaseRepository.findMaReleasesByTown(town, sortBy, sortHow, offset, limit);
+    	Pageable page = new PageRequest(offset, limit, Sort.Direction.fromString(sortHow), sortBy); 
+        List<MaRelease> releases = releaseRepository.findByTown(town, page);
         if (releases == null) {
             return new MaReleaseList(Collections.<MaRelease>emptyList());
         } else {
@@ -64,7 +68,7 @@ public class MaReleaseServiceImpl implements MaReleaseService {
 
     @Override
     public Long countMaReleasesByTown(String town) {
-        return releaseRepository.countMaReleases("town", town);
+        return releaseRepository.countByTown(town);
     }
 
     @Override

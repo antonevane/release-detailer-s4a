@@ -8,6 +8,8 @@ import com.dirtroadsoftware.rds4a.core.services.ReleaseDashboardService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardNotFoundException;
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
+import com.google.common.collect.Lists;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,14 +33,14 @@ public class ReleaseDashboardServiceImpl implements ReleaseDashboardService {
         if (dashboard == null) {
             throw new ReleaseDashboardNotFoundException();
         }
-        ReleaseSite createdSite = siteRepository.createReleaseSite(site);
+        ReleaseSite createdSite = siteRepository.save(site);
         createdSite.setDashboard(dashboard);
         return createdSite;
     }
 
     @Override
     public ReleaseDashboardList findAllReleaseDashboards() {
-        return new ReleaseDashboardList(dashboardRepository.findAllReleaseDashboards());
+        return new ReleaseDashboardList(Lists.newArrayList(dashboardRepository.findAll()));
     }
 
     @Override
@@ -48,11 +50,11 @@ public class ReleaseDashboardServiceImpl implements ReleaseDashboardService {
             throw new ReleaseDashboardNotFoundException();
         }
 
-        return new ReleaseSiteList(releaseDashboardId, siteRepository.findByReleaseDashboardId(releaseDashboardId));
+        return new ReleaseSiteList(releaseDashboardId, siteRepository.findByDashboardId(releaseDashboardId));
     }
 
     @Override
     public ReleaseDashboard findReleaseDashboard(Long releaseDashboardId) {
-        return dashboardRepository.findReleaseDashboard(releaseDashboardId);
+        return dashboardRepository.findOne(releaseDashboardId);
     }
 }

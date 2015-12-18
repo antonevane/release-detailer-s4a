@@ -1,18 +1,17 @@
 package com.dirtroadsoftware.rds4a.core.repositories.jpa;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
-import com.dirtroadsoftware.rds4a.core.repositories.ReleaseDashboardRepository;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 
 /**
  *
  */
+@Deprecated
 public class JpaReleaseDashboardRepository {
     @PersistenceContext
     private EntityManager em;

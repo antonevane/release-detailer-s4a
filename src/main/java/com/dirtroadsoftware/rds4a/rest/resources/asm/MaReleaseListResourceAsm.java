@@ -1,20 +1,18 @@
 package com.dirtroadsoftware.rds4a.rest.resources.asm;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
+import java.util.List;
+
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+
 import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
 import com.dirtroadsoftware.rds4a.rest.mvc.MaReleaseController;
 import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseDashboardController;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseListResource;
 import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseResource;
-import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteListResource;
-import com.dirtroadsoftware.rds4a.rest.resources.ReleaseSiteResource;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
-
-import java.util.List;
-
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Assemble a {@link com.dirtroadsoftware.rds4a.rest.resources.MaReleaseListResource} from

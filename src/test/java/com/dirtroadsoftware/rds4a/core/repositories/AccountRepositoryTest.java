@@ -41,7 +41,7 @@ public class AccountRepositoryTest {
         account.setName("Jeff");
         account.setPassword("abcdefg");
 
-        repository.createAccount(account);
+        repository.save(account);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class AccountRepositoryTest {
         Account account2 = new Account();
         account2.setName("Phil");
         account2.setPassword("abcdefg");
-        repository.createAccount(account2);
+        repository.save(account2);
 
         List<Account> accounts = Lists.newArrayList(repository.findAll());
         assertNotNull(accounts);
@@ -67,6 +67,6 @@ public class AccountRepositoryTest {
     @Test
     @Transactional
     public void findAccountByNameExisting() {
-        assertNotNull(repository.findAccountByName(account.getName()));
+        assertNotNull(repository.findByName(account.getName()));
     }
 }

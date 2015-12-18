@@ -1,11 +1,10 @@
 package com.dirtroadsoftware.rds4a.core.services;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import javax.transaction.Transactional;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,15 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.transaction.Transactional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
 
 
 /**
@@ -118,7 +114,7 @@ public class ReleaseDashboardServiceTest {
         site.setSite(12345);
         site.setDashboard(dashboard);
 
-        ReleaseSite createdSite = dashboardService.createReleaseSite(dashboard.getId(), site);
+        dashboardService.createReleaseSite(dashboard.getId(), site);
 
         ReleaseSiteList releaseSites = dashboardService.findAllReleaseSites(dashboard.getId());
         assertNotNull(releaseSites);

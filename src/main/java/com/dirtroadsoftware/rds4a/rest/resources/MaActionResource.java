@@ -2,8 +2,6 @@ package com.dirtroadsoftware.rds4a.rest.resources;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import java.util.Date;
-
 /**
  *
  */

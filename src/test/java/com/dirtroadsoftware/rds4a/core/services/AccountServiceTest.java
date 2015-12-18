@@ -1,12 +1,11 @@
 package com.dirtroadsoftware.rds4a.core.services;
 
-//import org.apache.catalina.Host;
-//import org.apache.catalina.LifecycleException;
-//import org.apache.catalina.startup.Tomcat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
-import com.dirtroadsoftware.rds4a.core.repositories.AccountRepository;
+import javax.transaction.Transactional;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +14,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.repositories.AccountRepository;
 
 /**
  *
@@ -40,7 +37,7 @@ public class AccountServiceTest {
         Account owner = new Account();
         owner.setName("Foo");
         owner.setPassword("abcdefg");
-        Account ownerCreated = accountRepository.createAccount(owner);
+        Account ownerCreated = accountRepository.save(owner);
         assertNotNull(ownerCreated);
 
         Account ownerFound = accountService.findAccount(ownerCreated.getId());

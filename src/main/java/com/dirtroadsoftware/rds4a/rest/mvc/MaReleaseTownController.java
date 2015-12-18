@@ -1,13 +1,5 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
-import com.dirtroadsoftware.rds4a.core.services.MaReleaseTownService;
-import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseTownList;
-import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseTownListResource;
-import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseTownResource;
-import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseListResourceAsm;
-import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseTownListResourceAsm;
-import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseTownResourceAsm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
+import com.dirtroadsoftware.rds4a.core.services.MaReleaseTownService;
+import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseTownList;
+import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseTownListResource;
+import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseTownResource;
+import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseTownListResourceAsm;
+import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseTownResourceAsm;
 
 /**
  * Spring web controller for interacting with the MaReleaseTownService.

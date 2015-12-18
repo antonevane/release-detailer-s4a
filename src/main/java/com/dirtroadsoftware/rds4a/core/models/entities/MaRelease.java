@@ -1,17 +1,17 @@
 package com.dirtroadsoftware.rds4a.core.models.entities;
 
-import org.hibernate.annotations.Formula;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import java.util.Date;
-import java.util.List;
+
+import org.hibernate.annotations.Formula;
 
 /**
  * A MassDEP waste release site reported and monitored under the Massachusetts Contingency Plan.

@@ -14,11 +14,11 @@ import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 @Service
 @Transactional
 public class MaActionServiceImpl implements MaActionService {
-    @Autowired
-    MaActionRepository repository;
+	@Autowired
+	MaActionRepository repository;
 
-    @Override
-    public MaAction findActionById(Long actionId) {
-        return repository.findOne(actionId);
-    }
+	@Override
+	public MaAction findActionById(Long actionId) {
+		return repository.findOne(actionId);
+	}
 }

@@ -11,13 +11,25 @@ import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
  */
 public interface ReleaseDashboardService {
 
-    // Create a Release Site
+    /**
+     * Create a Release Site.
+     * @param releaseDashboardId
+     * @param site
+     * @return
+     */
     public ReleaseSite createReleaseSite(Long releaseDashboardId, ReleaseSite site);
 
-    // Find all release dashboards
+    /**
+     * Find all release dashboards.
+     * @return
+     */
     public ReleaseDashboardList findAllReleaseDashboards();
 
-    // Find all release sites for a dashboard
+    /**
+     * Find all release sites for a dashboard.
+     * @param releaseDashboardId
+     * @return
+     */
     public ReleaseSiteList findAllReleaseSites(Long releaseDashboardId);
 
     /**

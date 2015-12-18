@@ -1,13 +1,11 @@
 package com.dirtroadsoftware.rds4a.rest.resources;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
-import org.springframework.hateoas.ResourceSupport;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
+import org.springframework.hateoas.ResourceSupport;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 
 /**
  * Exposes {@link com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite} as a resource that can be accessed using Spring HATEOAS components.

@@ -1,15 +1,16 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
-
 import java.util.List;
+
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.MaReleaseTown;
 
 /**
  *
  */
-public interface MaReleaseTownRepository {
-    List<MaReleaseTown> findTownsWithReleasesByRegion(int region);
-    List<MaReleaseTown> findAllTownsWithReleases();
+public interface MaReleaseTownRepository extends PagingAndSortingRepository<MaReleaseTown, Long> {
+	List<MaReleaseTown> findByRegion(int region);
 
-    MaReleaseTown findTownByZipCode(String zipCode);
+	MaReleaseTown findByZipCode(String zipCode);
 }

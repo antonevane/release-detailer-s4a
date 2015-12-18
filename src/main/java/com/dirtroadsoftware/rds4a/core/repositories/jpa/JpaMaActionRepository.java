@@ -9,11 +9,12 @@ import javax.persistence.Query;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import com.dirtroadsoftware.rds4a.core.repositories.MaActionRepository;
 
 /**
  *
  */
+@Deprecated
+@SuppressWarnings(value = { "unchecked", "rawtypes" })
 public class JpaMaActionRepository {
     @PersistenceContext
     private EntityManager em;
@@ -42,7 +43,7 @@ public class JpaMaActionRepository {
         }
     }
 
-    public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit) {
+	public List<MaAction> findMaActionsByDate(String date, String sortBy, String sortHow, int offset, int limit) {
         Query query;
         if ("raoClass".equals(sortBy)) {
             query = em.createQuery("SELECT a FROM MaAction a" +
@@ -66,7 +67,7 @@ public class JpaMaActionRepository {
         }
     }
 
-    public Long countMaActions(String actionAttribute, String town) {
+	public Long countMaActions(String actionAttribute, String town) {
         Query query = em.createQuery("SELECT count(a) FROM MaAction a" +
                 " WHERE a." + actionAttribute + " = ?1");
         query.setParameter(1, town);

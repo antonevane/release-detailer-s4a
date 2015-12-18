@@ -1,15 +1,10 @@
 package com.dirtroadsoftware.rds4a.rest.resources.asm;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
+
 import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 import com.dirtroadsoftware.rds4a.rest.mvc.ReleaseDashboardController;
 import com.dirtroadsoftware.rds4a.rest.resources.ReleaseDashboardListResource;
-import com.dirtroadsoftware.rds4a.rest.resources.ReleaseDashboardResource;
-import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *

@@ -16,13 +16,15 @@ public interface AccountService {
      * @param id the id of the {@link Account} to lookup
      * @return the {@link Account} if it exists, otherwise null
      */
-    public Account findAccount(Long id);
+	public Account findAccount(Long id);
 
-    public Account createAccount(Account account);
+	public Account createAccount(Account account);
 
-    public ReleaseDashboard createReleaseDashboard(Long accountId, ReleaseDashboard dashboard);
+	public ReleaseDashboard createReleaseDashboard(Long accountId, ReleaseDashboard dashboard);
 
-    public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId);
-    public AccountList findAllAccounts();
-    public Account findByAccountName(String name);
+	public ReleaseDashboardList findReleaseDashboardsByAccount(Long accountId);
+
+	public AccountList findAllAccounts();
+
+	public Account findByAccountName(String name);
 }

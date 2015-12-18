@@ -44,24 +44,24 @@ public class ReleaseSiteRepositoryTest {
         account = new Account();
         account.setName("Jeff");
         account.setPassword("abcdefg");
-        accountRepository.createAccount(account);
+        accountRepository.save(account);
 
         dashboard = new ReleaseDashboard();
         dashboard.setOwner(account);
         dashboard.setTitle("Jeff's Dashboard");
-        dashboardRepository.createReleaseDashboard(dashboard);
+        dashboardRepository.save(dashboard);
 
         site = new ReleaseSite();
         site.setRegion(1);
         site.setSite(12345);
         site.setDashboard(dashboard);
-        siteRepository.createReleaseSite(site);
+        siteRepository.save(site);
     }
 
     @Test
     @Transactional
     public void findReleaseSite() {
-        assertNotNull(siteRepository.findReleaseSite(site.getId()));
+        assertNotNull(siteRepository.findOne(site.getId()));
     }
 
     @Test
@@ -71,9 +71,9 @@ public class ReleaseSiteRepositoryTest {
         site2.setRegion(1);
         site2.setSite(12345);
         site2.setDashboard(dashboard);
-        siteRepository.createReleaseSite(site2);
+        siteRepository.save(site2);
 
-        List<ReleaseSite> foundSites = siteRepository.findByReleaseDashboardId(dashboard.getId());
+        List<ReleaseSite> foundSites = siteRepository.findByDashboardId(dashboard.getId());
         assertNotNull(foundSites);
         assertEquals(2, foundSites.size());
     }
@@ -85,8 +85,8 @@ public class ReleaseSiteRepositoryTest {
         updatedSite.setRegion(2);
         updatedSite.setSite(23456);
         updatedSite.setDashboard(dashboard);
-        siteRepository.updateReleaseSite(site.getId(), updatedSite);
-        ReleaseSite actualReleaseSite = siteRepository.findReleaseSite(site.getId());
+        siteRepository.updateSiteAndRegion(site.getId(), updatedSite.getRegion(), updatedSite.getSite());
+        ReleaseSite actualReleaseSite = siteRepository.findOne(site.getId());
         assertEquals("Wrong region", 2, actualReleaseSite.getRegion());
         assertEquals("Wrong site", 23456, actualReleaseSite.getSite());
     }
@@ -94,7 +94,7 @@ public class ReleaseSiteRepositoryTest {
     @Test
     @Transactional
     public void deleteReleaseSite() {
-        siteRepository.deleteReleaseSite(site.getId());
-        assertNull(siteRepository.findReleaseSite(site.getId()));
+        siteRepository.delete(site.getId());
+        assertNull(siteRepository.findOne(site.getId()));
     }
 }

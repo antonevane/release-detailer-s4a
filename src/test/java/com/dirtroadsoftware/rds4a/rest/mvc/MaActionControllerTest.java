@@ -1,8 +1,14 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.services.MaActionService;
-import com.dirtroadsoftware.rds4a.core.services.exceptions.MaActionNotFoundException;
+import static org.hamcrest.Matchers.endsWith;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,15 +19,9 @@ import org.springframework.hateoas.Link;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.startsWith;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
+import com.dirtroadsoftware.rds4a.core.services.MaActionService;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.MaActionNotFoundException;
 /**
  *
  */

@@ -1,23 +1,26 @@
 package com.dirtroadsoftware.rds4a.core.repositories;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
-import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceUtil;
 import javax.transaction.Transactional;
 
-import java.util.List;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import com.dirtroadsoftware.rds4a.core.models.entities.MaAction;
 
 /**
  *
@@ -40,10 +43,13 @@ public class MaActionRepositoryTest {
 
     @Test
     public void findMaActionsByTown() throws Exception {
+    	// Controller example
+    	// http://www.petrikainulainen.net/programming/spring-framework/spring-data-jpa-tutorial-part-seven-pagination/
         String town = "Bolton";
         String sortBy = "date";
-        String sortHow = "ASC";
-        List<MaAction> actions = repository.findMaActionsByTown(town, sortBy, sortHow, 5, 10);
+        Pageable page =  new PageRequest(5, 10, Sort.Direction.ASC, sortBy);
+        
+        List<MaAction> actions = repository.findByReleaseTown(town, page);
 
         assertEquals(10, actions.size());
         assertEquals("RLFA", actions.get(5).getAction());
@@ -53,9 +59,9 @@ public class MaActionRepositoryTest {
     @Test
     public void findMaActionsByDate() throws Exception {
         String date = "2013-06-03";
-        String sortBy = "raoClass";
-        String sortHow = "ASC";
-        List<MaAction> actions = repository.findMaActionsByDate(date, sortBy, sortHow, 0, 8);
+        String sortBy = "release.raoClass";
+        Pageable page =  new PageRequest(0, 8, Sort.Direction.ASC, sortBy);
+        List<MaAction> actions = repository.findByDate(date, page);
 
         assertEquals(8, actions.size());
 
@@ -70,7 +76,7 @@ public class MaActionRepositoryTest {
     @Test
     public void countMaActionsForTown() throws Exception {
         String town = "ORANGE";
-        Long count = repository.countMaActions("release.town", town);
+        Long count = repository.countByReleaseTown(town);
 
         assertEquals(1105l, count.longValue());
     }

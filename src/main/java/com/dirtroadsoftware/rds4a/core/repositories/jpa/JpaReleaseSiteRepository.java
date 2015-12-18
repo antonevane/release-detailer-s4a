@@ -1,19 +1,18 @@
 package com.dirtroadsoftware.rds4a.core.repositories.jpa;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
-import com.dirtroadsoftware.rds4a.core.repositories.ReleaseSiteRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.List;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 
 /**
  *
  */
-@Repository
-public class JpaReleaseSiteRepository implements ReleaseSiteRepository {
+@Deprecated
+public class JpaReleaseSiteRepository {
     @PersistenceContext
     EntityManager em;
 

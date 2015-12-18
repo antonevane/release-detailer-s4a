@@ -1,36 +1,5 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
-import com.dirtroadsoftware.rds4a.core.services.AccountService;
-import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistException;
-import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
-import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
-import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.hateoas.Link;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.net.URI;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.Matchers.arrayWithSize;
-import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -47,6 +16,35 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.hateoas.Link;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.services.AccountService;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountDoesNotExistException;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.AccountExistsException;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardExistsException;
+import com.dirtroadsoftware.rds4a.core.services.util.AccountList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
 
 /**
  *

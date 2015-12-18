@@ -1,27 +1,6 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
-import com.dirtroadsoftware.rds4a.core.models.entities.Account;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
-import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
-import com.dirtroadsoftware.rds4a.core.services.ReleaseDashboardService;
-import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardNotFoundException;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
-import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.hateoas.Link;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
@@ -32,6 +11,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.hateoas.Link;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import com.dirtroadsoftware.rds4a.core.models.entities.Account;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
+import com.dirtroadsoftware.rds4a.core.services.ReleaseDashboardService;
+import com.dirtroadsoftware.rds4a.core.services.exceptions.ReleaseDashboardNotFoundException;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseDashboardList;
+import com.dirtroadsoftware.rds4a.core.services.util.ReleaseSiteList;
 
 /**
  *
@@ -135,7 +135,8 @@ public class ReleaseDashboardControllerTest {
 
     }
 
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void findAllReleaseDashboards() throws Exception {
         Account owner = new Account();
         owner.setId(3L);

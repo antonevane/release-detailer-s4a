@@ -6,11 +6,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  *
  */
-@ResponseStatus(value=HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class BadRequestException extends RuntimeException {
-    public BadRequestException() {
-    }
-    public BadRequestException(Throwable cause) {
-        super(cause);
-    }
+	private static final long serialVersionUID = -2714705485385503549L;
+
+	public BadRequestException() {
+	}
+
+	public BadRequestException(Throwable cause) {
+		super(cause);
+	}
 }

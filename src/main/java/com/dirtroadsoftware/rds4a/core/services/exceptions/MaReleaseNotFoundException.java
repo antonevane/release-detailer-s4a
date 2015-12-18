@@ -4,7 +4,9 @@ package com.dirtroadsoftware.rds4a.core.services.exceptions;
  *
  */
 public class MaReleaseNotFoundException extends RuntimeException {
-    public MaReleaseNotFoundException() {
+	private static final long serialVersionUID = 1460311989974250729L;
+	
+	public MaReleaseNotFoundException() {
         super();
     }
     public MaReleaseNotFoundException(Throwable cause) {

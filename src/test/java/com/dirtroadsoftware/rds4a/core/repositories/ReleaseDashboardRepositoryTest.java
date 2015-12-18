@@ -2,6 +2,8 @@ package com.dirtroadsoftware.rds4a.core.repositories;
 
 import com.dirtroadsoftware.rds4a.core.models.entities.Account;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
+import com.google.common.collect.Lists;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,18 +38,18 @@ public class ReleaseDashboardRepositoryTest {
         account = new Account();
         account.setName("Jeff");
         account.setPassword("abcdefg");
-        accountRepository.createAccount(account);
+        accountRepository.save(account);
 
         dashboard = new ReleaseDashboard();
         dashboard.setOwner(account);
         dashboard.setTitle("Jeff's Dashboard");
-        dashboardRepository.createReleaseDashboard(dashboard);
+        dashboardRepository.save(dashboard);
     }
 
     @Test
     @Transactional
     public void findReleaseDashboard() {
-        assertNotNull(dashboardRepository.findReleaseDashboard(dashboard.getId()));
+        assertNotNull(dashboardRepository.findOne(dashboard.getId()));
     }
 
     @Test
@@ -57,9 +59,9 @@ public class ReleaseDashboardRepositoryTest {
         ReleaseDashboard dashboard2 = new ReleaseDashboard();
         dashboard2.setOwner(account);
         dashboard2.setTitle("Jeff's Second Dashboard");
-        dashboardRepository.createReleaseDashboard(dashboard2);
+        dashboardRepository.save(dashboard2);
 
-        List<ReleaseDashboard> dashboards = dashboardRepository.findAllReleaseDashboards();
+        List<ReleaseDashboard> dashboards = Lists.newArrayList(dashboardRepository.findAll());
 
         assertNotNull(dashboards);
         assertEquals("Wrong number of dashboards", 2, dashboards.size());
@@ -68,12 +70,12 @@ public class ReleaseDashboardRepositoryTest {
     @Test
     @Transactional
     public void findReleaseDashboardByTitle() {
-        assertNotNull(dashboardRepository.findReleaseDashboardByTitle(dashboard.getTitle()));
+        assertNotNull(dashboardRepository.findByTitle(dashboard.getTitle()));
     }
 
     @Test
     @Transactional
     public void findReleaseDashboardByAccount() {
-        assertNotNull(dashboardRepository.findReleaseDashboardsByAccount(dashboard.getOwner().getId()));
+        assertNotNull(dashboardRepository.findByOwnerId(dashboard.getOwner().getId()));
     }
 }

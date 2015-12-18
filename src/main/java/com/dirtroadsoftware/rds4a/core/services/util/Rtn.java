@@ -1,10 +1,9 @@
 package com.dirtroadsoftware.rds4a.core.services.util;
 
+import java.text.ParseException;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.util.StringUtils;
-
-import java.text.ParseException;
 
 /**
  * Helper class for parsing and formatting RTNs
