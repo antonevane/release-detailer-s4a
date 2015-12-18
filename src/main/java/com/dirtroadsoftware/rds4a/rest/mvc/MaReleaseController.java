@@ -1,5 +1,18 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dirtroadsoftware.rds4a.core.models.entities.MaRelease;
 import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.TownNotFoundException;
@@ -13,23 +26,11 @@ import com.dirtroadsoftware.rds4a.rest.resources.MaReleaseResource;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.MaActionListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseResourceAsm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * Spring web controller for interacting with the MaReleaseService.
  */
-@Controller
+@RestController
 @RequestMapping("/rest/releases")
 public class MaReleaseController {
     private static final int MAX_RELEASE_LIMIT = 20;
@@ -95,6 +96,10 @@ public class MaReleaseController {
         return new ResponseEntity<MaActionListResource>(res, HttpStatus.OK);
     }
 
+    
+    // TODO: Spring 3 pageable HATEOAS
+    //http://stackoverflow.com/questions/16790371/spring-mvc-3-return-a-spring-data-page-as-json
+    // https://github.com/olivergierke/spring-restbucks
     @RequestMapping(value="/ma", method = RequestMethod.GET, params = {"town", "offset", "limit"},
             produces = "application/json; charset=utf-8")
     @ResponseBody
@@ -135,7 +140,7 @@ public class MaReleaseController {
 
     // TODO remove
     public List<MaRelease> findMaReleasesByTown(Long townId) {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return null;
     }
 
 }

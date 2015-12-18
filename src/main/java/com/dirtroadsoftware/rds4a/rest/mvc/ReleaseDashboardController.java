@@ -1,5 +1,19 @@
 package com.dirtroadsoftware.rds4a.rest.mvc;
 
+import java.net.URI;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseDashboard;
 import com.dirtroadsoftware.rds4a.core.models.entities.ReleaseSite;
 import com.dirtroadsoftware.rds4a.core.services.ReleaseDashboardService;
@@ -15,24 +29,11 @@ import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardListResourc
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseDashboardResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteListResourceAsm;
 import com.dirtroadsoftware.rds4a.rest.resources.asm.ReleaseSiteResourceAsm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.net.URI;
 
 /**
  * TODO use singular "release-dashboard" for path
  */
-@Controller
+@RestController
 @RequestMapping(value="/rest/release-dashboards")
 public class ReleaseDashboardController {
     private ReleaseDashboardService releaseDashboardService;
