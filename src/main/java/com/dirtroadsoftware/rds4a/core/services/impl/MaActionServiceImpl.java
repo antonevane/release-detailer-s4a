@@ -14,7 +14,12 @@ import com.dirtroadsoftware.rds4a.core.services.MaActionService;
 @Service
 @Transactional
 public class MaActionServiceImpl implements MaActionService {
+
 	@Autowired
+	public MaActionServiceImpl(MaActionRepository repository) {
+		this.repository = repository;
+	}
+	
 	MaActionRepository repository;
 
 	@Override

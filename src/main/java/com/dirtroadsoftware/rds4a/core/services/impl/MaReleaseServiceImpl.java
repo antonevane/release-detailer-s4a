@@ -6,7 +6,9 @@ import com.dirtroadsoftware.rds4a.core.services.MaReleaseService;
 import com.dirtroadsoftware.rds4a.core.services.exceptions.MaReleaseNotFoundException;
 import com.dirtroadsoftware.rds4a.core.services.util.MaReleaseList;
 import com.dirtroadsoftware.rds4a.core.services.util.Rtn;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +26,7 @@ import java.util.List;
 @Service
 @Transactional
 public class MaReleaseServiceImpl implements MaReleaseService {
-    static final Logger logger = Logger.getLogger(MaReleaseServiceImpl.class);
+    static final Logger logger = LoggerFactory.getLogger(MaReleaseServiceImpl.class);
     @Autowired
     MaReleaseRepository releaseRepository;
 

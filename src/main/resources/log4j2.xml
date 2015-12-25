@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="warn">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %Logger{36} - %msg%n"/>
     </Console>
   </Appenders>
   <Loggers>
     <Logger name="com.dirtroadsoftware.rds4a" level="trace">
       <AppenderRef ref="Console"/>
     </Logger>
+    
+    <Logger name="javax.activation" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="javax.mail" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="javax.xml.bind" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="ch.qos.logback" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="com.codahale.metrics" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="com.ryantenney" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="com.sun.xml.internal.bind" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="com.zaxxer" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="io.undertow" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="net.sf.ehcache" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.apache" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.apache.catalina.startup.DigesterFactory" level="off">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.bson" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.elasticsearch" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.hibernate.validator" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.hibernate" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.hibernate.ejb.HibernatePersistence" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.springframework" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.springframework.web" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.springframework.security" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.springframework.cache" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.thymeleaf" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.xnio" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="springfox" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="sun.rmi" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="liquibase" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="sun.rmi.transport" level="warn">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    
+    
     <Root level="info">
       <AppenderRef ref="Console"/>
     </Root>

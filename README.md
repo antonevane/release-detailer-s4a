@@ -14,8 +14,12 @@ http://spring.io/guides/tutorials/bookmarks/
   * Only Constructor injections (recommended - help to avoid NullPointerException)
   * Spring controllers return HATEOAS response
   * GlobalControllerExceptionHandler class handles common errors
-  * Spring Data JPA - java 8 support. See: [Spring Data Java 9](https://github.com/spring-projects/spring-data-examples/tree/master/jpa/java8)
+  * Spring Data JPA - java 8 support. See: [Spring Data Java 8](https://github.com/spring-projects/spring-data-examples/tree/master/jpa/java8)
   
   
-###########Java 8
-  * [Optional](http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html) 
+#####Java 8
+  * [Optional](http://www.oracle.com/technetwork/articles/java/java8-optional-2175753.html)
+  
+#####Application build
+  * [Maven wrapper](https://github.com/takari/maven-wrapper). Usage ./mvnw <goal> (./mvnw clean install) 
+  * [JHipster](https://jhipster.github.io)
