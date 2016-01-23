@@ -20,7 +20,7 @@ public class MaActionServiceImpl implements MaActionService {
 		this.repository = repository;
 	}
 	
-	MaActionRepository repository;
+	private MaActionRepository repository;
 
 	@Override
 	public MaAction findActionById(Long actionId) {
