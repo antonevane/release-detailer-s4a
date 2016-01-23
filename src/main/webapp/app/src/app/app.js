@@ -8,7 +8,8 @@ angular.module( 'ngBoilerplate', [
   'ngBoilerplate.release',
   'ngBoilerplate.action',
   'ui.router',
-  'hateoas'
+  'hateoas',
+  'ngResource'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider, HateoasInterceptorProvider ) {

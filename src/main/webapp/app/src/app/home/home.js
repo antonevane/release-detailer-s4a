@@ -15,6 +15,7 @@
 angular.module( 'ngBoilerplate.home', [
   'ui.router',
   'plusOne',
+  'ngResource',
   'ngBoilerplate.account'
 ])
 

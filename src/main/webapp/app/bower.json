@@ -2,11 +2,16 @@
   "name": "releaseDetailer",
   "version": "0.0.1",
   "devDependencies": {
-    "angular": "~1.2",
-    "angular-mocks": "~1.2",
-    "bootstrap": "~3.1",
+    "angular": "~1.4",
+    "angular-mocks": "~1.4",
+    "bootstrap": "~3.3.0",
     "angular-bootstrap": "~0.10.0",
     "angular-ui-router": "~0.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "angular-resource": "~1.4.9",
+    "angular-base64": "~2.0.5",
+    "angular-hateoas": "~0.2.5",
+    "jquery": "~2.2.0"
+  }
 }
