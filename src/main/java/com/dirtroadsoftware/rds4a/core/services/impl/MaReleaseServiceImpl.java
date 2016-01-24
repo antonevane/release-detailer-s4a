@@ -14,8 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
@@ -26,29 +26,47 @@ import java.util.List;
 @Service
 @Transactional
 public class MaReleaseServiceImpl implements MaReleaseService {
-    static final Logger logger = LoggerFactory.getLogger(MaReleaseServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(MaReleaseServiceImpl.class);
+    
     @Autowired
     MaReleaseRepository releaseRepository;
 
+    @Transactional(readOnly = true)
     @Override
-    public MaRelease findMaRelease(Long id) {
+    public MaRelease findMaRelease(final Long id) {
         return releaseRepository.findOne(id);
     }
 
-    @Override
-    public MaRelease findMaReleaseByRtn(String rtn) {
-        Rtn parsedRtn = parseRtn(rtn);
-        return releaseRepository.findByRegionAndSite(parsedRtn.getRegion(), parsedRtn.getSite());
-    }
+	@Transactional(readOnly = true)
+	@Override
+	public MaRelease findMaReleaseByRtn(final String rtn) {
+		MaRelease release = null;
+		try {
+			Rtn parsedRtn = parseRtn(rtn);
+			release = releaseRepository.findByRegionAndSite(parsedRtn.getRegion(), parsedRtn.getSite());
+		} catch (MaReleaseNotFoundException releaseNotFound) {
+			logger.warn("Exception while parsing rtn " + rtn, releaseNotFound);
+		}
+		return release;
+	}
 
-    @Override
-    public MaRelease findMaReleaseWithActionsByRtn(String rtn) {
-        Rtn parsedRtn = parseRtn(rtn);
-        return releaseRepository.findMaReleaseWithActionsByRegionSite(parsedRtn.getRegion(), parsedRtn.getSite());
-    }
+	@Transactional(readOnly = true)
+	@Override
+	public MaRelease findMaReleaseWithActionsByRtn(final String rtn) {
+		MaRelease release = null;
+		try {
+			Rtn parsedRtn = parseRtn(rtn);
+			release = releaseRepository.findMaReleaseWithActionsByRegionSite(parsedRtn.getRegion(),
+					parsedRtn.getSite());
+		} catch (MaReleaseNotFoundException releaseNotFound) {
+			logger.warn("Exception while parsing rtn " + rtn, releaseNotFound);
+		}
+		return release;
+	}
 
+	@Transactional(readOnly = true)
     @Override
-    public MaReleaseList findMaReleasesByTown(String town) {
+    public MaReleaseList findMaReleasesByTown(final String town) {
         List<MaRelease> releases = releaseRepository.findByTown(town);
         if (releases == null) {
             return new MaReleaseList(Collections.<MaRelease>emptyList());
@@ -57,33 +75,36 @@ public class MaReleaseServiceImpl implements MaReleaseService {
         }
     }
 
-    @Override
-    public MaReleaseList findMaReleasesByTown(String town, String sortBy, String sortHow, int offset, int limit) {
-    	Pageable page = new PageRequest(offset, limit, Sort.Direction.fromString(sortHow), sortBy); 
-        List<MaRelease> releases = releaseRepository.findByTown(town, page);
-        if (releases == null) {
-            return new MaReleaseList(Collections.<MaRelease>emptyList());
-        } else {
-            return new MaReleaseList(releases);
-        }
-    }
+	@Transactional(readOnly = true)
+	@Override
+	public MaReleaseList findMaReleasesByTown(final String town, final String sortBy, final String sortHow,
+			final int offset, final int limit) {
+		Pageable page = new PageRequest(offset, limit, Sort.Direction.fromString(sortHow), sortBy);
+		List<MaRelease> releases = releaseRepository.findByTown(town, page);
+		if (releases == null) {
+			return new MaReleaseList(Collections.<MaRelease> emptyList());
+		} else {
+			return new MaReleaseList(releases);
+		}
+	}
 
+	@Transactional(readOnly = true)
     @Override
-    public Long countMaReleasesByTown(String town) {
+    public Long countMaReleasesByTown(final String town) {
         return releaseRepository.countByTown(town);
     }
 
+	@Transactional(readOnly = true)
     @Override
-    public MaRelease findMaReleaseWithActionsById(Long id) {
+    public MaRelease findMaReleaseWithActionsById(final Long id) {
         return releaseRepository.findMaReleaseWithActions(id);
     }
 
-    private Rtn parseRtn(String rtn) {
+    private Rtn parseRtn(final String rtn) {
         Rtn parsedRtn = null;
         try {
             parsedRtn = Rtn.parseRtn(rtn);
         } catch (ParseException ex) {
-            logger.warn("Exception while parsing rtn " + rtn, ex);
             throw new MaReleaseNotFoundException(ex);
         }
         return parsedRtn;

@@ -2,6 +2,8 @@ package com.dirtroadsoftware.rds4a.rest.mvc;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ import com.dirtroadsoftware.rds4a.rest.resources.asm.MaReleaseResourceAsm;
 @RestController
 @RequestMapping("/rest/releases")
 public class MaReleaseController {
+	private final Logger logger = LoggerFactory.getLogger(MaReleaseController.class);
+	
     private static final int MAX_RELEASE_LIMIT = 20;
     /** Service exposed by this web controller */
     private MaReleaseService releaseService;
@@ -52,7 +56,7 @@ public class MaReleaseController {
             MaReleaseResource res = new MaReleaseResourceAsm().toResource(release);
             return new ResponseEntity<MaReleaseResource>(res, HttpStatus.OK);
         } else {
-            return new ResponseEntity<MaReleaseResource>(HttpStatus.NOT_FOUND);
+        	throw new NotFoundException("Release not found for given release id. [ID] = " + releaseId);
         }
     }
 
@@ -66,7 +70,7 @@ public class MaReleaseController {
             MaReleaseResource res = new MaReleaseResourceAsm().toResource(release);
             return new ResponseEntity<MaReleaseResource>(res, HttpStatus.OK);
         } else {
-            return new ResponseEntity<MaReleaseResource>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException("Release not found for given rtn, [RTN] = " + rtn);
         }
     }
 
@@ -74,13 +78,13 @@ public class MaReleaseController {
     @RequestMapping(value="/ma/town/{town}", method = RequestMethod.GET)
     @PreAuthorize("permitAll")
     public ResponseEntity<MaReleaseListResource> getMaReleasesByTown(@PathVariable String town) {
-
         try {
             MaReleaseList releaseList = releaseService.findMaReleasesByTown(town);
             MaReleaseListResource res = new MaReleaseListResourceAsm().toResource(releaseList);
             return new ResponseEntity<MaReleaseListResource>(res, HttpStatus.OK);
         } catch (TownNotFoundException ex) {
-            throw new NotFoundException();
+        	logger.warn("getMaReleasesByTown", ex);
+        	throw new NotFoundException("Releases not found for given town, [TOWN] = " + town);
         }
      }
 
@@ -95,7 +99,6 @@ public class MaReleaseController {
         MaActionListResource res = new MaActionListResourceAsm().toResource(actions);
         return new ResponseEntity<MaActionListResource>(res, HttpStatus.OK);
     }
-
     
     // TODO: Spring 3 pageable HATEOAS
     //http://stackoverflow.com/questions/16790371/spring-mvc-3-return-a-spring-data-page-as-json

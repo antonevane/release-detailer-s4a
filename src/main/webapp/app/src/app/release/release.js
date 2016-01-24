@@ -53,20 +53,20 @@ angular.module( 'ngBoilerplate.release', [
     .factory('releaseService', function($resource) {
         var service = {};
         service.getMaReleaseById = function(releaseId) {
-            var Release = $resource("/release-detailer-s4a/rest/releases/:paramReleaseId");
+            var Release = $resource("/rest/releases/:paramReleaseId");
             return Release.get({paramReleaseId : releaseId}).$promise;
         };
         service.getMaReleaseByRtn = function(rtn, success, failure) {
-            var Release = $resource("/release-detailer-s4a/rest/releases/ma/:paramRtn");
+            var Release = $resource("/rest/releases/ma/:paramRtn");
             return Release.get({paramRtn : rtn}).$promise;
         };
         service.getMaReleasesByTown = function(town) {
             console.log("releaseService.getMaReleasesByTown() called: " + town);
-            var Release = $resource("/release-detailer-s4a/rest/releases/ma/town/:paramTown");
+            var Release = $resource("/rest/releases/ma/town/:paramTown");
             return Release.get({paramTown : town}).$promise;
         };
         service.getMaReleasesByTownPaged = function(town, offset, limit) {
-            var Release = $resource("/release-detailer-s4a/rest/releases/ma?town=:paramTown&offset=:paramOffset&limit=:paramLimit");
+            var Release = $resource("/rest/releases/ma?town=:paramTown&offset=:paramOffset&limit=:paramLimit");
             return Release.get({paramTown : town, paramOffset : offset, paramLimit : limit}).$promise;
         };
         service.getMaReleasesPagination = function(paginationLink) {
@@ -74,12 +74,12 @@ angular.module( 'ngBoilerplate.release', [
             return Release.get().$promise;
         };
         service.getMaReleaseTowns = function() {
-            var Town = $resource("/release-detailer-s4a/rest/towns/ma");
+            var Town = $resource("/rest/towns/ma");
             return Town.get().$promise;
         };
         return service;
     })
-    .controller("ReleaseSearchCtrl", function($scope, releaseService) {
+    .controller("ReleaseSearchCtrl", function($scope, releaseService, $log) {
         $scope.getMaReleaseByRtn = function(rtn) {
             // Get the $promise from the service to fetch the release information using the RTN
             releaseService.getMaReleaseByRtn(rtn).then(
@@ -87,8 +87,12 @@ angular.module( 'ngBoilerplate.release', [
                     console.log("ReleaseSearchCtrl: getMaReleaseByRtn: data", data);
                     $scope.release = data;
                 },
-                function() {
-                    console.log("Unable to get release information for " + $scope.rtn);
+                function(error) {
+                    $log.error("Unable to get release information for " + $scope.rtn);
+                    if(error.status == 404) {
+                        $scope.notFound = error.data;
+                        $log.error(JSON.stringify($scope.notFound));
+                    }
                     $scope.release = null;
                 });
         };
@@ -96,11 +100,15 @@ angular.module( 'ngBoilerplate.release', [
             // Get the $promise from the service to fetch the release information using the internal release ID
             releaseService.getMaReleaseById(rid).then(
                 function(data) {
-                    console.log("ReleaseSearchCtrl: getMaReleaseById: data", data);
+                    $log.debug("ReleaseSearchCtrl: getMaReleaseById: data", data);
                     $scope.release = data;
                 },
-                function() {
-                    console.log("Unable to get release information for " + $scope.rtn);
+                function(error) {
+                    $log.error("Unable to get release information for " + $scope.rtn);
+                    if(error.status == 404) {
+                        $scope.notFound = error.data;
+                        $log.error(JSON.stringify($scope.notFound));
+                    }
                     $scope.release = null;
                 });
         };
@@ -109,13 +117,13 @@ angular.module( 'ngBoilerplate.release', [
             $scope.loading = true;
             releaseService.getMaReleasesByTown(town).then(
                 function(data) {
-                    console.log("SUCCESS: " + data);
+                    $log.debug("SUCCESS: " + JSON.stringify(data));
                     $scope.releases = data.releases;
-                    console.log("$scope.releases: " + $scope.releases);
+                    $log.debug("$scope.releases: " + $scope.releases);
                     $scope.loading = false;
                 },
                 function(error) {
-                    console.log("FAILURE: " + error);
+                    $log.error("FAILURE: " + JSON.stringify(error));
                     $scope.loading = false;
                 }
             );
@@ -124,15 +132,18 @@ angular.module( 'ngBoilerplate.release', [
             $scope.loading = true;
             releaseService.getMaReleasesByTownPaged(town, offset, limit).then(
                 function(data) {
-                    console.log("SUCCESS: " + data);
+                    $log.debug("SUCCESS: " + JSON.stringify(data));
                     $scope.releases = data.releases;
-                    $scope.next = data.links.next;
-                    $scope.prev = data.links.prev;
-                    console.log("$scope.releases: " + $scope.releases);
+                    if($scope.releases.length > 0) {
+                        $scope.next = data.links.next;
+                        $scope.prev = data.links.prev;
+                    }
+
+                    $log.debug("$scope.releases: " + $scope.releases);
                     $scope.loading = false;
                 },
                 function(error) {
-                    console.log("FAILURE: " + error);
+                    $log.error("FAILURE: " + JSON.stringify(error));
                     $scope.loading = false;
                 }
             );
@@ -142,15 +153,17 @@ angular.module( 'ngBoilerplate.release', [
             $scope.loading = true;
             releaseService.getMaReleasesPagination(paginationLink).then(
                 function(data) {
-                    console.log("SUCCESS: " + data);
+                    $log.debug("SUCCESS: " + JSON.stringify(data));
                     $scope.releases = data.releases;
-                    $scope.next = data.links.next;
-                    $scope.prev = data.links.prev;
-                    console.log("$scope.releases: " + $scope.releases);
+                    if($scope.releases.length > 0) {
+                        $scope.next = data.links.next;
+                        $scope.prev = data.links.prev;
+                    }
+                    $log.debug("$scope.releases: " + $scope.releases);
                     $scope.loading = false;
                 },
                 function(error) {
-                    console.log("FAILURE: " + error);
+                    $log.error("FAILURE: " + JSON.stringify(error));
                     $scope.loading = false;
                 }
             );
@@ -166,6 +179,7 @@ angular.module( 'ngBoilerplate.release', [
                     loadingTowns = false;
                 },
                 function(error) {
+                    $log.error("FAILURE: " + JSON.stringify(error));
                     $scope.loadingTowns = false;
                 }
             );

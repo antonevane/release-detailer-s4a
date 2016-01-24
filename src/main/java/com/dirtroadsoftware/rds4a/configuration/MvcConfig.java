@@ -14,4 +14,5 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/app/**").addResourceLocations("/app/build/");
 	}
+
 }

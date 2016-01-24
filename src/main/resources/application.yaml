@@ -1,7 +1,32 @@
 #spring.profiles.active: dev,hsqldb
-db:
-  driverClassName: org.h2.Driver
-  # jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-  jdbcUrl: jdbc:h2:file:~/local;DB_CLOSE_DELAY=-1
-  login: SA
-  password: 
+spring:
+    profiles:
+        active: dev
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use Grunt + BrowserSync for livereload
+    datasource:
+        driver-class-name: org.h2.jdbcx.JdbcDataSource
+        url: jdbc:h2:file:./target/h2db/db/hipster;DB_CLOSE_DELAY=-1
+        name:
+        username: 
+        password:
+    jpa:
+        database-platform: com.dirtroadsoftware.rds4a.core.models.util.FixedH2Dialect
+        database: H2
+        show_sql: true
+        properties:
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+
+liquibase:
+    contexts: dev
+
+server:
+    port: 8080 
+  
+release:  
+    cors: 
